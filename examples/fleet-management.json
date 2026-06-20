@@ -1,0 +1,17 @@
+{
+  "product": "Fleet maintenance software",
+  "market": "Commercial fleet operations",
+  "locale": "US",
+  "geographies": ["United States"],
+  "industries": ["Transportation", "Construction", "Field services", "Government"],
+  "companySizes": ["200-1000", "1000+"],
+  "jobTitles": ["Fleet Manager", "Director of Fleet", "VP Operations"],
+  "jobFunctions": ["Operations", "Facilities", "Public Sector"],
+  "seniorities": ["Manager", "Director", "VP"],
+  "keywords": ["fleet maintenance", "DVIR", "preventive maintenance", "fleet management software"],
+  "communities": ["fleet management", "public works", "construction equipment"],
+  "pains": ["maintenance downtime", "paper inspections", "missed preventive maintenance"],
+  "triggers": ["compliance pressure", "telematics expansion", "maintenance cost reduction"],
+  "campaignGoal": "Demand creation",
+  "preferredChannels": ["linkedin-ads", "google-ads-youtube", "microsoft-ads", "reddit-ads", "meta-ads"]
+}

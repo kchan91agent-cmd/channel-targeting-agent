@@ -1,0 +1,25 @@
+{
+  "name": "channel-targeting-agent",
+  "version": "0.1.0",
+  "description": "Map PMM ICP and persona strategy into platform-available B2B targeting options.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "start": "node src/index.js examples/logistics-operations.json",
+    "match": "node src/index.js",
+    "report": "node src/report.js",
+    "check-fields": "node src/connectors/check-fields.js",
+    "refresh": "node src/connectors/refresh-registry.js",
+    "test": "node --test"
+  },
+  "keywords": [
+    "pmm",
+    "abm",
+    "targeting",
+    "advertising",
+    "gtm"
+  ],
+  "license": "MIT"
+}

@@ -1,0 +1,27 @@
+{
+  "id": "dv360",
+  "name": "Google Display & Video 360",
+  "channelType": "programmatic",
+  "supportedLocales": ["US", "CA", "GB", "EU", "AU", "IN", "GLOBAL"],
+  "refreshCadence": "monthly-or-quarterly",
+  "sourceUrl": "https://developers.google.com/display-video/api/reference/rest/v4/targetingTypes.targetingOptions",
+  "sourceCheckedAt": "2026-06-13",
+  "liveCheck": {
+    "mode": "official-api-supported",
+    "authRequired": true,
+    "envVars": ["GOOGLE_APPLICATION_CREDENTIALS", "DV360_ADVERTISER_ID"],
+    "notes": "Use targetingTypes.targetingOptions for available options; advertiser settings may affect availability."
+  },
+  "targetingDimensions": [
+    { "id": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "audience", "label": "Audience lists", "inputKeys": ["customerLists", "accountLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences", "suppressionLists"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "category", "label": "Content categories", "inputKeys": ["industries", "interests", "topics"], "availability": "official", "matchType": "substitute", "confidence": "medium" },
+    { "id": "keyword", "label": "Keyword targeting", "inputKeys": ["keywords"], "availability": "official", "matchType": "substitute", "confidence": "medium" },
+    { "id": "placement", "label": "Inventory / placement targeting", "inputKeys": ["placements"], "availability": "official", "matchType": "substitute", "confidence": "medium" },
+    { "id": "device", "label": "Device targeting", "inputKeys": ["devices"], "availability": "official", "matchType": "exact", "confidence": "high" }
+  ],
+  "knownLimitations": [
+    "Programmatic audience quality depends on inventory, data provider, and advertiser permissions.",
+    "Persona fields usually need audience data, not native job title targeting."
+  ]
+}

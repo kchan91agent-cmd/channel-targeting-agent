@@ -1,0 +1,18 @@
+{
+  "product": "Route orchestration software",
+  "market": "Enterprise logistics and delivery operations",
+  "locale": "US",
+  "geographies": ["United States", "Canada"],
+  "industries": ["Retail", "CPG", "Third-party logistics", "Transportation"],
+  "companySizes": ["1000+"],
+  "jobTitles": ["VP Logistics", "Director of Transportation", "Head of Delivery Operations"],
+  "jobFunctions": ["Operations", "Supply Chain", "Information Technology"],
+  "seniorities": ["Director", "VP", "CXO"],
+  "technographics": ["TMS", "WMS", "OMS"],
+  "intentSignals": ["route optimization", "last mile delivery", "transportation management system"],
+  "keywords": ["delivery orchestration", "route optimization", "last mile logistics"],
+  "pains": ["manual dispatch exceptions", "high cost-to-serve", "carrier coordination overhead"],
+  "triggers": ["SLA pressure", "mixed fleet complexity", "manual exception volume"],
+  "campaignGoal": "Pipeline creation",
+  "preferredChannels": ["linkedin-ads", "microsoft-ads", "google-ads-youtube", "dv360"]
+}

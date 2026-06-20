@@ -1,0 +1,24 @@
+name: Monthly source check
+
+on:
+  schedule:
+    - cron: "0 15 1 * *"
+  workflow_dispatch:
+
+jobs:
+  source-check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - name: Run tests
+        run: npm test
+      - name: Check official source URLs
+        run: npm run refresh
+      - name: Upload source-check snapshot
+        uses: actions/upload-artifact@v4
+        with:
+          name: source-check-snapshot
+          path: data/snapshots/latest-source-check.local.json

@@ -1,0 +1,27 @@
+{
+  "id": "reddit-ads",
+  "name": "Reddit Ads",
+  "channelType": "paid-social-community",
+  "supportedLocales": ["US", "CA", "GB", "EU", "AU", "IN", "GLOBAL"],
+  "refreshCadence": "monthly",
+  "sourceUrl": "https://ads-api.reddit.com/docs/",
+  "sourceCheckedAt": "2026-06-13",
+  "liveCheck": {
+    "mode": "official-api-preferred",
+    "authRequired": true,
+    "envVars": ["REDDIT_ADS_ACCESS_TOKEN", "REDDIT_AD_ACCOUNT_ID"],
+    "notes": "Use official Reddit Ads API documentation and authenticated account checks for exact targeting options."
+  },
+  "targetingDimensions": [
+    { "id": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "availability": "official-dynamic", "matchType": "exact", "confidence": "medium" },
+    { "id": "community", "label": "Community targeting", "inputKeys": ["communities", "industries", "interests", "topics"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "medium" },
+    { "id": "interest", "label": "Interest targeting", "inputKeys": ["interests", "industries"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "keyword", "label": "Keyword targeting", "inputKeys": ["keywords"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "medium" },
+    { "id": "customAudience", "label": "Custom audiences", "inputKeys": ["customerLists", "accountLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences", "suppressionLists"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "device", "label": "Device targeting", "inputKeys": ["devices"], "availability": "official-dynamic", "matchType": "exact", "confidence": "medium" }
+  ],
+  "knownLimitations": [
+    "Not strong for precise B2B job title targeting.",
+    "Best used for community/context discovery and message testing."
+  ]
+}

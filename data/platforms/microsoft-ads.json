@@ -1,0 +1,28 @@
+{
+  "id": "microsoft-ads",
+  "name": "Microsoft Advertising",
+  "channelType": "search-display-linkedin-profile",
+  "supportedLocales": ["US", "CA", "GB", "EU", "AU", "IN", "GLOBAL"],
+  "refreshCadence": "monthly-or-quarterly",
+  "sourceUrl": "https://learn.microsoft.com/en-us/advertising/campaign-management-service/profilecriterion?view=bingads-13",
+  "sourceCheckedAt": "2026-06-13",
+  "liveCheck": {
+    "mode": "official-api-supported",
+    "authRequired": true,
+    "envVars": ["MICROSOFT_ADS_DEVELOPER_TOKEN", "MICROSOFT_ADS_CUSTOMER_ID", "MICROSOFT_ADS_ACCOUNT_ID", "MICROSOFT_ADS_CLIENT_ID", "MICROSOFT_ADS_CLIENT_SECRET", "MICROSOFT_ADS_REFRESH_TOKEN"],
+    "notes": "LinkedIn profile targeting supports company, industry, and job function criteria in Microsoft Advertising."
+  },
+  "targetingDimensions": [
+    { "id": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "companyName", "label": "LinkedIn company", "inputKeys": ["companyNames"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "industry", "label": "LinkedIn industry", "inputKeys": ["industries"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "jobFunction", "label": "LinkedIn job function", "inputKeys": ["jobFunctions"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "keyword", "label": "Keywords", "inputKeys": ["keywords"], "availability": "official", "matchType": "substitute", "confidence": "medium" },
+    { "id": "customerList", "label": "Customer match", "inputKeys": ["customerLists", "accountLists", "contactLists", "suppressionLists"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "remarketing", "label": "Remarketing", "inputKeys": ["websiteVisitors", "retargetingAudiences", "engagementAudiences"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" }
+  ],
+  "knownLimitations": [
+    "Job title and seniority should be approximated through job function, keyword, or audience strategy unless verified.",
+    "Profile targeting availability can vary by market and campaign type."
+  ]
+}

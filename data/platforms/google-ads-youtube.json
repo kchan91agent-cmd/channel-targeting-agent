@@ -1,0 +1,31 @@
+{
+  "id": "google-ads-youtube",
+  "name": "Google Ads / YouTube",
+  "channelType": "search-video-display",
+  "supportedLocales": ["US", "CA", "GB", "EU", "AU", "IN", "GLOBAL"],
+  "refreshCadence": "monthly-or-quarterly",
+  "sourceUrl": "https://developers.google.com/google-ads/api/docs/targeting/overview",
+  "sourceCheckedAt": "2026-06-13",
+  "liveCheck": {
+    "mode": "official-api-supported",
+    "authRequired": true,
+    "envVars": ["GOOGLE_ADS_DEVELOPER_TOKEN", "GOOGLE_ADS_CUSTOMER_ID", "GOOGLE_ADS_CLIENT_ID", "GOOGLE_ADS_CLIENT_SECRET", "GOOGLE_ADS_REFRESH_TOKEN"],
+    "notes": "Use Google Ads API for criteria metadata and account-specific availability."
+  },
+  "targetingDimensions": [
+    { "id": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "keyword", "label": "Keywords", "inputKeys": ["keywords", "industries"], "availability": "official", "matchType": "substitute", "confidence": "medium" },
+    { "id": "customSegment", "label": "Custom segments", "inputKeys": ["keywords", "interests", "industries", "placements", "topics"], "availability": "official", "matchType": "substitute", "confidence": "medium" },
+    { "id": "inMarket", "label": "In-market audiences", "inputKeys": ["industries", "interests"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "medium" },
+    { "id": "affinity", "label": "Affinity audiences", "inputKeys": ["interests"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "detailedDemographics", "label": "Detailed demographics / life events", "inputKeys": ["demographics", "education", "lifeEvents"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "yourData", "label": "Your data / remarketing segments", "inputKeys": ["websiteVisitors", "retargetingAudiences", "engagementAudiences"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "customerMatch", "label": "Customer Match", "inputKeys": ["customerLists", "accountLists", "contactLists", "suppressionLists"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "lookalike", "label": "Lookalike segments", "inputKeys": ["lookalikeSeeds"], "availability": "official-auth", "matchType": "substitute", "confidence": "medium" },
+    { "id": "device", "label": "Device targeting", "inputKeys": ["devices"], "availability": "official", "matchType": "exact", "confidence": "high" }
+  ],
+  "knownLimitations": [
+    "Job title and company-name targeting are not primary Google Ads targeting primitives.",
+    "Custom segments are strategy substitutes, not exact persona targeting."
+  ]
+}
