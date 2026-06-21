@@ -59,6 +59,22 @@ Suppression lists: open opportunities
   assert.deepEqual(strategy.suppressionLists, ["open opportunities"]);
 });
 
+test("parses campaign controls used for missing-input checks", () => {
+  const strategy = parseMarkdownBrief(`
+Product: Test product
+Market: Test market
+Budget: $15,000 test budget
+Conversion event: Sales-qualified meeting
+Measurement thresholds: 20 meetings, cost per meeting below $750
+Audience-sizing requirements: At least 10,000 reachable members
+`);
+
+  assert.equal(strategy.budget, "$15,000 test budget");
+  assert.equal(strategy.conversionEvent, "Sales-qualified meeting");
+  assert.deepEqual(strategy.measurementThresholds, ["20 meetings", "cost per meeting below $750"]);
+  assert.deepEqual(strategy.audienceSizingRequirements, ["At least 10,000 reachable members"]);
+});
+
 test("ignores placeholder values in Markdown briefs", () => {
   const strategy = parseMarkdownBrief(`
 # Campaign Brief
@@ -119,9 +135,61 @@ test("renders action-led sections before platform details", async () => {
   assert.ok(report.includes("## Missing Inputs That Change The Plan"));
   assert.ok(report.includes("## Channel Hypotheses"));
   assert.ok(report.includes("## Keyword Cluster Guidance"));
-  assert.ok(report.includes("Use these clusters to decide where each idea belongs in the activation plan."));
+  assert.ok(report.includes("These source-aware groups preserve the brief's original inputs"));
   assert.ok(report.includes("## Appendix: Raw Inputs And Platform Detail"));
+  assert.ok(report.includes("These source-aware groups preserve the brief's original inputs"));
   assert.ok(report.indexOf("## Activation Actions") < report.indexOf("## LinkedIn Ads"));
+});
+
+test("keeps TikTok terms source-aware and message-only inputs out of proxy output", async () => {
+  const platforms = await loadPlatforms();
+  const strategy = parseMarkdownBrief(`
+Product: Creator commerce analytics
+Market: TikTok commerce teams
+Keywords: TikTok Shop analytics, creator affiliate reporting
+Intent signals: live shopping launch
+Technographics: TikTok Business Center
+Pains: unclear creator ROI
+Gains: faster creative iteration
+Objections: hard to prove attribution
+Triggers: seasonal product drop
+`);
+  const report = renderMarkdownReport(matchStrategyToPlatforms(strategy, platforms));
+  const proxyStart = report.indexOf("### Use As Proxies Or Test/Experiment Campaign Sets");
+  const messagingStart = report.indexOf("### Keep Primarily In Messaging");
+  const proxySection = report.slice(proxyStart, messagingStart);
+
+  assert.ok(report.includes("### Keyword Signals"));
+  assert.ok(report.includes("TikTok Shop analytics"));
+  assert.ok(report.includes("### Intent Signals"));
+  assert.ok(report.includes("### Technographic Signals"));
+  assert.ok(report.includes("### Message / Creative Inputs"));
+  assert.equal(proxySection.includes("unclear creator ROI"), false);
+  assert.equal(proxySection.includes("seasonal product drop"), false);
+});
+
+test("flags the full campaign-control and ICP gaps for a deck-only brief", async () => {
+  const platforms = await loadPlatforms();
+  const output = matchStrategyToPlatforms(
+    { product: "Creator commerce analytics", market: "TikTok commerce teams" },
+    platforms
+  );
+  const report = renderMarkdownReport(output);
+
+  for (const label of [
+    "ICP company size",
+    "ICP job titles",
+    "ICP job functions",
+    "ICP seniority",
+    "Preferred paid channels",
+    "Budget",
+    "Conversion event",
+    "Measurement thresholds",
+    "Exclusions and suppression",
+    "Audience-sizing requirements"
+  ]) {
+    assert.ok(report.includes(`**${label}**`));
+  }
 });
 
 test("keeps long keyword dumps out of the main platform recommendation body", async () => {

@@ -43,6 +43,10 @@
     "negativeKeywords": { "type": "array", "items": { "type": "string" } },
     "suppressionLists": { "type": "array", "items": { "type": "string" } },
     "campaignGoal": { "type": "string" },
+    "budget": { "type": "string" },
+    "conversionEvent": { "type": "string" },
+    "measurementThresholds": { "type": "array", "items": { "type": "string" } },
+    "audienceSizingRequirements": { "type": "array", "items": { "type": "string" } },
     "preferredChannels": { "type": "array", "items": { "type": "string" } },
     "complianceConstraints": { "type": "array", "items": { "type": "string" } }
   }

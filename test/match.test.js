@@ -78,6 +78,67 @@ test("does not treat pains or triggers as keyword targeting levers", async () =>
   }
 });
 
+test("keeps all message-only inputs out of proxy scores and proxy recommendations", async () => {
+  const platforms = await loadPlatforms();
+  const output = matchStrategyToPlatforms(
+    {
+      product: "Creator analytics software",
+      market: "TikTok commerce teams",
+      pains: ["unclear creator ROI"],
+      gains: ["faster content decisions"],
+      objections: ["hard to prove attribution"],
+      triggers: ["new product launch"]
+    },
+    platforms
+  );
+
+  for (const match of output.platformMatches) {
+    assert.equal(match.exactActionabilityScore, 0);
+    assert.equal(match.proxyActionabilityScore, 0);
+    assert.equal(match.actionabilityScore, 0);
+    assert.equal(match.substituteMatches.length, 0);
+    assert.equal(match.substitutions.length, 0);
+  }
+});
+
+test("allows a message input only through an explicitly verified exact platform field", () => {
+  const output = matchStrategyToPlatforms(
+    {
+      product: "Test product",
+      market: "Test market",
+      pains: ["manual reconciliation"]
+    },
+    [
+      {
+        id: "verified-platform",
+        name: "Verified Platform",
+        channelType: "social",
+        supportedLocales: ["GLOBAL"],
+        knownLimitations: [],
+        sourceUrl: "https://example.com",
+        sourceCheckedAt: "2026-06-21",
+        refreshCadence: "manual",
+        targetingDimensions: [
+          {
+            id: "verifiedPainField",
+            label: "Verified pain field",
+            inputKeys: ["pains"],
+            availability: "official-auth",
+            matchType: "exact",
+            confidence: "high",
+            verifiedMessageTargeting: true
+          }
+        ]
+      }
+    ]
+  );
+
+  const match = output.platformMatches[0];
+  assert.equal(match.exactMatches.length, 1);
+  assert.equal(match.exactActionabilityScore, 0);
+  assert.equal(match.proxyActionabilityScore, 0);
+});
+
 test("keeps vendor-gated ABM platforms out of the v1 registry", async () => {
   const platforms = await loadPlatforms();
   const ids = platforms.map((platform) => platform.id);

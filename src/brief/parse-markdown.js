@@ -53,6 +53,14 @@ const FIELD_ALIASES = new Map([
   ["suppression lists", "suppressionLists"],
   ["campaign goal", "campaignGoal"],
   ["goal", "campaignGoal"],
+  ["budget", "budget"],
+  ["conversion event", "conversionEvent"],
+  ["primary conversion event", "conversionEvent"],
+  ["measurement thresholds", "measurementThresholds"],
+  ["measurement threshold", "measurementThresholds"],
+  ["audience-sizing requirements", "audienceSizingRequirements"],
+  ["audience sizing requirements", "audienceSizingRequirements"],
+  ["audience size requirements", "audienceSizingRequirements"],
   ["preferred channels", "preferredChannels"],
   ["channels", "preferredChannels"],
   ["compliance constraints", "complianceConstraints"]
@@ -92,6 +100,8 @@ const ARRAY_FIELDS = new Set([
   "exclusions",
   "negativeKeywords",
   "suppressionLists",
+  "measurementThresholds",
+  "audienceSizingRequirements",
   "preferredChannels",
   "complianceConstraints"
 ]);
@@ -112,9 +122,12 @@ function isPlaceholderValue(value) {
 }
 
 function splitValues(value) {
-  return value
+  const numericCommaToken = "\u0000";
+  const protectedNumericCommas = value.replace(/\b\d{1,3}(?:,\d{3})+\b/g, (number) => number.replaceAll(",", numericCommaToken));
+
+  return protectedNumericCommas
     .split(/[,;|]/)
-    .map((item) => item.trim())
+    .map((item) => item.replaceAll(numericCommaToken, ",").trim())
     .filter((item) => item && !isPlaceholderValue(item));
 }
 

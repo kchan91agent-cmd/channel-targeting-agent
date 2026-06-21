@@ -40,10 +40,6 @@ const PROXY_ACTIONABILITY_WEIGHTS = {
   lookalikeSeeds: 1,
   interests: 1,
   industries: 0.75,
-  pains: 0.5,
-  gains: 0.5,
-  objections: 0.5,
-  triggers: 0.5,
   demographics: 0.5,
   education: 0.5,
   lifeEvents: 0.5,
@@ -52,6 +48,7 @@ const PROXY_ACTIONABILITY_WEIGHTS = {
 };
 
 const CONFIDENCE_RANK = { high: 3, medium: 2, low: 1 };
+const MESSAGE_ONLY_INPUTS = new Set(["pains", "gains", "objections", "triggers"]);
 
 function asArray(value) {
   if (!value) return [];
@@ -64,6 +61,11 @@ function hasInput(strategy, key) {
 
 function inputValues(strategy, keys) {
   return keys.flatMap((key) => asArray(strategy[key]).map((value) => String(value)));
+}
+
+function canUseInputOnDimension(dimension, inputKey) {
+  if (!MESSAGE_ONLY_INPUTS.has(inputKey)) return true;
+  return dimension.matchType === "exact" && dimension.verifiedMessageTargeting === true;
 }
 
 function localeSupported(platform, strategy) {
@@ -83,11 +85,14 @@ function scoreConfidence(matchCount, substituteCount, caveatCount, preferred) {
 
 function weightedInputScore(matches, weights) {
   const inputKeys = new Set(matches.flatMap((match) => match.inputKeys));
-  return [...inputKeys].reduce((score, inputKey) => score + (weights[inputKey] ?? 0), 0);
+  return [...inputKeys].reduce((score, inputKey) => score + (MESSAGE_ONLY_INPUTS.has(inputKey) ? 0 : weights[inputKey] ?? 0), 0);
 }
 
 function weightedSubstitutionScore(substitutions) {
-  return substitutions.reduce((score, substitution) => score + (PROXY_ACTIONABILITY_WEIGHTS[substitution.input] ?? 0.5), 0);
+  return substitutions.reduce(
+    (score, substitution) => score + (MESSAGE_ONLY_INPUTS.has(substitution.input) ? 0 : PROXY_ACTIONABILITY_WEIGHTS[substitution.input] ?? 0.5),
+    0
+  );
 }
 
 function classifyChannelGroup({ platform, exactActionabilityScore, proxyActionabilityScore, exactMatches, substituteMatches, substitutions }) {
@@ -248,12 +253,13 @@ export function matchStrategyToPlatforms(strategy, platforms) {
     const preferred = platformPreferred(strategy, platform.id);
     const directMatches = platform.targetingDimensions
       .map((dimension) => {
-        const values = inputValues(strategy, dimension.inputKeys);
+        const inputKeys = dimension.inputKeys.filter((key) => hasInput(strategy, key) && canUseInputOnDimension(dimension, key));
+        const values = inputValues(strategy, inputKeys);
         if (values.length === 0) return null;
         return {
           dimensionId: dimension.id,
           label: dimension.label,
-          inputKeys: dimension.inputKeys.filter((key) => hasInput(strategy, key)),
+          inputKeys,
           requestedValues: values,
           matchType: dimension.matchType,
           availability: dimension.availability,
@@ -364,6 +370,10 @@ export function matchStrategyToPlatforms(strategy, platforms) {
       exclusions: asArray(strategy.exclusions),
       negativeKeywords: asArray(strategy.negativeKeywords),
       suppressionLists: asArray(strategy.suppressionLists),
+      budget: asArray(strategy.budget),
+      conversionEvent: asArray(strategy.conversionEvent),
+      measurementThresholds: asArray(strategy.measurementThresholds),
+      audienceSizingRequirements: asArray(strategy.audienceSizingRequirements),
       preferredChannels: asArray(strategy.preferredChannels),
       complianceConstraints: asArray(strategy.complianceConstraints)
     },

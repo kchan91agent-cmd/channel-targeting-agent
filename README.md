@@ -1,7 +1,7 @@
 # Channel Targeting Agent
 
-Status: MVP scaffold
-Last reviewed: 2026-06-13
+Status: working
+Last reviewed: 2026-06-21
 
 Channel Targeting Agent helps PMMs translate broad ICP, persona, and campaign strategy into targeting options that actually exist inside advertising platforms.
 
@@ -48,13 +48,43 @@ The default planning lens is B2B software advertising in:
 
 Use the `locale` and `geographies` input fields to narrow a recommendation.
 
-## Install
+## Start Here: Give An Agent Your Source
 
-```bash
-npm install
+You do not need to prepare a campaign brief, know advertising-platform fields, or run terminal commands.
+
+1. Open this project in Codex, Claude Code, Cursor, or another supported agent environment.
+2. Attach or link a readable source: a launch deck, messaging document, campaign brief, product page, or pasted notes.
+3. Send this request:
+
+```text
+Use the Channel Targeting Agent in this project to assess the attached or linked source.
+Create any temporary input it needs, run the feasibility report, and return the activation actions, targeting map, missing inputs, channel hypotheses, and manual verification required. Do not create campaigns, upload audiences, or invent targeting fields.
 ```
 
-This MVP has no runtime dependencies.
+The agent extracts only facts supported by your source, creates a temporary internal brief, runs the report, and tells you which information is missing. You should not need to fill in a form unless you want to add detail after the first report.
+
+Supported sources include readable links and attachments, slides, documents, PDFs, product pages, and pasted notes. If the agent cannot read a supplied source, it must ask for accessible text or a downloadable file rather than guess from partial access.
+
+## Runtime Setup (One-Time)
+
+The agent environment needs Node.js 20 or newer. Use the current Node LTS when setting up a new environment; download it from the official [Node.js download page](https://nodejs.org/en/download), reopen the terminal, and confirm:
+
+```bash
+node --version
+npm --version
+```
+
+No `npm install` step is required: this MVP has no runtime dependencies. Before a pilot, an agent should run the applicable preflight check:
+
+```bash
+# macOS / Linux
+sh scripts/preflight.sh
+
+# PowerShell (does not change your persistent execution policy)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preflight.ps1
+```
+
+If Node passes preflight but npm is unavailable, this dependency-free project can still run via `node --test` and `node src/report.js ...`.
 
 ## Run A Match Or Report
 
@@ -97,11 +127,11 @@ For an external PMM, demand generation, or growth team testing this in their own
 The recommended pilot loop is:
 
 1. Clone or copy only this project folder.
-2. Run `npm test`.
-3. Generate a report from a neutral example.
-4. Create a local sanitized campaign brief.
-5. Generate a pilot report.
-6. Score the report for actionability, targeting accuracy, confidence calibration, missing-input quality, and SME usefulness.
+2. Give the agent a readable source and the request from “Start Here.”
+3. Let the agent run preflight and create a temporary supported brief.
+4. Review the resulting report for actionability, targeting accuracy, confidence calibration, missing-input quality, and SME usefulness.
+
+The command-line input format below is for agent implementation and advanced users; it is not required for normal use.
 
 ## API Connections
 

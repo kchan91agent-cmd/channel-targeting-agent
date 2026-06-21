@@ -273,6 +273,26 @@ function sectionForMissingInputs(output) {
       action: "Add launch geographies or locale so platform availability, language, and audience-size checks are meaningful."
     },
     {
+      label: "ICP company size",
+      keys: ["companySizes"],
+      action: "Add the ICP employee or revenue-size bands needed for this campaign."
+    },
+    {
+      label: "ICP job titles",
+      keys: ["jobTitles"],
+      action: "Add the buyer or influencer titles to make persona targeting and audience sizing specific."
+    },
+    {
+      label: "ICP job functions",
+      keys: ["jobFunctions"],
+      action: "Add the relevant job functions so platforms without title precision can be assessed."
+    },
+    {
+      label: "ICP seniority",
+      keys: ["seniorities"],
+      action: "Add decision-maker and influencer seniority bands before treating role targeting as viable."
+    },
+    {
       label: "Named accounts or account list",
       keys: ["companyNames", "accountLists"],
       action: "Add named target accounts or an account-list source if ABM precision matters."
@@ -293,10 +313,34 @@ function sectionForMissingInputs(output) {
       action: "Add publications, communities, channels, or placements if contextual/programmatic testing is in scope."
     },
     {
-      label: "Measurement event",
-      keys: [],
-      isMissing: () => true,
-      action: "Define the success event for the test: lead, meeting, opportunity, pipeline, expansion, or qualified engagement."
+      label: "Preferred paid channels",
+      keys: ["preferredChannels"],
+      action: "State which paid channels are in scope so the report can distinguish a requested test from a broad feasibility scan."
+    },
+    {
+      label: "Budget",
+      keys: ["budget"],
+      action: "Define the test budget or budget range before demand gen recommends campaign structure or channel sequencing."
+    },
+    {
+      label: "Conversion event",
+      keys: ["conversionEvent"],
+      action: "Define the primary success event: lead, meeting, opportunity, pipeline, expansion, or qualified engagement."
+    },
+    {
+      label: "Measurement thresholds",
+      keys: ["measurementThresholds"],
+      action: "Define the minimum volume, quality, efficiency, or pipeline threshold that will make the test decision-ready."
+    },
+    {
+      label: "Exclusions and suppression",
+      keys: ["exclusions", "negativeKeywords", "suppressionLists"],
+      action: "Define exclusions, negative keywords, and suppression rules before campaign build."
+    },
+    {
+      label: "Audience-sizing requirements",
+      keys: ["audienceSizingRequirements"],
+      action: "Define the minimum reachable audience, account coverage, or frequency requirement needed before a channel can be considered viable."
     }
   ];
 
@@ -402,52 +446,33 @@ function uniqueValues(values) {
 }
 
 function clusterKeywordInputs(rawInputs = {}) {
-  const combined = uniqueValues([
-    ...(rawInputs.keywords ?? []),
-    ...(rawInputs.intentSignals ?? []),
-    ...(rawInputs.technographics ?? []),
-    ...(rawInputs.pains ?? []),
-    ...(rawInputs.gains ?? []),
-    ...(rawInputs.objections ?? []),
-    ...(rawInputs.triggers ?? [])
-  ]);
   const clusters = [
     {
-      name: "Product / Category",
-      matcher: /(platform|kubernetes|cloud native|container|gitops|cncf|orchestration)/i,
-      use: "Use for search intent, custom segments, and landing-page relevance."
+      name: "Keyword Signals",
+      keys: ["keywords"],
+      use: "Use as candidate search, custom-segment, or contextual test inputs after platform-side verification."
     },
     {
-      name: "Pain / Problem",
-      matcher: /(gap|complex|concern|stall|slow|misconfig|cost|inconsistent|lack|underutilized|manual|risk|downtime)/i,
-      use: "Use mostly for creative, landing-page copy, and problem-led ad variants."
+      name: "Intent Signals",
+      keys: ["intentSignals"],
+      use: "Use to structure demand-capture and initiative-led test hypotheses, not as proof of buyer reach."
     },
     {
-      name: "Trigger / Initiative",
-      matcher: /(initiative|adoption|migration|standardizing|requirement|scaling|moving to production|evaluation|modernization)/i,
-      use: "Use for timely campaign angles, search modifiers, and sales follow-up context."
+      name: "Technographic Signals",
+      keys: ["technographics"],
+      use: "Use only where a platform exposes a verified technographic or compatible contextual test surface."
     },
     {
-      name: "Compliance / Security",
-      matcher: /(security|fips|nsa|cisa|classified|air.?gapped|hardening|devsecops|compliance)/i,
-      use: "Use carefully in regulated-market creative and validate policy constraints before launch."
-    },
-    {
-      name: "Competitor / Alternative",
-      matcher: /(openshift|rancher|vmware|tanzu|dc\/os|alternative|competitive|competitor)/i,
-      use: "Use for competitive search, exclusions, and sales-assisted campaign follow-up."
-    },
-    {
-      name: "Workload / Use Case",
-      matcher: /(mlops|machine learning|ai|edge|iot|observability|compute|hybrid|multi-cloud|multi cloud)/i,
-      use: "Use for segment-specific tests when the audience or use case needs more precision."
+      name: "Message / Creative Inputs",
+      keys: ["pains", "gains", "objections", "triggers"],
+      use: "Use in creative, landing pages, sales follow-up, and experiment messaging; do not use as targeting proxies."
     }
   ];
 
   return clusters
     .map((cluster) => ({
       ...cluster,
-      values: combined.filter((value) => cluster.matcher.test(value))
+      values: uniqueValues(cluster.keys.flatMap((key) => rawInputs[key] ?? []))
     }))
     .filter((cluster) => cluster.values.length > 0);
 }
@@ -509,7 +534,7 @@ function sectionForKeywordClusters(output) {
   const clusters = clusterKeywordInputs(output.rawInputs);
   const lines = ["## Keyword Cluster Guidance", ""];
 
-  lines.push("Use these clusters to decide where each idea belongs in the activation plan. Product, category, trigger, and initiative terms may support search, custom-segment, or contextual tests when they map to real demand signals. Pain, gain, objection, and trigger language should usually shape copy, landing pages, and sales follow-up unless a platform exposes a confirmed targeting field. Do not treat a cluster as proof of reach; use it to structure tests and keep the full raw list in the appendix.");
+  lines.push("These source-aware groups preserve the brief's original inputs without guessing a product category from its vocabulary. Keyword, intent, and technographic inputs may structure verified search, custom-segment, or contextual tests. Pains, gains, objections, and triggers are message inputs only and never targeting proxies. Do not treat a group as proof of reach; use it to structure tests and keep the full raw list in the appendix.");
   lines.push("");
 
   if (clusters.length === 0) {
@@ -564,6 +589,10 @@ function sectionForAppendix(rawInputs = {}) {
     ["Exclusions", rawInputs.exclusions],
     ["Negative Keywords", rawInputs.negativeKeywords],
     ["Suppression Lists", rawInputs.suppressionLists],
+    ["Budget", rawInputs.budget],
+    ["Conversion Event", rawInputs.conversionEvent],
+    ["Measurement Thresholds", rawInputs.measurementThresholds],
+    ["Audience-Sizing Requirements", rawInputs.audienceSizingRequirements],
     ["Preferred Channels", rawInputs.preferredChannels],
     ["Compliance Constraints", rawInputs.complianceConstraints]
   ];

@@ -27,6 +27,16 @@ The tool should not:
 
 ## Common Commands
 
+Run the applicable preflight check before a third-party pilot. A working Node.js 20+ runtime is a hard prerequisite for every test and report command.
+
+```bash
+# macOS / Linux
+sh scripts/preflight.sh
+
+# PowerShell (does not change your persistent execution policy)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preflight.ps1
+```
+
 ```bash
 npm test
 npm run match -- examples/logistics-operations.json
@@ -35,7 +45,7 @@ npm run check-fields -- --platform google-ads-youtube
 npm run refresh -- --dry-run
 ```
 
-If `npm` is unavailable, run Node directly:
+If preflight confirms Node 20+ but `npm` is unavailable, run Node directly:
 
 ```bash
 node --test
@@ -44,12 +54,17 @@ node src/report.js examples/logistics-operations.md
 
 ## Agent Workflow
 
-1. Read the user brief.
-2. Convert it to a JSON strategy input or a supported Markdown brief.
-3. Run `npm run report -- <brief>`.
-4. Review unsupported fields carefully.
-5. Recommend campaign targeting only from exact or clearly labeled substitute fields.
-6. Keep pains, gains, objections, and triggers primarily in message/creative strategy unless a platform exposes a real targeting proxy.
+The default user is non-technical. Do not require them to create a Markdown brief, name schema fields, or run a command.
+
+1. Accept a readable user-supplied source: link, attachment, slide deck, document, product page, or pasted notes.
+2. Read the source. If it is inaccessible or incomplete, ask for accessible text or a downloadable file; do not infer missing content.
+3. Extract only source-supported facts into a temporary JSON or Markdown strategy input outside the repository. Leave unsupported or absent fields blank so the report can identify them as missing.
+4. Run the applicable preflight, then `npm run report -- <temporary-brief>`; if npm is unavailable after preflight, use `node src/report.js <temporary-brief>`.
+5. Return the PMM-readable report. Do not expose internal input-field mechanics unless the user asks to refine the result.
+6. Review unsupported fields carefully and recommend campaign targeting only from exact or clearly labeled substitute fields.
+7. Keep pains, gains, objections, and triggers in message/creative strategy. They cannot be targeting proxies unless the registry contains an explicitly verified exact platform field.
+
+Never write a user-supplied source, temporary brief, or generated report into this repository unless the user explicitly asks and confirms it is safe to share. Do not create campaigns, upload audiences, mutate ad accounts, or spend budget.
 
 For third-party pilots, follow `docs/third-party-pilot.md`. Keep pilot briefs and reports local unless the user explicitly asks to commit or share them.
 
@@ -77,7 +92,7 @@ The main report must be action-led. Lead with `Activation Actions`, `Targeting M
 - verify direct attributes available to target within each platform
 - verify dynamic picklists or authenticated availability where fields are not static
 - label proxy-heavy platforms as test paths for demand capture, contextual reach, or message learning unless audience sizing proves otherwise
-- keep pains, gains, objections, and triggers primarily in copy, landing pages, and sales follow-up unless a platform exposes a confirmed targeting field; do not recommend broad keyword matching as the primary path for these inputs
+- keep pains, gains, objections, and triggers in copy, landing pages, and sales follow-up; do not use broad keyword matching or contextual options as targeting proxies for these inputs
 
 `Targeting Map` should use these sections:
 
@@ -87,6 +102,6 @@ The main report must be action-led. Lead with `Activation Actions`, `Targeting M
 
 Prefer a PMM-readable activation readout over a raw platform-field dump. Long keyword, pain, trigger, interest, or community lists should be summarized as useful clusters in the main report and preserved in the appendix. Avoid generic PMM coaching unless it changes the activation decision.
 
-`Keyword Cluster Guidance` must include a short overview explaining how to use the clusters. Product, category, trigger, and initiative terms may support search, custom-segment, or contextual tests when they map to real demand signals. Pain, gain, objection, and trigger language should usually shape copy, landing pages, and sales follow-up rather than targeting. Clusters are test-structure inputs, not proof of reach.
+`Keyword Cluster Guidance` must use source-aware groups rather than product-domain regexes. Keywords, intent signals, and technographics may support verified search, custom-segment, or contextual tests. Pain, gain, objection, and trigger language belongs in copy, landing pages, and sales follow-up, never proxy targeting. Groups are test-structure inputs, not proof of reach.
 
-Also check whether the brief is missing common activation inputs beyond pains and triggers: first-party lists, retargeting audiences, engagement audiences, lookalike seeds, contextual placements/topics, devices, demographics/education/life events, and exclusions or suppression lists.
+Also check whether the brief is missing common activation inputs beyond pains and triggers: ICP company size, title/function/seniority, preferred paid channels, budget, conversion event, measurement thresholds, exclusions, audience-sizing requirements, first-party lists, retargeting audiences, engagement audiences, lookalike seeds, contextual placements/topics, devices, demographics/education/life events, and suppression lists.

@@ -1,7 +1,7 @@
 # Third-Party Pilot Guide
 
 Status: working
-Last reviewed: 2026-06-19
+Last reviewed: 2026-06-21
 
 This guide is for an external PMM, demand generation, or growth team testing Channel Targeting Agent in their own Codex, Claude Code, Cursor, or terminal environment.
 
@@ -31,9 +31,21 @@ Use one of these handoff paths:
 
 Share only the `channel-targeting-agent` folder. Do not include parent workspace folders, private notes, local `.env` files, generated one-off reports, or customer-specific briefs unless the pilot user is authorized to see them.
 
+## For A Non-Technical Pilot User
+
+The pilot user supplies only a readable source: a launch deck, messaging document, campaign brief, product page, link, attachment, PDF, or pasted notes. They do not need to create a campaign brief, understand platform fields, or run commands.
+
+Give the agent this request:
+
+```text
+Use the Channel Targeting Agent in this project to assess the attached or linked source. Create any temporary input it needs, run the feasibility report, and return the activation actions, targeting map, missing inputs, channel hypotheses, and manual verification required. Do not create campaigns, upload audiences, or invent targeting fields.
+```
+
+The agent must extract only source-backed facts into a temporary brief, keep absent inputs absent, and return the report. If it cannot read the source, it must ask for accessible text or a downloadable file instead of guessing. It must keep the source, temporary brief, and report outside the repository unless the pilot user explicitly authorizes saving a shareable version.
+
 ## Requirements
 
-- Node.js 20 or newer.
+- A working Node.js 20 or newer runtime. This is a hard prerequisite for `npm test`, `node --test`, and every report command; the project cannot generate a report without it. Use the current Node LTS for a new environment from the official [Node.js download page](https://nodejs.org/en/download).
 - Codex, Claude Code, Cursor, or a local terminal.
 - No platform credentials are required for the first pilot pass.
 
@@ -43,15 +55,26 @@ Optional:
 
 ## First Run
 
-From the project root:
+From the project root, run preflight before creating a pilot brief or attempting a report:
 
 ```bash
-npm install
+# macOS / Linux
+sh scripts/preflight.sh
+
+# PowerShell (does not change your persistent execution policy)
+powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preflight.ps1
+```
+
+If preflight fails, install or activate Node.js 20+, reopen the terminal, and rerun preflight. Do not continue the pilot until it succeeds.
+
+If preflight finds npm, run:
+
+```bash
 npm test
 npm run report -- examples/logistics-operations.md --out examples/outputs/logistics-operations-report.md
 ```
 
-If `npm` is unavailable but Node is available:
+If preflight confirms Node 20+ but npm is unavailable, run:
 
 ```bash
 node --test
@@ -60,9 +83,9 @@ node src/report.js examples/logistics-operations.md --out examples/outputs/logis
 
 The first run should pass the test suite and generate a Markdown report.
 
-## Test With A Real Brief
+## Advanced: Test With A Real Brief
 
-Create a local brief file, for example `pilot-brief.md`.
+The agent should normally create this local file for the user. Create one manually only when an advanced user wants to control every input.
 
 ```markdown
 # Campaign Brief
@@ -98,6 +121,10 @@ Exclusions:
 Negative keywords:
 Suppression lists:
 Campaign goal:
+Budget:
+Conversion event:
+Measurement thresholds:
+Audience-sizing requirements:
 Preferred channels:
 ```
 
@@ -120,11 +147,10 @@ Assess whether the attached campaign, ICP, persona, or ABM brief can be translat
 Steps:
 1. Read AGENTS.md and docs/workflow.md.
 2. If no brief file exists, create a local temporary Markdown brief from the user's source material.
-3. Run:
-   npm test
-   npm run report -- <brief.md> --out <report.md>
-4. Review the report for overconfident recommendations.
-5. Summarize:
+3. Run the applicable preflight command. If it fails, stop and report the runtime setup failure.
+4. Run `npm test` and `npm run report -- <brief.md> --out <report.md>` when npm is available; otherwise run `node --test` and `node src/report.js <brief.md> --out <report.md>`.
+5. Review the report for overconfident recommendations.
+6. Summarize:
    - direct targeting attributes to verify
    - proxy or experiment campaign sets
    - message-only pains, gains, objections, and triggers
@@ -134,7 +160,7 @@ Steps:
 Rules:
 - Do not use parent workspace context, external memory, or unrelated personal notes.
 - Do not invent platform fields.
-- Do not treat pains, gains, objections, or triggers as direct targeting.
+- Do not treat pains, gains, objections, or triggers as direct targeting or proxy targeting; keep them as message and creative inputs unless an explicitly verified exact platform field exists.
 - Do not upload audiences, create campaigns, mutate ad accounts, or spend budget.
 - Keep confidential pilot briefs and reports local unless the user explicitly asks to share or commit them.
 ```
