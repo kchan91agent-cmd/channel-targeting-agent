@@ -1,3 +1,5 @@
+import { spawnSync } from "node:child_process";
+
 const nodeVersion = process.versions.node;
 const nodeMajor = Number(nodeVersion.split(".")[0]);
 
@@ -7,5 +9,11 @@ if (!Number.isInteger(nodeMajor) || nodeMajor < 20) {
   process.exitCode = 1;
 } else {
   console.log(`Node.js v${nodeVersion} detected.`);
-  console.log("npm is available through the current command. Run: npm test");
+  const npm = spawnSync("npm", ["--version"], { encoding: "utf8" });
+  if (npm.status === 0) {
+    console.log(`npm ${npm.stdout.trim()} detected. Run: npm ci, then npm test`);
+  } else {
+    console.log("npm is not available. Core report commands can run only when dependencies are already installed.");
+    console.log("Full source ingestion requires npm ci before running tests or provider extraction.");
+  }
 }

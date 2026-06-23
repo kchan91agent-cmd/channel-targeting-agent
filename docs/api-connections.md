@@ -245,3 +245,5 @@ Official docs:
 ## Practical MVP Recommendation
 
 Start with Google Ads and Microsoft Advertising because they have clearer setup paths and useful B2B targeting surfaces. Add LinkedIn next because it is the highest-value PMM targeting platform, but expect app access and permission work before exact field pulls are dependable.
+
+Before implementing any connector, follow `docs/platform-freshness-policy.md`. All connectors remain read-only, scoped to the smallest required account question, and must fall back to the registry instead of blocking a non-technical pilot conversation.

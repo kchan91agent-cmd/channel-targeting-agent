@@ -18,8 +18,8 @@ if ([int]$Matches.major -lt 20) {
 Write-Output "Node.js $nodeVersion detected."
 $npmCommand = Get-Command npm -ErrorAction SilentlyContinue
 if ($null -ne $npmCommand) {
-  Write-Output "npm $((& npm --version).Trim()) detected. Run: npm test"
+  Write-Output "npm $((& npm --version).Trim()) detected. Run: npm ci, then npm test"
 } else {
-  Write-Output "npm is not available. Run tests directly: node --test"
-  Write-Output "Generate reports directly: node src/report.js <brief.md> --out <report.md>"
+  Write-Output "npm is not available. Core report commands can run only when dependencies are already installed."
+  Write-Output "Full source ingestion requires npm ci before running tests or provider extraction."
 }

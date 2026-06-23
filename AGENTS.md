@@ -39,6 +39,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preflight.ps1
 
 ```bash
 npm test
+npm run test:output-standard
 npm run match -- examples/logistics-operations.json
 npm run report -- examples/logistics-operations.md
 npm run check-fields -- --platform google-ads-youtube
@@ -58,8 +59,8 @@ The default user is non-technical. Do not require them to create a Markdown brie
 
 1. Accept a readable user-supplied source: link, attachment, slide deck, document, product page, or pasted notes.
 2. Read the source. If it is inaccessible or incomplete, ask for accessible text or a downloadable file; do not infer missing content.
-3. Extract only source-supported facts into a temporary JSON or Markdown strategy input outside the repository. Leave unsupported or absent fields blank so the report can identify them as missing.
-4. Run the applicable preflight, then `npm run report -- <temporary-brief>`; if npm is unavailable after preflight, use `node src/report.js <temporary-brief>`.
+3. Extract only source-supported facts into a temporary JSON or Markdown strategy input outside the repository. For readable text, `node src/extract/extract-source.js --source <temporary-source> --out <temporary-brief.json>` provides the deterministic default. For ambiguous prose, use the project-owned Codex or Claude adapter: `node src/extract/extract-with-provider.js --provider codex|claude --source <temporary-source> --out <temporary-brief.json>`. Before either extraction path, use `src/source/ingest.js` to convert supported attachments and public URLs into readable temporary text. Do not use private Google Docs or Drive links directly: export or attach a readable file. Leave unsupported or absent fields blank so the report can identify them as missing.
+4. For a supported file or public URL, run `npm run analyze-source -- --provider codex|claude --file <path>|--url <public-https-url>`; this owns temporary ingestion, extraction, report generation, and contract validation. Use the lower-level report command only when an advanced user explicitly supplies a structured brief.
 5. Return the PMM-readable report. Do not expose internal input-field mechanics unless the user asks to refine the result.
 6. Review unsupported fields carefully and recommend campaign targeting only from exact or clearly labeled substitute fields.
 7. Keep pains, gains, objections, and triggers in message/creative strategy. They cannot be targeting proxies unless the registry contains an explicitly verified exact platform field.
@@ -68,40 +69,24 @@ Never write a user-supplied source, temporary brief, or generated report into th
 
 For third-party pilots, follow `docs/third-party-pilot.md`. Keep pilot briefs and reports local unless the user explicitly asks to commit or share them.
 
+## Durable Isolation And Portability
+
+Treat `docs/portability-and-isolation.md` as the release contract. Before sharing the project, run `npm ci`, `npm test`, and `npm run check:portability`. Keep all dependencies project-declared and locked; do not add parent-workspace paths, private artifacts, personal configuration, or undocumented runtime assumptions. When changing source retention, dependencies, provider behavior, credentials, or the pilot flow, update that contract and add a deterministic guard where possible.
+
 ## Credential Handling
 
 Use `.env.example` as a reference. Never commit real tokens. If credentials are missing, use registry-backed fallback behavior and say that live platform verification was not available.
 
+For a new agent host or pilot batch, run `npm run freshness` and then `npm run refresh -- --dry-run` before the first conversation when network access is available. These checks are advisory and read-only: do not delay a user report solely because an official documentation URL is unavailable. Follow `docs/platform-freshness-policy.md`; account-specific checks require explicit authorized credentials and remain read-only.
+
 ## Output Standard
 
-For PMMs, prefer Markdown reports over raw JSON. The report should make it obvious:
+`docs/output-standard.md` is the required response contract. It supersedes the older action-led report layout below whenever they conflict. Use all nine sections in that file, in that order, and return the complete report directly in the chat response. Do not write a report file unless the user explicitly asks for a saved artifact.
 
-- what the PMM should do or verify next
-- which direct targeting levers can be used if verified
-- which proxy or contextual levers are test inputs, not proof of buyer reach
-- which pains, gains, objections, and triggers should stay in copy, landing pages, and sales follow-up
-- which missing inputs would materially change the plan
-- how channels group by evidence quality without pretending the list is an absolute stack rank
-- which platforms need manual or authenticated verification
+In particular, the agent must inventory every relevant platform field even when no source value exists, use `Input missing — provide [specific input].` for absent values, and retain the exact field-type vocabulary from the response contract. When platform credentials are unavailable, write `Registry-backed only — not account-confirmed.`
 
-The main report must be action-led. Lead with `Activation Actions`, `Targeting Map`, and `Missing Inputs That Change The Plan` before channel grouping, definitions, or raw platform detail. Do not bury exact fields, platform proxies, dynamic-picklist checks, first-party audience gaps, or measurement questions in the appendix.
+Keep pains, gains, objections, and triggers in the `Keep in Messaging` section. Never turn them into keyword or contextual targeting proxies without an explicitly verified platform field. The report may be long because the complete platform inventory is mandatory; do not summarize it away.
 
-`Activation Actions` should be written as operational checks, not generic advice:
+## Source-Extraction Regression Harness
 
-- size the candidate audience in the strongest channel group before treating it as viable
-- verify direct attributes available to target within each platform
-- verify dynamic picklists or authenticated availability where fields are not static
-- label proxy-heavy platforms as test paths for demand capture, contextual reach, or message learning unless audience sizing proves otherwise
-- keep pains, gains, objections, and triggers in copy, landing pages, and sales follow-up; do not use broad keyword matching or contextual options as targeting proxies for these inputs
-
-`Targeting Map` should use these sections:
-
-- `Use Directly`
-- `Use As Proxies Or Test/Experiment Campaign Sets`
-- `Keep Primarily In Messaging (Low Confidence in targeting for conversion)`
-
-Prefer a PMM-readable activation readout over a raw platform-field dump. Long keyword, pain, trigger, interest, or community lists should be summarized as useful clusters in the main report and preserved in the appendix. Avoid generic PMM coaching unless it changes the activation decision.
-
-`Keyword Cluster Guidance` must use source-aware groups rather than product-domain regexes. Keywords, intent signals, and technographics may support verified search, custom-segment, or contextual tests. Pain, gain, objection, and trigger language belongs in copy, landing pages, and sales follow-up, never proxy targeting. Groups are test-structure inputs, not proof of reach.
-
-Also check whether the brief is missing common activation inputs beyond pains and triggers: ICP company size, title/function/seniority, preferred paid channels, budget, conversion event, measurement thresholds, exclusions, audience-sizing requirements, first-party lists, retargeting audiences, engagement audiences, lookalike seeds, contextual placements/topics, devices, demographics/education/life events, and suppression lists.
+Run `npm run test:source-extraction` to test the executable source-to-brief boundary before sharing changes to source extraction. The harness keeps all run material in an OS temporary directory and compares only sanitized normalized facts and report-contract outcomes. All provider transports must implement the model-neutral contract in `docs/universal-adapter-contract.md`; Codex and Claude Code are the current MVP adapters. See `docs/source-extraction-harness.md` for the harness and private-canary procedure.

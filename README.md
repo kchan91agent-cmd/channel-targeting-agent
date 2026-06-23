@@ -57,11 +57,22 @@ You do not need to prepare a campaign brief, know advertising-platform fields, o
 3. Send this request:
 
 ```text
-Use the Channel Targeting Agent in this project to assess the attached or linked source.
-Create any temporary input it needs, run the feasibility report, and return the activation actions, targeting map, missing inputs, channel hypotheses, and manual verification required. Do not create campaigns, upload audiences, or invent targeting fields.
+Use the standalone Channel Targeting Agent to assess the supplied source.
+
+Run preflight, then use `npm run analyze-source` with an explicit provider and the supplied source. The command creates the temporary, source-backed brief outside the repository and runs the feasibility report.
+
+Deliver the complete result directly in this response window for a non-technical user to gut-check. Do not create, save, attach, or link a Markdown report file. Use the exact nine-section response structure in docs/output-standard.md. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, or invent targeting fields.
 ```
 
 The agent extracts only facts supported by your source, creates a temporary internal brief, runs the report, and tells you which information is missing. You should not need to fill in a form unless you want to add detail after the first report.
+
+For a standard local run, install dependencies once with `npm ci`, then use one provider and source:
+
+```bash
+npm run analyze-source -- --provider codex --file /secure/path/launch-deck.pptx
+```
+
+Use `--provider claude` in an authenticated Claude Code environment, or `--url https://...` for a public HTTPS source. Add `--diagnose` for redacted run metadata. See `docs/analyze-source.md` and `docs/universal-adapter-contract.md`.
 
 Supported sources include readable links and attachments, slides, documents, PDFs, product pages, and pasted notes. If the agent cannot read a supplied source, it must ask for accessible text or a downloadable file rather than guess from partial access.
 
@@ -74,7 +85,7 @@ node --version
 npm --version
 ```
 
-No `npm install` step is required: this MVP has no runtime dependencies. Before a pilot, an agent should run the applicable preflight check:
+Run `npm ci` before the first source-analysis run. Before a pilot, an agent should run the applicable preflight check:
 
 ```bash
 # macOS / Linux
@@ -84,7 +95,27 @@ sh scripts/preflight.sh
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preflight.ps1
 ```
 
-If Node passes preflight but npm is unavailable, this dependency-free project can still run via `node --test` and `node src/report.js ...`.
+Full source ingestion and provider extraction require `npm ci`. Without npm, only preinstalled dependencies and advanced structured-brief report commands can run directly.
+
+## Verify Output Standardization
+
+Run the format-invariance and targeting-variance regression suite before sharing the agent for external targeting-quality review:
+
+```bash
+npm run test:output-standard
+```
+
+See `docs/output-standardization-test-plan.md`. The suite keeps the report framework fixed across messaging briefs, GTM plans, campaign plans, and strategy changes, so reviewer feedback can focus on targeting usefulness rather than output structure.
+
+## Shareable Project Check
+
+Before sharing this repository outside its current workspace, run:
+
+```bash
+npm run check:portability
+```
+
+See `docs/portability-and-isolation.md` for the durable isolation contract and release checklist.
 
 ## Run A Match Or Report
 
@@ -92,17 +123,13 @@ If Node passes preflight but npm is unavailable, this dependency-free project ca
 npm run match -- examples/logistics-operations.json
 ```
 
-Generate a PMM-readable Markdown report:
+Print the full PMM-readable response to the terminal:
 
 ```bash
 npm run report -- examples/logistics-operations.md
 ```
 
-Write the report to a file:
-
-```bash
-npm run report -- examples/logistics-operations.md --out examples/outputs/logistics-operations-report.md
-```
+For a non-technical user, the agent must return this output in the response window using `docs/output-standard.md`; it must not save or attach a report file unless explicitly asked.
 
 ## Refresh Source Checks
 
@@ -123,6 +150,8 @@ The included GitHub Actions workflow runs tests and a source check on the first 
 ## Third-Party Pilot
 
 For an external PMM, demand generation, or growth team testing this in their own Codex or Claude Code environment, use `docs/third-party-pilot.md`.
+
+For a non-technical tester, share `docs/pilot-welcome-kit.md`.
 
 The recommended pilot loop is:
 
@@ -193,7 +222,9 @@ data/platforms/          Platform capability registry
 data/snapshots/          Refresh outputs
 docs/sources.md          Source and refresh policy
 docs/third-party-pilot.md External pilot setup and scorecard
+docs/portability-and-isolation.md Shareable-project isolation and release contract
 docs/workflow.md         Agent workflow and prompt examples
+docs/output-standardization-test-plan.md Output-framework regression protocol
 examples/                Neutral sample PMM briefs and JSON inputs
 examples/outputs/        Sample Markdown reports
 src/connectors/          Live source-check and future API adapters

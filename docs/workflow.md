@@ -16,8 +16,10 @@ The agent must:
 1. Read the supplied source.
 2. Create a temporary supported brief from facts in that source only.
 3. Leave absent fields empty so missing-input checks remain useful.
-4. Run preflight and the report command.
-5. Return the action-led report and ask focused follow-up questions only where missing inputs materially change the plan.
+4. Run preflight and `npm run analyze-source -- --provider codex|claude --file <path>|--url <public-https-url>`.
+5. Return the complete nine-section report defined in `docs/output-standard.md` directly in the response window. Do not save, attach, or link a report file unless explicitly asked.
+
+The standard command owns ingestion and provider extraction. It requires an explicit provider, writes temporary material outside the repository, and validates the fixed report contract. The lower-level extraction commands remain available for regression tests and advanced debugging only.
 
 If the source cannot be read, request accessible text or a downloadable file. Do not proceed from partial access or invent missing details. Keep the temporary brief and report outside the repository unless the user explicitly authorizes saving a shareable version.
 
@@ -83,17 +85,7 @@ Use this repository to assess whether the attached or linked launch deck, messag
 
 Read the source and create a temporary supported brief from source-backed facts only. Do not ask the user to create a brief or run terminal commands. If the source cannot be read, request accessible text or a downloadable file. Run preflight, then generate the report.
 
-Then summarize:
-1. The concrete activation actions to take or verify next, including audience sizing.
-2. The direct targeting attributes to verify within each platform.
-3. The dynamic picklists or authenticated fields that need platform-side checking.
-4. The proxy/contextual levers that can support test or experiment campaign sets but do not prove buyer reach.
-5. The pains, gains, objections, and triggers that should stay in messaging, landing pages, or sales follow-up.
-6. The missing inputs that would materially change the plan.
-7. The channel hypotheses by evidence quality.
-8. The manual or authenticated verification required before campaign build.
-
-Do not save the source, temporary brief, or report in the repository unless the user explicitly asks for a shareable version.
+Return the complete result using the exact nine-section response structure in `docs/output-standard.md`. Do not compress the field inventory, keyword map, or platform details. Do not save the source, temporary brief, or report in the repository unless the user explicitly asks for a shareable version.
 ```
 
 ## Field Checks
@@ -115,15 +107,7 @@ Do not treat a substitute as an exact field. A PMM should be able to tell the di
 - creative/message strategy
 - manual platform verification
 
-The output should help a PMM act, not just educate themselves. Lead with activation actions and targeting levers before channel groupings or definitions. Summarize high-value keyword clusters in the main readout and keep raw keyword, pain, trigger, interest, and community lists in the appendix.
-
-Use this targeting-map structure in the main report:
-
-- `Use Directly`
-- `Use As Proxies Or Test/Experiment Campaign Sets`
-- `Keep Primarily In Messaging (Low Confidence in targeting for conversion)`
-
-Keyword cluster guidance must group inputs by their supplied source, not by product-specific regexes. Keywords, intent signals, and technographics can structure verified search, custom-segment, or contextual tests. Pain, gain, objection, and trigger language belongs in copy, landing pages, and sales follow-up; it must not be presented as a proxy targeting lever.
+The output must follow `docs/output-standard.md`. Keyword, intent, and technographic inputs may structure verified search, custom-segment, or contextual tests. Pain, gain, objection, and trigger language belongs in copy, landing pages, and sales follow-up; it must not be presented as a proxy targeting lever.
 
 A registry maintainer may map one of those message inputs only by adding `verifiedMessageTargeting: true` to an `exact` targeting dimension backed by a verified official platform field. That field is shown as direct targeting but still receives no targeting-fit score.
 

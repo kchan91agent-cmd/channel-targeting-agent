@@ -1,0 +1,106 @@
+# Channel Targeting Agent Pilot Welcome Kit
+
+Status: shareable pilot handoff
+Last reviewed: 2026-06-23
+
+## Welcome
+
+Channel Targeting Agent turns a campaign brief, messaging document, launch deck, product page, or rough notes into a practical paid-media targeting feasibility report.
+
+It helps you separate:
+
+- Inputs that platforms can target directly.
+- Useful substitutes or experiments.
+- Information that belongs in messaging rather than targeting.
+- Missing inputs that would materially improve the plan.
+
+This is a read-only planning tool. It does not create campaigns, upload audiences, change ad accounts, or spend budget.
+
+## Open The Project
+
+Start here: [Channel Targeting Agent on GitHub](https://github.com/kchan91agent-cmd/channel-targeting-agent)
+
+If the repository is private, accept the GitHub invitation from the pilot host first. Open the project in Codex, then attach your source and follow the first-run request below. You do not need to download files manually or use Terminal.
+
+## What You Need
+
+You need only two things:
+
+1. Access to the Channel Targeting Agent project in a Codex workspace.
+2. One readable source: a document, slide deck, PDF, product page, public link, or pasted notes.
+
+You do **not** need to use Terminal, install software, create a structured brief, know platform-field names, or share ad-account credentials.
+
+## Start Your First Run
+
+Attach your source or paste a public link, then send this message in the same conversation:
+
+```text
+Use the standalone Channel Targeting Agent to assess the supplied source.
+
+Do all required setup and analysis work yourself. Do not ask me to use Terminal or run commands. Extract only facts that the source explicitly supports, then return the complete paid-media feasibility report directly in this conversation.
+
+Use the exact nine-section report structure in docs/output-standard.md. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, invent targeting fields, or save my source or report into the repository.
+```
+
+The agent performs its setup and analysis in the background, then returns the report here.
+
+## What You Will Receive
+
+Your report has nine sections. The most useful ones are:
+
+- **What the Source Says:** facts the agent found versus inputs still missing.
+- **Activation Readiness:** whether enough information exists to plan a demand-generation test.
+- **Available Targeting Fields by Platform:** direct fields, proxy options, and unavailable inputs for each platform.
+- **Targeting Map:** which inputs are usable directly, as proxies, or only in messaging.
+- **Channel Hypotheses:** where to start testing and why.
+- **Manual Verification Required:** items a paid-media specialist should confirm before campaign build.
+
+Treat the report as a planning starting point. A paid-media specialist must still validate account-specific audience availability, campaign-type rules, policy restrictions, reach, and cost before launch.
+
+## Privacy And Safe Use
+
+- Your source is processed temporarily for this run and is not saved into the project by default.
+- Do not attach customer lists, contact lists, account lists, tokens, passwords, or other secrets.
+- For private Google Docs or Drive files, attach an exported readable file instead of sharing a private link.
+- If a source cannot be read, the agent should ask for an accessible version rather than guess.
+
+## How To Review The Output
+
+After reading the report, ask yourself:
+
+1. Are the source facts correct?
+2. Does it clearly distinguish direct targeting from a proxy or a message-only input?
+3. Did it identify the missing information that would change your plan?
+4. Would a demand-generation or paid-media specialist know what to verify next?
+
+Do not treat a platform recommendation as an instruction to launch. It is a hypothesis grounded in the current registry and your source.
+
+## Send Feedback
+
+Reply in the same conversation with this short feedback format. Do not include source text, account lists, screenshots, or report copy unless you have approval to share them.
+
+```text
+Pilot result: pass | needs improvement | stop
+
+What was useful:
+-
+
+What was wrong, unclear, or too generic:
+-
+
+Any targeting claim a paid-media specialist would change:
+-
+
+Would you use this as a planning starting point? yes | no | with changes
+```
+
+For a formal feedback packet, use `docs/pilot-feedback-template.md`.
+
+## If Something Does Not Work
+
+Stay in the conversation. Tell the agent what happened in plain language and let it diagnose the setup or source-access issue. You should not be asked to troubleshoot the project from Terminal.
+
+## Pilot Scope
+
+This pilot is currently validated for Codex. Platform recommendations are registry-backed unless a later, explicitly authorized read-only account check confirms a specific field.

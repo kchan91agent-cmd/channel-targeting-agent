@@ -62,7 +62,8 @@ test("preflight accepts Node 20+ without npm and provides direct commands", asyn
     await createFakeCommand(directory, "node", 'if [ "$1" = "--version" ]; then echo "v20.18.0"; fi');
     const { stdout } = await runPreflight(directory);
     assert.ok(stdout.includes("Node.js v20.18.0 detected."));
-    assert.ok(stdout.includes("npm is not available. Run tests directly: node --test"));
+    assert.ok(stdout.includes("npm is not available. Core report commands can run only when dependencies are already installed."));
+    assert.ok(stdout.includes("Full source ingestion requires npm ci"));
   } finally {
     await rm(directory, { recursive: true, force: true });
   }
@@ -74,7 +75,7 @@ test("preflight detects npm when it is available", async () => {
     await createFakeCommand(directory, "node", 'if [ "$1" = "--version" ]; then echo "v22.11.0"; fi');
     await createFakeCommand(directory, "npm", 'if [ "$1" = "--version" ]; then echo "10.9.0"; fi');
     const { stdout } = await runPreflight(directory);
-    assert.ok(stdout.includes("npm 10.9.0 detected. Run: npm test"));
+    assert.ok(stdout.includes("npm 10.9.0 detected. Run: npm ci, then npm test"));
   } finally {
     await rm(directory, { recursive: true, force: true });
   }

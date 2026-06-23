@@ -28,8 +28,8 @@ fi
 
 echo "Node.js $node_version detected."
 if command -v npm >/dev/null 2>&1; then
-  echo "npm $(npm --version) detected. Run: npm test"
+  echo "npm $(npm --version) detected. Run: npm ci, then npm test"
 else
-  echo "npm is not available. Run tests directly: node --test"
-  echo "Generate reports directly: node src/report.js <brief.md> --out <report.md>"
+  echo "npm is not available. Core report commands can run only when dependencies are already installed."
+  echo "Full source ingestion requires npm ci before running tests or provider extraction."
 fi

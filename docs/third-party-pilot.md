@@ -3,9 +3,15 @@
 Status: working
 Last reviewed: 2026-06-21
 
-This guide is for an external PMM, demand generation, or growth team testing Channel Targeting Agent in their own Codex, Claude Code, Cursor, or terminal environment.
+This guide is for an external PMM, demand generation, or growth team testing Channel Targeting Agent in Codex or Claude Code.
 
 The project is standalone. It does not require parent workspace context, private notes, personal workspace paths, ad account access, or customer data.
+
+## Two Roles: Tester And Agent Host
+
+The **tester** is non-technical. They stay in the conversation window: attach a source or give a public link, then ask for the analysis. They must never be asked to open Terminal, install a dependency, name a schema field, or run a command.
+
+The **agent host** is the Codex or Claude Code environment containing this project. It runs the required commands privately and returns the final report in chat. If its runtime is unavailable, it reports that plain-language setup problem and stops; it does not give the tester a terminal command.
 
 ## What The Pilot Tests
 
@@ -21,6 +27,10 @@ The pilot should answer:
 
 Do not use the pilot to launch campaigns, upload audiences, mutate ad accounts, or make budget decisions without human review.
 
+## Share With A Tester
+
+Send the tester [Pilot Welcome Kit](pilot-welcome-kit.md). It contains the only instructions they need: attach a source, send one conversation request, review the report, and return redacted feedback.
+
 ## Share The Project
 
 Use one of these handoff paths:
@@ -35,27 +45,33 @@ Share only the `channel-targeting-agent` folder. Do not include parent workspace
 
 The pilot user supplies only a readable source: a launch deck, messaging document, campaign brief, product page, link, attachment, PDF, or pasted notes. They do not need to create a campaign brief, understand platform fields, or run commands.
 
-Give the agent this request:
+Give the agent this request in the conversation window:
 
 ```text
-Use the Channel Targeting Agent in this project to assess the attached or linked source. Create any temporary input it needs, run the feasibility report, and return the activation actions, targeting map, missing inputs, channel hypotheses, and manual verification required. Do not create campaigns, upload audiences, or invent targeting fields.
+Use the standalone Channel Targeting Agent to assess the supplied source.
+
+Do all required setup and analysis work yourself. Do not ask me to use Terminal or run commands. Run preflight, then use `npm run analyze-source` with the provider and supplied source. The command creates a temporary, source-backed campaign brief outside the repository and runs the feasibility report.
+
+Deliver the complete result directly in this response window for a non-technical user to gut-check. Do not create, save, attach, or link a Markdown report file. Use the exact nine-section response structure in docs/output-standard.md. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, or invent targeting fields.
 ```
 
-The agent must extract only source-backed facts into a temporary brief, keep absent inputs absent, and return the report. If it cannot read the source, it must ask for accessible text or a downloadable file instead of guessing. It must keep the source, temporary brief, and report outside the repository unless the pilot user explicitly authorizes saving a shareable version.
+The agent must use an explicit provider (`codex` or `claude`), extract only source-backed facts into a temporary brief, keep absent inputs absent, and return the report. If it cannot read the source, it must ask for an accessible file or public HTTPS URL instead of guessing. It must keep the source, temporary brief, and report outside the repository unless the pilot user explicitly authorizes saving a shareable version.
 
-## Requirements
+## Agent-Host Requirements
+
+These are handled by the agent host before or during the conversation. They are not tester tasks.
 
 - A working Node.js 20 or newer runtime. This is a hard prerequisite for `npm test`, `node --test`, and every report command; the project cannot generate a report without it. Use the current Node LTS for a new environment from the official [Node.js download page](https://nodejs.org/en/download).
-- Codex, Claude Code, Cursor, or a local terminal.
+- An authenticated Codex or Claude Code environment that can run project commands.
 - No platform credentials are required for the first pilot pass.
 
 Optional:
 
 - Read-only platform API credentials for field checks. See `docs/api-connections.md`.
 
-## First Run
+## Agent-Host Preparation (Not A Tester Task)
 
-From the project root, run preflight before creating a pilot brief or attempting a report:
+The hosting agent runs preflight before creating a pilot brief or attempting a report:
 
 ```bash
 # macOS / Linux
@@ -65,23 +81,19 @@ sh scripts/preflight.sh
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preflight.ps1
 ```
 
-If preflight fails, install or activate Node.js 20+, reopen the terminal, and rerun preflight. Do not continue the pilot until it succeeds.
+If preflight fails, the hosting agent reports the setup issue to its operator. Do not start the tester session until it succeeds.
 
-If preflight finds npm, run:
+For the first conversation in a new host, the agent should also run `npm run freshness` and, when network access is available, `npm run refresh -- --dry-run`. These are read-only advisory checks. They never require a tester credential, never modify an ad platform, and do not block a report when a public documentation URL is unavailable.
+
+Install dependencies, then run:
 
 ```bash
+npm ci
 npm test
-npm run report -- examples/logistics-operations.md --out examples/outputs/logistics-operations-report.md
+npm run analyze-source -- --provider codex --file examples/logistics-operations.md
 ```
 
-If preflight confirms Node 20+ but npm is unavailable, run:
-
-```bash
-node --test
-node src/report.js examples/logistics-operations.md --out examples/outputs/logistics-operations-report.md
-```
-
-The first run should pass the test suite and generate a Markdown report.
+The first run should pass the test suite and print the complete report. An agent returns that report directly in its response window. Source ingestion and provider extraction cannot run in a fresh environment without npm-installed dependencies.
 
 ## Advanced: Test With A Real Brief
 
@@ -131,10 +143,10 @@ Preferred channels:
 Then run:
 
 ```bash
-npm run report -- pilot-brief.md --out pilot-report.md
+npm run report -- pilot-brief.md
 ```
 
-Do not commit `pilot-brief.md` or `pilot-report.md` if they contain confidential strategy, target accounts, customer data, or private campaign details.
+Do not commit `pilot-brief.md` if it contains confidential strategy, target accounts, customer data, or private campaign details. The non-technical workflow returns the report in chat and does not save a report file.
 
 ## Agent Prompt For Codex Or Claude Code
 
@@ -146,16 +158,11 @@ Assess whether the attached campaign, ICP, persona, or ABM brief can be translat
 
 Steps:
 1. Read AGENTS.md and docs/workflow.md.
-2. If no brief file exists, create a local temporary Markdown brief from the user's source material.
-3. Run the applicable preflight command. If it fails, stop and report the runtime setup failure.
-4. Run `npm test` and `npm run report -- <brief.md> --out <report.md>` when npm is available; otherwise run `node --test` and `node src/report.js <brief.md> --out <report.md>`.
+2. Run the applicable preflight command. If it fails, stop and report the runtime setup failure.
+3. Run `npm ci` when dependencies are not installed, then run `npm test`.
+4. Run `npm run analyze-source -- --provider codex|claude --file <source-file>` or use `--url <public-https-url>`.
 5. Review the report for overconfident recommendations.
-6. Summarize:
-   - direct targeting attributes to verify
-   - proxy or experiment campaign sets
-   - message-only pains, gains, objections, and triggers
-   - missing inputs that would change the plan
-   - manual or authenticated verification needed before campaign build
+6. Return the complete response using the exact nine-section structure in `docs/output-standard.md`; do not save or attach a report file.
 
 Rules:
 - Do not use parent workspace context, external memory, or unrelated personal notes.
@@ -163,11 +170,12 @@ Rules:
 - Do not treat pains, gains, objections, or triggers as direct targeting or proxy targeting; keep them as message and creative inputs unless an explicitly verified exact platform field exists.
 - Do not upload audiences, create campaigns, mutate ad accounts, or spend budget.
 - Keep confidential pilot briefs and reports local unless the user explicitly asks to share or commit them.
+- Never ask the pilot user to run a command, use Terminal, install Node, or choose a provider. Resolve setup yourself or explain in plain language that the agent environment needs repair.
 ```
 
 ## Suggested Pilot Scorecard
 
-After each test brief, rate the output from 1 to 5:
+After each test brief, rate the output from 1 to 5. Use these anchors: **1** means unusable or unsafe without major rework; **3** means directionally useful but needs material human correction; **5** means ready for a PMM and paid-media specialist to use as a working starting point.
 
 - Actionability: Can a PMM brief demand generation from the output?
 - Targeting accuracy: Are direct fields, proxies, and unavailable dimensions separated correctly?
@@ -182,6 +190,12 @@ Capture 3-5 concrete notes:
 - What was overconfident?
 - What field or platform behavior did the report miss?
 - What would make the next run more useful?
+
+Use `docs/pilot-feedback-template.md` to return a redacted, structured feedback packet with provider/version, source type, contract status, scores, and remediation owner.
+
+### Pilot Decision Rule
+
+Continue the pilot only when the report contract is valid and no source fact was invented. A run is ready to promote when its average score is at least 4, no category is below 3, and the paid-media SME has no unresolved high-risk targeting correction. Otherwise, submit the redacted feedback packet and classify the required change before rerunning.
 
 ## Safe Pilot Boundaries
 
@@ -204,12 +218,11 @@ Not allowed in this MVP:
 
 ## What To Send Back
 
-For each pilot run, send back:
+For each pilot run, send back only:
 
-- the sanitized input brief, if shareable
-- the generated report, if shareable
 - the scorecard ratings
 - notes on overconfidence, missing fields, or confusing wording
 - any platform-specific corrections from a demand generation SME
+- the redacted feedback packet in `docs/pilot-feedback-template.md`
 
-If the input brief is confidential, send back only a redacted brief and concrete feedback about the report behavior.
+Do not send source text, reports, screenshots, account lists, or model transcripts by default. If something is confidential, send only concrete feedback about report behavior.

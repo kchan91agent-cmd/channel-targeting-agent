@@ -1,0 +1,10 @@
+Decision memo
+
+We are taking Route orchestration software into Enterprise logistics. The product is Route orchestration software. The market is Enterprise logistics.
+
+The locale is US; geographies include United States and Canada. Industries include Third-party logistics and Retail. Company size is 1000+.
+Titles include Director of Transportation and VP Logistics. Functions include Supply Chain and Operations. Seniorities are VP and Director.
+
+Keywords include last mile logistics and route optimization. Pains include high cost-to-serve and manual dispatch exceptions. Triggers include mixed fleet complexity and SLA pressure.
+
+Campaign goal is Pipeline creation. Preferred channels include microsoft-ads, google-ads-youtube, and linkedin-ads.

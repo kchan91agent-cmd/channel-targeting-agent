@@ -1,0 +1,16 @@
+{
+  "product": "Route orchestration software",
+  "market": "Enterprise logistics",
+  "locale": "US",
+  "geographies": ["Canada", "United States"],
+  "industries": ["Retail", "Third-party logistics"],
+  "companySizes": ["1000+"],
+  "jobTitles": ["Director of Transportation", "VP Logistics"],
+  "jobFunctions": ["Operations", "Supply Chain"],
+  "seniorities": ["Director", "VP"],
+  "keywords": ["last mile logistics", "route optimization"],
+  "pains": ["high cost-to-serve", "manual dispatch exceptions"],
+  "triggers": ["SLA pressure", "mixed fleet complexity"],
+  "campaignGoal": "Pipeline creation",
+  "preferredChannels": ["google-ads-youtube", "linkedin-ads", "microsoft-ads"]
+}

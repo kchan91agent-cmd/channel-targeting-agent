@@ -1,4 +1,11 @@
 node_modules/
 .env
+.env.*
+!.env.example
 coverage/
 data/snapshots/*.local.json
+*.private.md
+*.private.json
+pilot-brief.md
+pilot-report.md
+.DS_Store

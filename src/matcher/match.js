@@ -311,6 +311,14 @@ export function matchStrategyToPlatforms(strategy, platforms) {
       directFitLabel: scoreBandLabel(directFitBand),
       proxyFitBand,
       proxyFitLabel: scoreBandLabel(proxyFitBand),
+      targetingDimensions: platform.targetingDimensions.map((dimension) => ({
+        id: dimension.id,
+        label: dimension.label,
+        inputKeys: dimension.inputKeys,
+        matchType: dimension.matchType,
+        availability: dimension.availability,
+        confidence: dimension.confidence
+      })),
       exactMatches,
       substituteMatches,
       substitutions,
