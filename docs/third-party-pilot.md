@@ -95,6 +95,21 @@ npm run analyze-source -- --provider codex --file examples/logistics-operations.
 
 The first run should pass the test suite and print the complete report. An agent returns that report directly in its response window. Source ingestion and provider extraction cannot run in a fresh environment without npm-installed dependencies.
 
+## Agent Host Troubleshooting
+
+Keep these fixes behind the scenes. A non-technical tester should not be asked to run Terminal commands.
+
+- If `node` or `npm` is missing, the host needs Node.js 20+ installed or an activated bundled runtime from the agent environment.
+- If `npm` works but project scripts fail with `node: command not found`, the host has npm available but Node is not on `PATH`. Add the Node binary directory to `PATH`, then rerun setup. In Codex Desktop on macOS, the bundled runtime is commonly available with:
+
+  ```bash
+  PATH=/Applications/Codex.app/Contents/Resources/cua_node/bin:$PATH npm test
+  ```
+
+- Folder names with spaces are supported. If extraction fails only in a path such as `Channel Targeting Agent`, check whether the failing path contains URL encoding such as `%20`.
+- `npm run refresh -- --dry-run` requires outbound network access to official documentation URLs. If it returns `fetch failed`, treat that as a network or sandbox-access issue before treating it as a source freshness problem.
+- Missing ad-platform credentials are expected for the default pilot. The first-pass report is registry-backed only; authenticated field checks are optional later-stage validation.
+
 ## Advanced: Test With A Real Brief
 
 The agent should normally create this local file for the user. Create one manually only when an advanced user wants to control every input.

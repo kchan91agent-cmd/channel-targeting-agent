@@ -35,7 +35,7 @@ sh scripts/preflight.sh
 powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preflight.ps1
 ```
 
-If Node is not installed or is older than 20, stop the pilot, install or activate Node 20+, and rerun preflight. No `npm install` is required because this project has no runtime dependencies. If Node passes but npm is absent, use `node --test` and `node src/report.js ...` directly.
+If Node is not installed or is older than 20, stop the pilot, install or activate Node 20+, and rerun preflight. Run `npm ci` before source ingestion or provider extraction so the document-conversion libraries are installed from the committed lockfile. If Node passes but npm is absent, only limited structured-brief report commands may work when dependencies are already installed.
 
 ## Basic Usage
 

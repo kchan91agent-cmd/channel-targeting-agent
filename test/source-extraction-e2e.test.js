@@ -2,7 +2,7 @@ import assert from "node:assert/strict";
 import test from "node:test";
 import { access, readFile } from "node:fs/promises";
 import { canonicalizeStrategy } from "../src/extract/strategy-input.js";
-import { diagnoseExtraction, withEphemeralSource } from "../src/extract/harness.js";
+import { diagnoseExtraction, extractorScriptPath, withEphemeralSource } from "../src/extract/harness.js";
 import { loadPlatforms } from "../src/platforms.js";
 import { matchStrategyToPlatforms } from "../src/matcher/match.js";
 import { renderMarkdownReport } from "../src/report/render-markdown.js";
@@ -55,4 +55,10 @@ test("diagnoses extraction, output-contract, and runtime failures without source
   assert.equal(diagnoseExtraction({ caseId: "contract", expected, actual: expected, contractErrors: ["missing heading"] }).owner, "output renderer / contract");
   assert.equal(diagnoseExtraction({ caseId: "matcher", expected, actual: expected, matcherErrors: ["registry expectation changed"] }).owner, "matcher or platform registry");
   assert.equal(diagnoseExtraction({ caseId: "runtime", expected, extractionError: "Source extractor did not complete." }).failureClass, "environment");
+});
+
+test("resolves extractor script paths when the project directory contains spaces", () => {
+  const resolved = extractorScriptPath("file:///tmp/Channel%20Targeting%20Agent/src/extract/harness.js");
+  assert.equal(resolved, "/tmp/Channel Targeting Agent/src/extract/extract-source.js");
+  assert.ok(!resolved.includes("%20"));
 });

@@ -97,6 +97,21 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preflight.ps1
 
 Full source ingestion and provider extraction require `npm ci`. Without npm, only preinstalled dependencies and advanced structured-brief report commands can run directly.
 
+### Agent Host Troubleshooting
+
+These are setup issues for the agent host, not tasks for a non-technical pilot tester.
+
+- If `node` or `npm` is missing, install Node.js 20+ or use the Node runtime bundled with the agent environment. Confirm both commands with `node --version` and `npm --version`.
+- If `npm` is available but scripts fail with `node: command not found`, Node is not on the shell `PATH`. Add the directory containing the Node binary to `PATH`, then rerun the script. In Codex Desktop on macOS, an agent host can usually use:
+
+  ```bash
+  PATH=/Applications/Codex.app/Contents/Resources/cua_node/bin:$PATH npm test
+  ```
+
+- Project folders with spaces, such as `Channel Targeting Agent`, are supported. If source-extraction tests fail only in a path with spaces, check for URL-encoded paths such as `%20` in the error output.
+- `npm run refresh -- --dry-run` checks public official documentation URLs and requires outbound network access. A `fetch failed` result is usually an environment or network-access issue first, not proof that platform sources are stale.
+- Missing ad-platform credentials are expected in the default pilot. Reports are registry-backed only unless a later, explicitly authorized read-only connector is configured.
+
 ## Verify Output Standardization
 
 Run the format-invariance and targeting-variance regression suite before sharing the agent for external targeting-quality review:

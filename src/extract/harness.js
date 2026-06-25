@@ -2,10 +2,15 @@ import { chmod, mkdtemp, readFile, rm, writeFile } from "node:fs/promises";
 import { tmpdir } from "node:os";
 import { basename, join } from "node:path";
 import { spawn } from "node:child_process";
+import { fileURLToPath } from "node:url";
 import { canonicalizeStrategy, diffStrategy, validateStrategyInput } from "./strategy-input.js";
 
+export function extractorScriptPath(moduleUrl = import.meta.url) {
+  return fileURLToPath(new URL("./extract-source.js", moduleUrl));
+}
+
 function defaultExtractor() {
-  return { command: process.execPath, args: [new URL("./extract-source.js", import.meta.url).pathname] };
+  return { command: process.execPath, args: [extractorScriptPath()] };
 }
 
 function configuredExtractor() {
