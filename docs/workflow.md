@@ -17,7 +17,7 @@ The agent must:
 2. Create a temporary supported brief from facts in that source only.
 3. Leave absent fields empty so missing-input checks remain useful.
 4. Run preflight and `npm run analyze-source -- --provider codex|claude --file <path>|--url <public-https-url>`.
-5. Return the complete nine-section report defined in `docs/output-standard.md` directly in the response window. Do not save, attach, or link a report file unless explicitly asked.
+5. Return the complete two-layer report defined in `docs/output-standard.md` directly in the response window: concise Executive Brief first, then Appendix: Targeting Evidence and Platform Detail. Do not save, attach, or link a report file unless explicitly asked.
 
 The standard command owns ingestion and provider extraction. It requires an explicit provider, writes temporary material outside the repository, and validates the fixed report contract. The lower-level extraction commands remain available for regression tests and advanced debugging only.
 
@@ -85,7 +85,7 @@ Use this repository to assess whether the attached or linked launch deck, messag
 
 Read the source and create a temporary supported brief from source-backed facts only. Do not ask the user to create a brief or run terminal commands. If the source cannot be read, request accessible text or a downloadable file. Run preflight, then generate the report.
 
-Return the complete result using the exact nine-section response structure in `docs/output-standard.md`. Do not compress the field inventory, keyword map, or platform details. Do not save the source, temporary brief, or report in the repository unless the user explicitly asks for a shareable version.
+Return the complete result using the exact two-layer response structure in `docs/output-standard.md`. Keep the Executive Brief concise, but do not compress the appendix field inventory, keyword map, source inputs, platform details, gaps, or verification checks. Do not save the source, temporary brief, or report in the repository unless the user explicitly asks for a shareable version.
 ```
 
 ## Field Checks

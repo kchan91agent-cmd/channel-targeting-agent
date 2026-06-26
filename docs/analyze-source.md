@@ -12,7 +12,7 @@ npm run analyze-source -- --provider codex --file /secure/path/launch-deck.pptx
 npm run analyze-source -- --provider claude --url https://example.com/public-brief
 ```
 
-The command performs local ingestion, writes only temporary readable text and a normalized brief outside the repository, invokes the selected provider, validates the fixed report contract, prints the nine-section report, and removes temporary artifacts.
+The command performs local ingestion, writes only temporary readable text and a normalized brief outside the repository, invokes the selected provider, validates the fixed report contract, prints the two-layer report, and removes temporary artifacts.
 
 Add `--diagnose` to append a redacted JSON diagnosis. It includes provider, source type, failure class, remediation owner, and contract errors—never source content, source path, normalized values, model response, or report text beyond the normal report output.
 

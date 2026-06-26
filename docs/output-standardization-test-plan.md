@@ -5,7 +5,7 @@ Last reviewed: 2026-06-22
 
 ## Purpose
 
-This suite protects the response framework, not the marketing judgment. It ensures that document architecture does not change the Channel Targeting Agent’s nine-section output contract.
+This suite protects the response framework, not the marketing judgment. It ensures that document architecture does not change the Channel Targeting Agent’s two-layer output contract: concise Executive Brief first, then Appendix: Targeting Evidence and Platform Detail.
 
 Marketers can therefore assess targeting usefulness, evidence quality, and direct-versus-proxy judgment without receiving different report skeletons.
 
@@ -22,7 +22,7 @@ The suite contains two controls:
 1. **Format invariance:** a messaging brief, GTM plan, campaign plan, and executive memo express identical targeting facts. Each must parse to the same strategy and render byte-for-byte identical output.
 2. **Targeting variance:** ABM, search-intent, first-party, persona-incomplete, and sparse strategies must render the same framework while changing only targeting-dependent content.
 
-The contract validator rejects missing, duplicated, reordered, or renamed sections; missing platform field tables; changed table headers; unsupported field types; missing targeting-map subsections; and incomplete per-platform field inventories.
+The contract validator rejects missing, duplicated, reordered, or renamed executive/appendix sections; missing keyword-cluster and platform field tables; changed table headers; unsupported field types; missing targeting-map subsections; and incomplete per-platform field inventories.
 
 ## Scope Boundary
 

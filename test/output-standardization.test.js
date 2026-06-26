@@ -59,18 +59,35 @@ test("keeps the required framework fixed while targeting strategy variables chan
   assert.ok(fixtures.find((fixture) => fixture.name === "abm").report.includes("Summit Industrial"));
   assert.ok(fixtures.find((fixture) => fixture.name === "search-intent").report.includes("Kubernetes cost allocation"));
   assert.ok(fixtures.find((fixture) => fixture.name === "first-party").report.includes("At-risk renewal accounts"));
-  assert.ok(fixtures.find((fixture) => fixture.name === "persona-incomplete").report.includes("**Verdict: Partially ready**"));
-  assert.ok(fixtures.find((fixture) => fixture.name === "sparse").report.includes("**Verdict: Not ready**"));
+  assert.ok(fixtures.find((fixture) => fixture.name === "persona-incomplete").report.includes("**Activation readiness:** Partially ready"));
+  assert.ok(fixtures.find((fixture) => fixture.name === "sparse").report.includes("**Activation readiness:** Not ready"));
+  assert.ok(fixtures.find((fixture) => fixture.name === "first-party").report.includes("First-party/account targeting is the biggest activation unlock."));
+  assert.ok(fixtures.find((fixture) => fixture.name === "search-intent").report.includes("### Keyword Cluster Guidance"));
+  assert.ok(fixtures.find((fixture) => fixture.name === "search-intent").report.includes("### Platform Field Inventory"));
   assert.equal(new Set(fixtures.map((fixture) => fixture.report)).size, fixtures.length);
+});
+
+test("keeps the executive brief concise while long-tail evidence moves to the appendix", async () => {
+  const platforms = await loadPlatforms();
+  const { report } = await renderedFixture(platforms, "targeting-variance", "search-intent");
+  const executiveBrief = report.slice(report.indexOf("## Executive Brief"), report.indexOf("## Appendix: Targeting Evidence and Platform Detail"));
+  const appendix = report.slice(report.indexOf("## Appendix: Targeting Evidence and Platform Detail"));
+
+  assert.ok(executiveBrief.includes("### Top Opportunities"));
+  assert.equal(executiveBrief.includes("### Platform Field Inventory"), false);
+  assert.equal(executiveBrief.includes("| LinkedIn Ads | Geography |"), false);
+  assert.ok(appendix.includes("| LinkedIn Ads | Geography |"));
+  assert.ok(appendix.includes("| Pains, gains, objections, and triggers |"));
+  assert.ok(appendix.includes("Creative, landing page, or sales follow-up only"));
 });
 
 test("rejects a report when the fixed framework is changed", async () => {
   const platforms = await loadPlatforms();
   const { report } = await renderedFixture(platforms, "format-invariance", "messaging-brief");
-  const altered = report.replace("## 8. Missing Inputs That Change the Plan", "## 8. Activation Gaps");
+  const altered = report.replace("### Missing Inputs That Would Improve Targeting", "### Activation Gaps");
   const result = validateStandardOutput(altered, platforms);
 
   assert.equal(result.valid, false);
-  assert.ok(result.errors.some((error) => error.includes("Top-level sections")));
-  assert.ok(result.errors.some((error) => error.includes("Missing Inputs That Change the Plan")));
+  assert.ok(result.errors.some((error) => error.includes("Executive Brief subsections")));
+  assert.ok(result.errors.some((error) => error.includes("Missing Inputs That Would Improve Targeting")));
 });

@@ -40,21 +40,21 @@ Use the standalone Channel Targeting Agent to assess the supplied source.
 
 Do all required setup and analysis work yourself. Do not ask me to use Terminal or run commands. Extract only facts that the source explicitly supports, then return the complete paid-media feasibility report directly in this conversation.
 
-Use the exact nine-section report structure in docs/output-standard.md. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, invent targeting fields, or save my source or report into the repository.
+Use the exact two-layer report structure in docs/output-standard.md: concise Executive Brief first, then Appendix: Targeting Evidence and Platform Detail. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, invent targeting fields, or save my source or report into the repository.
 ```
 
 The agent performs its setup and analysis in the background, then returns the report here.
 
 ## What You Will Receive
 
-Your report has nine sections. The most useful ones are:
+Your report has two layers. The most useful parts are:
 
-- **What the Source Says:** facts the agent found versus inputs still missing.
-- **Activation Readiness:** whether enough information exists to plan a demand-generation test.
-- **Available Targeting Fields by Platform:** direct fields, proxy options, and unavailable inputs for each platform.
-- **Targeting Map:** which inputs are usable directly, as proxies, or only in messaging.
-- **Channel Hypotheses:** where to start testing and why.
-- **Manual Verification Required:** items a paid-media specialist should confirm before campaign build.
+- **Executive Brief:** top opportunities, channel readout, campaign concepts, missing inputs, and important caveats.
+- **Source Inputs:** facts the agent extracted from your source.
+- **Keyword Cluster Guidance:** how to use search, contextual, first-party, message-only, and exclusion clusters.
+- **Concrete Keyword and Audience Map:** exact terms, allowed use, suitable platforms, and verification needs.
+- **Platform Field Inventory:** direct fields, proxy options, first-party audience fields, and unavailable inputs for each platform.
+- **Platform Detail / Cross-Platform Gaps / Manual Verification:** deeper evidence a paid-media specialist should inspect before campaign build.
 
 Treat the report as a planning starting point. A paid-media specialist must still validate account-specific audience availability, campaign-type rules, policy restrictions, reach, and cost before launch.
 

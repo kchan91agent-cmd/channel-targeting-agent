@@ -22,21 +22,26 @@ test("parses expanded audience inputs from Markdown briefs", () => {
   assert.deepEqual(strategy.suppressionLists, ["open opportunities"]);
 });
 
-test("renders the required nine-section report and all-platform field inventory", async () => {
+test("renders the required executive brief, appendix, and all-platform field inventory", async () => {
   const platforms = await loadPlatforms();
   const markdown = await readFile(new URL("../examples/fleet-management.md", import.meta.url), "utf8");
   const report = renderMarkdownReport(matchStrategyToPlatforms(parseMarkdownBrief(markdown), platforms));
 
   for (const heading of [
-    "## 1. What the Source Says",
-    "## 2. Activation Readiness",
-    "## 3. Available Targeting Fields by Platform",
-    "## 4. Concrete Keyword and Audience Map",
-    "## 5. Targeting Map",
-    "## 6. Channel Hypotheses",
-    "## 7. Manual Verification Required Before Any Campaign Build",
-    "## 8. Missing Inputs That Change the Plan",
-    "## 9. Complete Platform Detail"
+    "## Executive Brief",
+    "### Top Opportunities",
+    "### Channel Readout",
+    "### Best Campaign Concepts",
+    "### Missing Inputs That Would Improve Targeting",
+    "### Important Caveat",
+    "## Appendix: Targeting Evidence and Platform Detail",
+    "### Source Inputs",
+    "### Keyword Cluster Guidance",
+    "### Concrete Keyword and Audience Map",
+    "### Platform Field Inventory",
+    "### Platform Detail",
+    "### Cross-Platform Gaps",
+    "### Manual Verification Required"
   ]) assert.ok(report.includes(heading));
 
   assert.ok(report.includes("| LinkedIn Ads | Geography |"));
@@ -45,14 +50,15 @@ test("renders the required nine-section report and all-platform field inventory"
   assert.ok(report.includes("| Google Ads / YouTube | Job title | Not targetable |"));
   assert.ok(report.includes("Input missing — provide an eligible seed audience."));
   assert.ok(report.includes("Registry-backed only — not account-confirmed."));
-  assert.ok(report.indexOf("## 1. What the Source Says") < report.indexOf("## 9. Complete Platform Detail"));
+  assert.ok(report.indexOf("## Executive Brief") < report.indexOf("## Appendix: Targeting Evidence and Platform Detail"));
+  assert.ok(report.indexOf("### Platform Field Inventory") < report.indexOf("### Platform Detail"));
 });
 
 test("keeps pains, gains, objections, and triggers out of targeting keywords", async () => {
   const platforms = await loadPlatforms();
   const strategy = parseMarkdownBrief("Product: Creator commerce analytics\nMarket: TikTok commerce teams\nKeywords: TikTok Shop analytics\nPains: unclear creator ROI\nGains: faster creative iteration\nTriggers: seasonal product drop");
   const report = renderMarkdownReport(matchStrategyToPlatforms(strategy, platforms));
-  const targetingMap = report.slice(report.indexOf("## 5. Targeting Map"), report.indexOf("## 6. Channel Hypotheses"));
+  const targetingMap = report.slice(report.indexOf("### Concrete Keyword and Audience Map"), report.indexOf("### Platform Field Inventory"));
 
   assert.ok(report.includes("| Pains, gains, objections, and triggers |"));
   assert.ok(report.includes("Creative, landing page, or sales follow-up only"));

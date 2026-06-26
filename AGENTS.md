@@ -81,11 +81,11 @@ For a new agent host or pilot batch, run `npm run freshness` and then `npm run r
 
 ## Output Standard
 
-`docs/output-standard.md` is the required response contract. It supersedes the older action-led report layout below whenever they conflict. Use all nine sections in that file, in that order, and return the complete report directly in the chat response. Do not write a report file unless the user explicitly asks for a saved artifact.
+`docs/output-standard.md` is the required response contract. It supersedes the older action-led report layout below whenever they conflict. Use the two-layer structure in that file, in that order: a concise `Executive Brief` followed by `Appendix: Targeting Evidence and Platform Detail`. Return the complete report directly in the chat response. Do not write a report file unless the user explicitly asks for a saved artifact.
 
 In particular, the agent must inventory every relevant platform field even when no source value exists, use `Input missing — provide [specific input].` for absent values, and retain the exact field-type vocabulary from the response contract. When platform credentials are unavailable, write `Registry-backed only — not account-confirmed.`
 
-Keep pains, gains, objections, and triggers in the `Keep in Messaging` section. Never turn them into keyword or contextual targeting proxies without an explicitly verified platform field. The report may be long because the complete platform inventory is mandatory; do not summarize it away.
+Keep pains, gains, objections, and triggers in the appendix as message-only clusters and in the `Keep in Messaging` subsection. Never turn them into keyword or contextual targeting proxies without an explicitly verified platform field. Keep the executive brief concise; the report may still be long because the appendix must include the complete platform inventory and evidence detail.
 
 ## Source-Extraction Regression Harness
 

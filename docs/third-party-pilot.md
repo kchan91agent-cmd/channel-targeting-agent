@@ -52,7 +52,7 @@ Use the standalone Channel Targeting Agent to assess the supplied source.
 
 Do all required setup and analysis work yourself. Do not ask me to use Terminal or run commands. Run preflight, then use `npm run analyze-source` with the provider and supplied source. The command creates a temporary, source-backed campaign brief outside the repository and runs the feasibility report.
 
-Deliver the complete result directly in this response window for a non-technical user to gut-check. Do not create, save, attach, or link a Markdown report file. Use the exact nine-section response structure in docs/output-standard.md. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, or invent targeting fields.
+Deliver the complete result directly in this response window for a non-technical user to gut-check. Do not create, save, attach, or link a Markdown report file. Use the exact two-layer response structure in docs/output-standard.md: concise Executive Brief first, then Appendix: Targeting Evidence and Platform Detail. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, or invent targeting fields.
 ```
 
 The agent must use an explicit provider (`codex` or `claude`), extract only source-backed facts into a temporary brief, keep absent inputs absent, and return the report. If it cannot read the source, it must ask for an accessible file or public HTTPS URL instead of guessing. It must keep the source, temporary brief, and report outside the repository unless the pilot user explicitly authorizes saving a shareable version.
@@ -177,7 +177,7 @@ Steps:
 3. Run `npm ci` when dependencies are not installed, then run `npm test`.
 4. Run `npm run analyze-source -- --provider codex|claude --file <source-file>` or use `--url <public-https-url>`.
 5. Review the report for overconfident recommendations.
-6. Return the complete response using the exact nine-section structure in `docs/output-standard.md`; do not save or attach a report file.
+6. Return the complete response using the exact two-layer structure in `docs/output-standard.md`; do not save or attach a report file.
 
 Rules:
 - Do not use parent workspace context, external memory, or unrelated personal notes.

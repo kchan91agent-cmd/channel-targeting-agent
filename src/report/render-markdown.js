@@ -27,6 +27,48 @@ const FIRST_PARTY_KEYS = new Set([
   "suppressionLists"
 ]);
 
+const SOURCE_INPUTS = [
+  ["Geographies", "geographies"],
+  ["Industries", "industries"],
+  ["Company sizes", "companySizes"],
+  ["Company names", "companyNames"],
+  ["Account lists", "accountLists"],
+  ["Customer lists", "customerLists"],
+  ["Contact lists", "contactLists"],
+  ["Website visitors", "websiteVisitors"],
+  ["Retargeting audiences", "retargetingAudiences"],
+  ["Engagement audiences", "engagementAudiences"],
+  ["Lookalike seeds", "lookalikeSeeds"],
+  ["Job titles", "jobTitles"],
+  ["Job functions", "jobFunctions"],
+  ["Seniorities", "seniorities"],
+  ["Skills", "skills"],
+  ["Interests", "interests"],
+  ["Keywords", "keywords"],
+  ["Communities", "communities"],
+  ["Placements", "placements"],
+  ["Topics", "topics"],
+  ["Devices", "devices"],
+  ["Demographics", "demographics"],
+  ["Education", "education"],
+  ["Life events", "lifeEvents"],
+  ["Technographics", "technographics"],
+  ["Intent signals", "intentSignals"],
+  ["Pains", "pains"],
+  ["Gains", "gains"],
+  ["Objections", "objections"],
+  ["Triggers", "triggers"],
+  ["Exclusions", "exclusions"],
+  ["Negative keywords", "negativeKeywords"],
+  ["Suppression lists", "suppressionLists"],
+  ["Budget", "budget"],
+  ["Conversion event", "conversionEvent"],
+  ["Measurement thresholds", "measurementThresholds"],
+  ["Audience sizing requirements", "audienceSizingRequirements"],
+  ["Preferred channels", "preferredChannels"],
+  ["Compliance constraints", "complianceConstraints"]
+];
+
 const MESSAGE_INPUTS = [
   ["Pains", "pains"],
   ["Gains", "gains"],
@@ -35,10 +77,22 @@ const MESSAGE_INPUTS = [
 ];
 
 const CHANNEL_GROUPS = [
-  ["best-fit", "Conditional Best Fit"],
-  ["strong-secondary", "Strong Secondary"],
-  ["experimental", "Experimental or Situational"],
-  ["low-fit", "Low Fit"]
+  ["best-fit", "Conditional best fit"],
+  ["strong-secondary", "Strong secondary"],
+  ["experimental", "Experimental or situational"],
+  ["low-fit", "Low fit"]
+];
+
+const MISSING_INPUTS = [
+  ["Launch geography or locale", ["geographies", "locale"], "Platform availability, language, policy, and reach checks", "All evaluated platforms", "Audience feasibility and campaign setup"],
+  ["Named accounts / account list", ["companyNames", "accountLists"], "Required for account-level precision and suppression logic", "LinkedIn, Google, Microsoft, Meta, Reddit, X, TikTok, DV360 where eligible", "ABM precision and account coverage"],
+  ["Company size", ["companySizes"], "Determines firmographic reach and sizing", "LinkedIn and any platform with a verified equivalent", "Firmographic feasibility"],
+  ["Job title, function, or seniority", ["jobTitles", "jobFunctions", "seniorities"], "Determines persona precision versus proxy-only reach", "LinkedIn; proxy assessment for other platforms", "Persona-targeting feasibility"],
+  ["First-party audience source", ["customerLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences"], "Enables retargeting, matched audiences, and sequencing", "Platforms with eligible first-party audience fields", "Warm-audience and suppression plan"],
+  ["Lookalike / similar-audience seed", ["lookalikeSeeds"], "Required to evaluate modeled expansion", "Platforms with verified modeled-audience support", "Modeled-reach testing"],
+  ["Exclusions, suppression lists, and negative keywords", ["exclusions", "suppressionLists", "negativeKeywords"], "Prevents wasted spend and inappropriate reach", "Search and platforms with suppression controls", "Launch safety and traffic quality"],
+  ["Budget or test range", ["budget"], "Determines channel mix and minimum viable test design", "All evaluated platforms", "Spend planning"],
+  ["Primary conversion event", ["conversionEvent"], "Defines optimization and success criteria", "All evaluated platforms", "Measurement plan"]
 ];
 
 function values(rawInputs, keys, inputSummary = {}) {
@@ -51,6 +105,13 @@ function values(rawInputs, keys, inputSummary = {}) {
 function list(items, fallback = "None") {
   const unique = [...new Set((items ?? []).filter(Boolean))];
   return unique.length > 0 ? unique.join(", ") : fallback;
+}
+
+function shortList(items, limit = 6, fallback = "None") {
+  const unique = [...new Set((items ?? []).filter(Boolean))];
+  if (unique.length === 0) return fallback;
+  const visible = unique.slice(0, limit).join(", ");
+  return unique.length > limit ? `${visible} (+${unique.length - limit} more; see appendix)` : visible;
 }
 
 function escapeTable(value) {
@@ -105,8 +166,7 @@ function verificationNote(platform, field) {
 }
 
 function sourceStatus(rawInputs, keys, inputSummary) {
-  const supplied = values(rawInputs, keys, inputSummary);
-  return supplied.length > 0 ? "Yes" : "No";
+  return values(rawInputs, keys, inputSummary).length > 0 ? "Yes" : "No";
 }
 
 function sourceValue(rawInputs, field, inputSummary) {
@@ -114,33 +174,78 @@ function sourceValue(rawInputs, field, inputSummary) {
   return supplied.length > 0 ? list(supplied) : `Input missing — provide ${field.missing}.`;
 }
 
-function sourceLabel(rawInputs, keys, inputSummary = {}) {
-  return values(rawInputs, keys, inputSummary).length > 0 ? "Source-backed" : "Missing";
+function isInputPresent(output, keys) {
+  return values(output.rawInputs, keys, output.inputSummary).length > 0;
 }
 
-function sectionWhatSourceSays(output) {
-  const { rawInputs, inputSummary } = output;
-  const audienceValues = values(rawInputs, ["companyNames", "accountLists", "companySizes", "jobTitles", "jobFunctions", "seniorities", "skills"]);
-  const entries = [
-    ["Product", inputSummary.product && inputSummary.product !== "unspecified" ? [inputSummary.product] : []],
-    ["Market", inputSummary.market && inputSummary.market !== "unspecified" ? [inputSummary.market] : []],
-    ["Audience", audienceValues],
-    ["Campaign goal", inputSummary.campaignGoal && inputSummary.campaignGoal !== "unspecified" ? [inputSummary.campaignGoal] : []],
-    ["Industries", rawInputs.industries],
-    ["Personas", values(rawInputs, ["jobTitles", "jobFunctions", "seniorities", "skills"])],
-    ["Keywords", values(rawInputs, ["keywords", "intentSignals", "technographics"])],
-    ...MESSAGE_INPUTS.map(([label, key]) => [label, rawInputs[key]])
+function missingInputRows(output) {
+  return MISSING_INPUTS.filter(([, keys]) => !isInputPresent(output, keys));
+}
+
+function platformsInGroup(output, group) {
+  return output.platformMatches.filter((platform) => platform.channelGroup === group);
+}
+
+function platformNames(platforms, fallback = "none") {
+  return platforms.length ? platforms.map((platform) => platform.platformName).join(", ") : fallback;
+}
+
+function platformSubject(platforms) {
+  return {
+    names: platformNames(platforms),
+    verb: platforms.length === 1 ? "is" : "are",
+    secondaryNoun: platforms.length === 1 ? "a strong secondary path" : "strong secondary paths"
+  };
+}
+
+function directFieldLabels(platform) {
+  return platform.exactMatches.map((match) => match.label);
+}
+
+function proxyFieldLabels(platform) {
+  return [
+    ...platform.substituteMatches.map((match) => match.label),
+    ...platform.substitutions.map((substitution) => substitution.recommendation)
   ];
-  const lines = ["## 1. What the Source Says", ""];
-  for (const [label, supplied] of entries) {
-    const status = supplied?.length > 0 ? "Source-backed" : "Missing";
-    lines.push(`- **${label} — ${status}:** ${list(supplied, `Input missing — provide ${label.toLowerCase()}.`)}`);
+}
+
+function platformNamesForField(output, keys, matchType) {
+  return output.platformMatches
+    .filter((platform) => catalogDimensions(platform, { keys }).some((dimension) => matchType ? dimension.matchType === matchType : true))
+    .map((platform) => platform.platformName);
+}
+
+function clusterValues(output, keys) {
+  return values(output.rawInputs, keys, output.inputSummary);
+}
+
+function keywordRows(output) {
+  const rows = [];
+  const searchTerms = clusterValues(output, ["keywords", "intentSignals", "technographics"]);
+  if (searchTerms.length > 0) {
+    const searchPlatforms = platformNamesForField(output, ["keywords", "intentSignals", "technographics"], "substitute").filter((name) => /Google|Microsoft/.test(name));
+    if (searchPlatforms.length) rows.push(["Search and category demand", searchTerms, "Search keyword", searchPlatforms, "Confirm campaign type, match type, policy, volume, and negative-keyword handling in the account."]);
+    const customPlatforms = platformNamesForField(output, ["keywords", "intentSignals", "technographics"], "substitute").filter((name) => !/Microsoft Advertising/.test(name));
+    if (customPlatforms.length) rows.push(["Custom segment and intent proxies", searchTerms, "Custom segment", customPlatforms, "Confirm the platform accepts these terms for a custom segment or equivalent audience test."]);
   }
-  lines.push("- **Working hypotheses:** None generated. A likely title inferred from a persona narrative must remain a Working hypothesis until the source names it.");
-  lines.push("- **Evidence limitations:** This report uses only the supplied source and registry-backed platform fields. Platform picklists, minimum reach, and account eligibility are not confirmed here.");
-  lines.push("- **Staleness and confidentiality:** Treat source facts as current only to the date of the supplied material. Do not put confidential lists or source material into the standalone repository.");
-  lines.push("");
-  return lines.join("\n");
+
+  const contextualTerms = clusterValues(output, ["topics", "placements", "communities", "industries", "interests"]);
+  if (contextualTerms.length > 0) {
+    const platforms = platformNamesForField(output, ["topics", "placements", "communities", "industries", "interests"], "substitute");
+    rows.push(["Contextual and audience signals", contextualTerms, "Contextual/content test", platforms.length ? platforms : ["All evaluated platforms where contextual inventory is available"], "Verify inventory, picklists, reach, and whether the signal is contextual rather than persona-precise."]);
+  }
+
+  const firstPartyTerms = clusterValues(output, ["companyNames", "accountLists", "customerLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences", "lookalikeSeeds", "suppressionLists"]);
+  if (firstPartyTerms.length > 0) {
+    rows.push(["First-party and account motion", firstPartyTerms, "Custom segment", ["Platforms with eligible matched-audience, customer-list, retargeting, or suppression support"], "Verify upload eligibility, consent, match rates, audience minimums, and suppression logic."]);
+  }
+
+  const messageTerms = MESSAGE_INPUTS.flatMap(([, key]) => output.rawInputs[key]);
+  if (messageTerms.length > 0) {
+    rows.push(["Pains, gains, objections, and triggers", messageTerms, "Creative, landing page, or sales follow-up only", ["All evaluated platforms"], "No targeting use unless an authenticated platform field explicitly supports it."]);
+  }
+
+  return rows;
 }
 
 function readiness(output) {
@@ -154,29 +259,164 @@ function readiness(output) {
   return "Ready";
 }
 
-function sectionActivationReadiness(output) {
-  const { rawInputs, inputSummary } = output;
-  const required = [
-    ["product", inputSummary.product && inputSummary.product !== "unspecified"],
-    ["campaign goal", inputSummary.campaignGoal && inputSummary.campaignGoal !== "unspecified"],
-    ["launch geography or locale", values(rawInputs, ["geographies", "locale"], inputSummary).length > 0],
-    ["target audience definition (accounts, firmographics, or personas)", values(rawInputs, ["companyNames", "accountLists", "industries", "companySizes", "jobTitles", "jobFunctions", "seniorities", "skills"]).length > 0],
-    ["primary conversion event", (rawInputs.conversionEvent ?? []).length > 0],
-    ["budget or test range", (rawInputs.budget ?? []).length > 0]
-  ].filter(([, present]) => !present)
-    .map(([label]) => label);
-  const lines = ["## 2. Activation Readiness", "", `**Verdict: ${readiness(output)}**`, ""];
-  lines.push("Minimum missing information before demand generation should plan spend:");
-  lines.push(...(required.length ? required.map((item) => `- ${item}`) : ["- No minimum source-input gaps detected. Account-side verification still remains required."]));
-  lines.push("- Available platform fields remain listed below even when the corresponding source input is missing.");
+function topOpportunities(output) {
+  const opportunities = [];
+  const firstParty = clusterValues(output, ["companyNames", "accountLists", "customerLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences", "suppressionLists"]);
+  const best = platformsInGroup(output, "best-fit");
+  const strong = platformsInGroup(output, "strong-secondary");
+  const searchTerms = clusterValues(output, ["keywords", "intentSignals", "technographics"]);
+  const experimental = platformsInGroup(output, "experimental");
+
+  if (best.length > 0) {
+    const platform = best[0];
+    opportunities.push(`${platform.platformName} is the strongest paid-media fit. It maps the source into ${shortList(directFieldLabels(platform), 5, "source-backed direct fields")}; verify audience size and dynamic picklists before spend.`);
+  }
+  if (firstParty.length > 0) {
+    opportunities.push(`First-party/account targeting is the biggest activation unlock. Use ${shortList(firstParty, 6)} for matched audiences, retargeting, sequencing, and suppression where the platform allows it.`);
+  } else {
+    opportunities.push("The biggest missing unlock is first-party/account targeting. Named accounts, customer/contact lists, website audiences, and suppression lists would materially improve precision.");
+  }
+  if (strong.length > 0) {
+    const subject = platformSubject(strong);
+    opportunities.push(`${subject.names} ${subject.verb} ${subject.secondaryNoun}. Treat as demand-capture, contextual, or profile-derived tests unless authenticated checks prove tighter persona reach.`);
+  }
+  if (searchTerms.length > 0) {
+    opportunities.push(`Search and custom-segment tests have usable demand language: ${shortList(searchTerms, 6)}. Use these as intent/proxy signals, not proof of exact buyer reach.`);
+  }
+  if (experimental.length > 0) {
+    const subject = platformSubject(experimental);
+    opportunities.push(`${subject.names} ${subject.verb} experimental or situational. Use for message learning, content/context tests, retargeting, or amplification rather than precise B2B persona targeting.`);
+  }
+
+  return opportunities.slice(0, 5);
+}
+
+function campaignConcepts(output) {
+  const concepts = [];
+  const firstParty = clusterValues(output, ["companyNames", "accountLists", "customerLists", "contactLists"]);
+  const retargeting = clusterValues(output, ["websiteVisitors", "retargetingAudiences", "engagementAudiences"]);
+  const suppression = clusterValues(output, ["suppressionLists", "exclusions", "negativeKeywords"]);
+  const searchTerms = clusterValues(output, ["keywords", "intentSignals", "technographics"]);
+  const best = platformsInGroup(output, "best-fit")[0];
+  const industries = output.rawInputs.industries ?? [];
+  const personas = clusterValues(output, ["jobTitles", "jobFunctions", "seniorities"]);
+
+  if (firstParty.length > 0) concepts.push(`Account/customer activation campaign: use ${shortList(firstParty, 6)} as the core matched-audience or CRM-backed motion.`);
+  if (best && (industries.length > 0 || personas.length > 0)) concepts.push(`${best.platformName} persona campaign: target ${shortList([...industries, ...personas], 8)} with source-backed messaging.`);
+  if (searchTerms.length > 0) concepts.push(`Search/custom-segment demand test: build tightly controlled tests around ${shortList(searchTerms, 8)} with negative keywords and landing-page alignment.`);
+  if (retargeting.length > 0) concepts.push(`Retargeting and engagement sequence: use ${shortList(retargeting, 6)} to move warm audiences to the next conversion event.`);
+  if (suppression.length > 0) concepts.push(`Suppression-safe launch path: apply ${shortList(suppression, 6)} so the wrong audience does not receive the wrong CTA.`);
+  if (concepts.length === 0) concepts.push("Source-backed targeting is too sparse for campaign concepts; add audience, intent, first-party, and conversion inputs before planning spend.");
+
+  return concepts.slice(0, 5);
+}
+
+function renderMissingInputsTable(output) {
+  const lines = ["| Missing input | Why it matters | Affected platforms | Decision blocked |", "| --- | --- | --- | --- |"];
+  const missing = missingInputRows(output);
+  if (!missing.length) {
+    lines.push("| None identified from the standard activation inputs | Account-side validation still applies | All evaluated platforms | Final build confirmation |");
+  } else {
+    for (const [input, , why, platforms, blocked] of missing) lines.push(`| ${escapeTable(input)} | ${escapeTable(why)} | ${escapeTable(platforms)} | ${escapeTable(blocked)} |`);
+  }
+  return lines;
+}
+
+export function renderExecutiveBrief(output) {
+  const lines = ["## Executive Brief", "", "### Top Opportunities", ""];
+  topOpportunities(output).forEach((opportunity, index) => lines.push(`${index + 1}. ${opportunity}`));
+
+  lines.push("", "### Channel Readout", "");
+  for (const [group, label] of CHANNEL_GROUPS) {
+    lines.push(`- **${label}:** ${platformNames(platformsInGroup(output, group))}`);
+  }
+  lines.push(`- **Activation readiness:** ${readiness(output)}`);
+
+  lines.push("", "### Best Campaign Concepts", "");
+  for (const concept of campaignConcepts(output)) lines.push(`- ${concept}`);
+
+  lines.push("", "### Missing Inputs That Would Improve Targeting", "");
+  lines.push(...renderMissingInputsTable(output));
+
+  lines.push("", "### Important Caveat", "");
+  lines.push("All platform conclusions are registry-backed unless authenticated account checks were explicitly run. Registry-backed only — not account-confirmed. Verify picklists, audience size, campaign type, locale, policy constraints, first-party eligibility, and suppression logic before any campaign build.");
   lines.push("");
   return lines.join("\n");
 }
 
-function sectionAvailableTargetingFields(output) {
-  const lines = ["## 3. Available Targeting Fields by Platform", ""];
+function renderSourceInputs(output) {
+  const lines = ["### Source Inputs", ""];
+  lines.push(`- **Product:** ${output.inputSummary.product ?? "Input missing — provide product."}`);
+  lines.push(`- **Market:** ${output.inputSummary.market ?? "Input missing — provide market."}`);
+  lines.push(`- **Locale:** ${output.inputSummary.locale ?? "unspecified"}`);
+  lines.push(`- **Campaign goal:** ${output.inputSummary.campaignGoal ?? "Input missing — provide campaign goal."}`);
+  for (const [label, key] of SOURCE_INPUTS) {
+    const supplied = output.rawInputs[key] ?? [];
+    if (supplied.length > 0) lines.push(`- **${label}:** ${list(supplied)}`);
+  }
+  lines.push("");
+  return lines.join("\n");
+}
+
+export function renderKeywordClusterGuidance(output) {
+  const clusters = [
+    ["First-party / account motion", clusterValues(output, ["companyNames", "accountLists", "customerLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences", "lookalikeSeeds", "suppressionLists"]), "Use for matched audiences, CRM-backed activation, retargeting, sequencing, lookalike seeds, and suppression after eligibility checks."],
+    ["Search / category demand", clusterValues(output, ["keywords", "intentSignals", "technographics"]), "Use for search, custom-segment, and demand-capture tests when the term maps to real buyer intent."],
+    ["Contextual / audience signals", clusterValues(output, ["topics", "placements", "communities", "industries", "interests"]), "Use for contextual inventory, content adjacency, communities, and broad audience tests; do not treat as persona precision."],
+    ["Pain / problem", clusterValues(output, ["pains", "objections"]), "Use mostly for creative, landing-page copy, sales follow-up, and problem-led ad variants."],
+    ["Trigger / initiative", clusterValues(output, ["triggers"]), "Use for timely campaign angles, search modifiers, nurture logic, and sales conversation context."],
+    ["Gain / outcome", clusterValues(output, ["gains"]), "Use for proof points, CTA framing, landing-page hierarchy, and sales enablement."],
+    ["Exclusions / launch safety", clusterValues(output, ["exclusions", "negativeKeywords", "suppressionLists"]), "Use for negative keywords, exclusions, and audience-safety review before activation."]
+  ].filter(([, terms]) => terms.length > 0);
+
+  const lines = ["### Keyword Cluster Guidance", ""];
+  if (clusters.length === 0) {
+    lines.push("No source-backed keyword, contextual, first-party, message, or exclusion clusters were supplied.");
+  } else {
+    for (const [label, terms, use] of clusters) {
+      lines.push(`- **${label}:** Most useful examples: ${shortList(terms, 8)}. Recommended use: ${use}`);
+    }
+  }
+  lines.push("");
+  return lines.join("\n");
+}
+
+function renderKeywordAudienceMap(output) {
+  const rows = keywordRows(output);
+  const lines = ["### Concrete Keyword and Audience Map", ""];
+  if (rows.length === 0) {
+    lines.push("No source-backed keyword, intent, technographic, first-party, pain, gain, objection, or trigger terms were supplied.");
+  } else {
+    lines.push("| Cluster | Exact terms | Allowed use | Suitable platforms | Verification needed |");
+    lines.push("| --- | --- | --- | --- | --- |");
+    for (const [cluster, terms, allowedUse, platforms, verification] of rows) {
+      lines.push(`| ${escapeTable(cluster)} | ${escapeTable(list(terms))} | ${allowedUse} | ${escapeTable(list(platforms))} | ${escapeTable(verification)} |`);
+    }
+  }
+
+  lines.push("", "#### Use Directly", "");
+  const direct = output.platformMatches.flatMap((platform) => platform.exactMatches.map((match) => `- **${platform.platformName} / ${match.label}:** ${shortList(match.requestedValues, 8)} — Source-backed; verify in the platform.`));
+  lines.push(...(direct.length ? direct : ["- No source-backed direct targeting values yet."]));
+
+  lines.push("", "#### Use as Proxies or Test Sets", "");
+  const proxies = output.platformMatches.flatMap((platform) => [
+    ...platform.substituteMatches.map((match) => `- **${platform.platformName} / ${match.label}:** ${shortList(match.requestedValues, 8)} — test or reach proxy, not proof of buyer reach.`),
+    ...platform.substitutions.map((substitution) => `- **${platform.platformName} / ${substitution.input}:** ${substitution.recommendation} Requested: ${shortList(substitution.requestedValues, 8)} — test or reach proxy, not proof of buyer reach.`)
+  ]);
+  lines.push(...(proxies.length ? proxies : ["- No source-backed proxy or contextual test set identified."]));
+
+  lines.push("", "#### Keep in Messaging", "");
+  const messaging = MESSAGE_INPUTS.filter(([, key]) => output.rawInputs[key].length > 0)
+    .map(([label, key]) => `- **${label}:** ${list(output.rawInputs[key])} — Creative, landing page, or sales follow-up only unless an authenticated platform field explicitly supports targeting use.`);
+  lines.push(...(messaging.length ? messaging : ["- No pains, gains, objections, or triggers were supplied."]));
+  lines.push("");
+  return lines.join("\n");
+}
+
+function renderPlatformFieldInventory(output) {
+  const lines = ["### Platform Field Inventory", ""];
   for (const platform of output.platformMatches) {
-    lines.push(`### ${platform.platformName}`);
+    lines.push(`#### ${platform.platformName}`);
     lines.push("");
     lines.push("| Platform | Available targeting field | Type | Source input available? | Source-backed value or missing input | Confidence | Manual verification needed |");
     lines.push("| --- | --- | --- | --- | --- | --- | --- |");
@@ -188,152 +428,20 @@ function sectionAvailableTargetingFields(output) {
   return lines.join("\n");
 }
 
-function platformNamesForField(output, keys, matchType) {
-  return output.platformMatches
-    .filter((platform) => catalogDimensions(platform, { keys }).some((dimension) => matchType ? dimension.matchType === matchType : true))
-    .map((platform) => platform.platformName);
-}
-
-function keywordRows(output) {
-  const raw = output.rawInputs;
-  const rows = [];
-  if (raw.keywords.length > 0) {
-    const searchPlatforms = platformNamesForField(output, ["keywords"], "substitute").filter((name) => /Google|Microsoft/.test(name));
-    if (searchPlatforms.length) rows.push(["Source keywords — search", raw.keywords, "Search keyword", searchPlatforms, "Confirm campaign type, match type, policy, and negative-keyword handling in the account."]);
-    const customPlatforms = platformNamesForField(output, ["keywords"], "substitute").filter((name) => !/Microsoft Advertising/.test(name));
-    if (customPlatforms.length) rows.push(["Source keywords — audience/context", raw.keywords, "Custom segment", customPlatforms, "Confirm the platform accepts these terms for a custom segment or equivalent audience test."]);
-  }
-  if (raw.intentSignals.length > 0 || raw.technographics.length > 0) {
-    const terms = [...raw.intentSignals, ...raw.technographics];
-    const platforms = platformNamesForField(output, ["intentSignals", "technographics"], "substitute");
-    if (platforms.length) rows.push(["Intent and technographic signals", terms, "Contextual/content test", platforms, "Confirm the signal maps to an available contextual, content, or custom-segment surface."]);
-  }
-  const messageTerms = MESSAGE_INPUTS.flatMap(([, key]) => raw[key]);
-  if (messageTerms.length > 0) rows.push(["Pains, gains, objections, and triggers", messageTerms, "Creative, landing page, or sales follow-up only", ["All evaluated platforms"], "No targeting use. Keep these in messaging unless an authenticated platform field explicitly supports the use."]);
-  return rows;
-}
-
-function sectionKeywordAudienceMap(output) {
-  const rows = keywordRows(output);
-  const lines = ["## 4. Concrete Keyword and Audience Map", ""];
-  if (rows.length === 0) {
-    lines.push("No source-backed keyword, intent, technographic, pain, gain, objection, or trigger terms were supplied.");
-    lines.push("");
-    return lines.join("\n");
-  }
-  lines.push("| Cluster | Exact terms | Allowed use | Suitable platforms | Verification needed |");
-  lines.push("| --- | --- | --- | --- | --- |");
-  for (const [cluster, terms, allowedUse, platforms, verification] of rows) {
-    lines.push(`| ${escapeTable(cluster)} | ${escapeTable(list(terms))} | ${allowedUse} | ${escapeTable(list(platforms))} | ${escapeTable(verification)} |`);
-  }
-  lines.push("");
-  return lines.join("\n");
-}
-
-function sectionTargetingMap(output) {
-  const lines = ["## 5. Targeting Map", "", "### Use Directly", ""];
-  const direct = output.platformMatches.flatMap((platform) => platform.exactMatches.map((match) => `- **${platform.platformName} / ${match.label}:** ${list(match.requestedValues)} — Source-backed; verify in the platform.`));
-  lines.push(...(direct.length ? direct : ["- No source-backed direct targeting values yet."]));
-  lines.push("", "### Use as Proxies or Test Sets", "");
-  const proxies = output.platformMatches.flatMap((platform) => [
-    ...platform.substituteMatches.map((match) => `- **${platform.platformName} / ${match.label}:** ${list(match.requestedValues)} — test or reach proxy, not proof of buyer reach.`),
-    ...platform.substitutions.map((substitution) => `- **${platform.platformName} / ${substitution.input}:** ${substitution.recommendation} Requested: ${list(substitution.requestedValues)} — test or reach proxy, not proof of buyer reach.`)
-  ]);
-  lines.push(...(proxies.length ? proxies : ["- No source-backed proxy or contextual test set identified."]));
-  lines.push("", "### Keep in Messaging", "");
-  const messaging = MESSAGE_INPUTS.filter(([, key]) => output.rawInputs[key].length > 0)
-    .map(([label, key]) => `- **${label}:** ${list(output.rawInputs[key])} — use in creative, landing pages, webinar content, nurture, and sales follow-up.`);
-  lines.push(...(messaging.length ? messaging : ["- No pains, gains, objections, or triggers were supplied."]));
-  lines.push("");
-  return lines.join("\n");
-}
-
-function channelExplanation(platform) {
-  const direct = platform.exactMatches.map((match) => match.label);
-  const proxy = platform.substituteMatches.map((match) => match.label);
-  const substitute = platform.substitutions.map((item) => item.recommendation);
-  const missing = FIELD_CATALOG
-    .filter((field) => sourceStatus(platform.rawInputs ?? {}, field.keys) === "No")
-    .slice(0, 1);
-  return {
-    fields: direct.length ? list(direct) : "No source-backed direct field values",
-    proxy: proxy.length || substitute.length ? list([...proxy, ...substitute]) : "No source-backed keyword or proxy role",
-    why: direct.length ? `It has ${direct.length} direct source-backed field match(es).` : proxy.length || substitute.length ? "It can support a proxy or contextual test, not precise buyer proof." : "The current source does not map to a usable field.",
-    move: `${authenticationStatus(platform)} Verify audience size, dynamic picklists, campaign-type and locale constraints; add missing account, persona, geography, or first-party inputs where applicable.`
-  };
-}
-
-function sectionChannelHypotheses(output) {
-  const lines = ["## 6. Channel Hypotheses", ""];
-  for (const [group, label] of CHANNEL_GROUPS) {
-    lines.push(`### ${label}`);
-    lines.push("");
-    const platforms = output.platformMatches.filter((platform) => platform.channelGroup === group);
-    if (platforms.length === 0) {
-      lines.push("- None.");
-    } else {
-      for (const platform of platforms) {
-        const detail = channelExplanation(platform);
-        lines.push(`- **${platform.platformName}:** Available fields: ${detail.fields}. Keyword or proxy role: ${detail.proxy}. Why: ${detail.why} Move up or down: ${detail.move}`);
-      }
-    }
-    lines.push("");
-  }
-  return lines.join("\n");
-}
-
-function sectionManualVerification(output) {
-  const lines = ["## 7. Manual Verification Required Before Any Campaign Build", ""];
-  lines.push("- Verify dynamic picklists and authenticated/API field availability for every platform listed below.");
-  lines.push("- Verify campaign-type and locale constraints, policy constraints, audience-size/minimum-reach thresholds, and first-party audience eligibility before any build.");
-  lines.push("- Verify suppression logic, exclusions, and negative-keyword treatment before activation.");
-  for (const platform of output.platformMatches) {
-    lines.push(`- **${platform.platformName}:** ${authenticationStatus(platform)} ${platform.caveats.join(" ")}`);
-  }
-  lines.push("");
-  return lines.join("\n");
-}
-
-const MISSING_INPUTS = [
-  ["Launch geography or locale", ["geographies", "locale"], "Platform availability, language, policy, and reach checks", "All evaluated platforms", "Audience feasibility and campaign setup"],
-  ["Named accounts / account list", ["companyNames", "accountLists"], "Required for account-level precision and suppression logic", "LinkedIn, Google, Microsoft, Meta, Reddit, X, TikTok, DV360 where eligible", "ABM precision and account coverage"],
-  ["Company size", ["companySizes"], "Determines firmographic reach and sizing", "LinkedIn and any platform with a verified equivalent", "Firmographic feasibility"],
-  ["Job title, function, or seniority", ["jobTitles", "jobFunctions", "seniorities"], "Determines persona precision versus proxy-only reach", "LinkedIn; proxy assessment for other platforms", "Persona-targeting feasibility"],
-  ["First-party audience source", ["customerLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences"], "Enables retargeting, matched audiences, and sequencing", "Platforms with eligible first-party audience fields", "Warm-audience and suppression plan"],
-  ["Lookalike / similar-audience seed", ["lookalikeSeeds"], "Required to evaluate modeled expansion", "Platforms with verified modeled-audience support", "Modeled-reach testing"],
-  ["Exclusions, suppression lists, and negative keywords", ["exclusions", "suppressionLists", "negativeKeywords"], "Prevents wasted spend and inappropriate reach", "Search and platforms with suppression controls", "Launch safety and traffic quality"],
-  ["Budget or test range", ["budget"], "Determines channel mix and minimum viable test design", "All evaluated platforms", "Spend planning"],
-  ["Primary conversion event", ["conversionEvent"], "Defines optimization and success criteria", "All evaluated platforms", "Measurement plan"]
-];
-
-function isInputPresent(output, keys) {
-  return values(output.rawInputs, keys, output.inputSummary).length > 0;
-}
-
-function sectionMissingInputs(output) {
-  const lines = ["## 8. Missing Inputs That Change the Plan", "", "| Missing input | Why it matters | Affected platforms | Decision blocked |", "| --- | --- | --- | --- |"];
-  const missing = MISSING_INPUTS.filter(([, keys]) => !isInputPresent(output, keys));
-  if (!missing.length) {
-    lines.push("| None identified from the standard activation inputs | Account-side validation still applies | All evaluated platforms | Final build confirmation |");
-  } else {
-    for (const [input, , why, platforms, blocked] of missing) lines.push(`| ${escapeTable(input)} | ${escapeTable(why)} | ${escapeTable(platforms)} | ${escapeTable(blocked)} |`);
-  }
-  lines.push("");
-  return lines.join("\n");
-}
-
 function matchesForDetail(matches) {
   return matches.length ? matches.map((match) => `${match.label}: ${list(match.requestedValues)}`).join("; ") : "None";
 }
 
-function sectionPlatformDetail(output) {
-  const lines = ["## 9. Complete Platform Detail", ""];
+function renderPlatformDetail(output) {
+  const lines = ["### Platform Detail", ""];
   for (const platform of output.platformMatches) {
-    lines.push(`### ${platform.platformName}`);
-    lines.push("");
-    lines.push(`- **Exact matches:** ${matchesForDetail(platform.exactMatches)}`);
-    lines.push(`- **Proxy or substitute fields:** ${matchesForDetail(platform.substituteMatches)}${platform.substitutions.length ? `; ${platform.substitutions.map((item) => item.recommendation).join("; ")}` : ""}`);
     const unavailable = FIELD_CATALOG.filter((field) => fieldType(platform, field) === "Not targetable").map((field) => field.label);
+    lines.push(`#### ${platform.platformName}`);
+    lines.push("");
+    lines.push(`- **Channel group:** ${platform.channelGroupLabel}. Confidence: ${platform.confidence}.`);
+    lines.push(`- **Channel type:** ${platform.channelType}`);
+    lines.push(`- **Exact matches:** ${matchesForDetail(platform.exactMatches)}`);
+    lines.push(`- **Proxy or substitute fields:** ${matchesForDetail(platform.substituteMatches)}${platform.substitutions.length ? `; ${platform.substitutions.map((item) => `${item.input}: ${item.recommendation} Requested: ${list(item.requestedValues)}`).join("; ")}` : ""}`);
     lines.push(`- **Unavailable dimensions:** ${list(unavailable)}`);
     lines.push(`- **Caveats:** ${list(platform.caveats)}`);
     lines.push(`- **Official source URL:** ${platform.source.url}`);
@@ -344,19 +452,54 @@ function sectionPlatformDetail(output) {
   return lines.join("\n");
 }
 
+function renderCrossPlatformGaps(output) {
+  const lines = ["### Cross-Platform Gaps", ""];
+  const gaps = output.unavailableStrategyDimensions ?? [];
+  if (gaps.length === 0) {
+    lines.push("- No cross-platform unavailable source dimensions were identified. Account-side validation still applies.");
+  } else {
+    for (const gap of gaps) lines.push(`- ${gap}`);
+  }
+  const missing = missingInputRows(output).map(([input]) => input);
+  if (missing.length > 0) lines.push(`- Missing activation inputs with material planning impact: ${list(missing)}.`);
+  lines.push("");
+  return lines.join("\n");
+}
+
+function renderManualVerification(output) {
+  const lines = ["### Manual Verification Required", ""];
+  lines.push("- Verify exact picklists and authenticated/API field availability in each ad account before campaign build.");
+  lines.push("- Verify campaign-type and locale constraints, policy constraints, audience-size/minimum-reach thresholds, and first-party audience eligibility.");
+  lines.push("- Verify suppression logic, exclusions, and negative-keyword treatment before activation.");
+  lines.push("- Do not upload customer, contact, or account lists from this tool.");
+  lines.push("- Treat pains, gains, objections, and triggers as message strategy unless a platform exposes a confirmed targeting field.");
+  for (const platform of output.platformMatches) {
+    lines.push(`- **${platform.platformName}:** ${authenticationStatus(platform)} ${platform.caveats.join(" ")}`);
+  }
+  lines.push("");
+  return lines.join("\n");
+}
+
+export function renderAppendix(output) {
+  return [
+    "## Appendix: Targeting Evidence and Platform Detail",
+    "",
+    renderSourceInputs(output),
+    renderKeywordClusterGuidance(output),
+    renderKeywordAudienceMap(output),
+    renderPlatformFieldInventory(output),
+    renderPlatformDetail(output),
+    renderCrossPlatformGaps(output),
+    renderManualVerification(output)
+  ].join("\n");
+}
+
 export function renderMarkdownReport(output) {
   const lines = [
     "# Channel Targeting Feasibility Report",
     "",
-    sectionWhatSourceSays(output),
-    sectionActivationReadiness(output),
-    sectionAvailableTargetingFields(output),
-    sectionKeywordAudienceMap(output),
-    sectionTargetingMap(output),
-    sectionChannelHypotheses(output),
-    sectionManualVerification(output),
-    sectionMissingInputs(output),
-    sectionPlatformDetail(output)
+    renderExecutiveBrief(output),
+    renderAppendix(output)
   ];
   return `${lines.join("\n")}\n`;
 }

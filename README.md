@@ -61,7 +61,7 @@ Use the standalone Channel Targeting Agent to assess the supplied source.
 
 Run preflight, then use `npm run analyze-source` with an explicit provider and the supplied source. The command creates the temporary, source-backed brief outside the repository and runs the feasibility report.
 
-Deliver the complete result directly in this response window for a non-technical user to gut-check. Do not create, save, attach, or link a Markdown report file. Use the exact nine-section response structure in docs/output-standard.md. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, or invent targeting fields.
+Deliver the complete result directly in this response window for a non-technical user to gut-check. Do not create, save, attach, or link a Markdown report file. Use the exact two-layer response structure in docs/output-standard.md: concise Executive Brief first, then Appendix: Targeting Evidence and Platform Detail. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, or invent targeting fields.
 ```
 
 The agent extracts only facts supported by your source, creates a temporary internal brief, runs the report, and tells you which information is missing. You should not need to fill in a form unless you want to add detail after the first report.
@@ -120,7 +120,7 @@ Run the format-invariance and targeting-variance regression suite before sharing
 npm run test:output-standard
 ```
 
-See `docs/output-standardization-test-plan.md`. The suite keeps the report framework fixed across messaging briefs, GTM plans, campaign plans, and strategy changes, so reviewer feedback can focus on targeting usefulness rather than output structure.
+See `docs/output-standardization-test-plan.md`. The suite keeps the two-layer report framework fixed across messaging briefs, GTM plans, campaign plans, and strategy changes, so reviewer feedback can focus on targeting usefulness rather than output structure.
 
 ## Shareable Project Check
 

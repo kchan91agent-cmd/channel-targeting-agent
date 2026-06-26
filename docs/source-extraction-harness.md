@@ -5,7 +5,7 @@ Last reviewed: 2026-06-22
 
 ## Purpose
 
-This harness verifies that semantically equivalent but architecturally different readable sources produce the same normalized strategy and the same required nine-section report. It tests source-to-brief extraction separately from matching and rendering.
+This harness verifies that semantically equivalent but architecturally different readable sources produce the same normalized strategy and the same required two-layer report. It tests source-to-brief extraction separately from matching and rendering.
 
 The committed corpus is fictional and sanitized. Do not add customer documents, source URLs, account lists, user data, or model transcripts to fixtures or diagnostics.
 
@@ -49,7 +49,7 @@ The output contains only the case ID, status, failure class, remediation owner, 
 | Result | Required change |
 | --- | --- |
 | `extraction-fidelity` | Fix source-to-brief extraction. Add the sanitized failing architecture as a regression fixture before changing rules. |
-| Valid brief but contract validator fails or reports differ | Fix agent instructions only if the agent bypassed the extractor; otherwise fix the output renderer / contract. The nine-section framework remains fixed. |
+| Valid brief but contract validator fails or reports differ | Fix agent instructions only if the agent bypassed the extractor; otherwise fix the output renderer / contract. The two-layer framework remains fixed. |
 | Valid brief and report framework but targeting classification is wrong | Fix the matcher or platform registry with verified platform evidence. |
 | `environment` | Repair adapter availability, source access, credentials, or temporary-directory cleanup. Do not classify this as a targeting regression. |
 
