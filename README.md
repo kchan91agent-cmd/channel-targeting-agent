@@ -1,7 +1,7 @@
 # Channel Targeting Agent
 
 Status: working
-Last reviewed: 2026-06-21
+Last reviewed: 2026-06-26
 
 Channel Targeting Agent helps PMMs translate broad ICP, persona, and campaign strategy into targeting options that actually exist inside advertising platforms.
 
@@ -10,6 +10,12 @@ It does not launch campaigns. It produces a reviewable strategy-to-targeting map
 The MVP is agent-first. It is meant to run from Codex, Claude Code, Cursor, or a local terminal, not from a web UI.
 
 This repository is standalone. It does not require parent workspace context, private notes, ad account credentials, or customer data for the default pilot workflow.
+
+## Staying Current
+
+The GitHub repository is the source of truth for this project. Before each new pilot, test run, or Codex/App Studio project run, the agent host should sync or pull the latest `main` branch from GitHub.
+
+Do not assume a project created from the GitHub link automatically receives future repository updates. If the environment cannot sync from GitHub, create a fresh project from the repo link before running the test.
 
 ## Why This Exists
 

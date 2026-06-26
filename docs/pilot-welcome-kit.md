@@ -1,7 +1,7 @@
 # Channel Targeting Agent Pilot Welcome Kit
 
 Status: shareable pilot handoff
-Last reviewed: 2026-06-23
+Last reviewed: 2026-06-26
 
 ## Welcome
 
@@ -21,6 +21,12 @@ This is a read-only planning tool. It does not create campaigns, upload audience
 Start here: [Channel Targeting Agent on GitHub](https://github.com/kchan91agent-cmd/channel-targeting-agent)
 
 If the repository is private, accept the GitHub invitation from the pilot host first. Open the project in Codex, then attach your source and follow the first-run request below. You do not need to download files manually or use Terminal.
+
+## Staying Current
+
+The GitHub repository is the source of truth for this project. Before starting a new pilot or rerun, the agent host should sync the project with the latest `main` branch from GitHub.
+
+Do not assume a Codex/App Studio project created from the GitHub link automatically receives future updates. If the project cannot sync from GitHub, create a fresh project from the repo link before running the test.
 
 ## What You Need
 

@@ -1,7 +1,7 @@
 # Third-Party Pilot Guide
 
 Status: working
-Last reviewed: 2026-06-21
+Last reviewed: 2026-06-26
 
 This guide is for an external PMM, demand generation, or growth team testing Channel Targeting Agent in Codex or Claude Code.
 
@@ -40,6 +40,12 @@ Use one of these handoff paths:
 3. Internal fork: copy this folder into the tester's existing agent workspace.
 
 Share only the `channel-targeting-agent` folder. Do not include parent workspace folders, private notes, local `.env` files, generated one-off reports, or customer-specific briefs unless the pilot user is authorized to see them.
+
+## Keep The Project Current
+
+The GitHub repository is the source of truth. Before each new pilot, test run, or project-based rerun, the agent host must sync or pull the latest `main` branch from GitHub and use that version for the run.
+
+Do not assume a Codex/App Studio project created from the GitHub link automatically receives future repository updates. If the environment cannot sync from GitHub, create a fresh project from the repo link before running the test.
 
 ## For A Non-Technical Pilot User
 
