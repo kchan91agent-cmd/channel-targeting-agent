@@ -1,0 +1,27 @@
+{
+  "id": "meta-ads",
+  "name": "Meta Ads: Facebook / Instagram",
+  "channelType": "paid-social",
+  "supportedLocales": ["US", "CA", "GB", "EU", "AU", "IN", "GLOBAL"],
+  "refreshCadence": "monthly",
+  "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+  "sourceCheckedAt": "2026-06-13",
+  "liveCheck": {
+    "mode": "official-api-preferred",
+    "authRequired": true,
+    "envVars": ["META_ACCESS_TOKEN", "META_AD_ACCOUNT_ID"],
+    "notes": "Use Targeting Search API where available; B2B work fields are not reliable enough to treat as primary targeting without verification."
+  },
+  "targetingDimensions": [
+    { "id": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "interest", "label": "Interests", "inputKeys": ["interests", "industries", "topics"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "behavior", "label": "Behaviors", "inputKeys": ["lifeEvents"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "demographics", "label": "Demographics", "inputKeys": ["demographics", "education"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "customAudience", "label": "Custom audiences", "inputKeys": ["customerLists", "accountLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences", "suppressionLists"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "lookalike", "label": "Lookalike audiences", "inputKeys": ["customerLists", "lookalikeSeeds"], "availability": "official-auth", "matchType": "substitute", "confidence": "medium" }
+  ],
+  "knownLimitations": [
+    "B2B job title and employer targeting should not be assumed available.",
+    "Detailed targeting availability is policy-sensitive and can change by locale."
+  ]
+}

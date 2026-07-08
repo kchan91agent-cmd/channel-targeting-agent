@@ -1,0 +1,32 @@
+{
+  "id": "linkedin-ads",
+  "name": "LinkedIn Ads",
+  "channelType": "paid-social",
+  "supportedLocales": ["US", "CA", "GB", "EU", "AU", "IN", "GLOBAL"],
+  "refreshCadence": "monthly",
+  "sourceUrl": "https://business.linkedin.com/advertise/ads/targeting",
+  "sourceCheckedAt": "2026-06-13",
+  "liveCheck": {
+    "mode": "official-api-preferred",
+    "authRequired": true,
+    "envVars": ["LINKEDIN_ACCESS_TOKEN", "LINKEDIN_AD_ACCOUNT_ID"],
+    "notes": "Exact criteria and picklists should be verified through LinkedIn Marketing API or Campaign Manager access."
+  },
+  "targetingDimensions": [
+    { "id": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "companyName", "label": "Company names", "inputKeys": ["companyNames"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "industry", "label": "Company industry", "inputKeys": ["industries"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "companySize", "label": "Company size", "inputKeys": ["companySizes"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "jobTitle", "label": "Job title", "inputKeys": ["jobTitles"], "availability": "official-dynamic", "matchType": "exact", "confidence": "medium" },
+    { "id": "jobFunction", "label": "Job function", "inputKeys": ["jobFunctions"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "seniority", "label": "Seniority", "inputKeys": ["seniorities"], "availability": "official", "matchType": "exact", "confidence": "high" },
+    { "id": "skill", "label": "Member skills", "inputKeys": ["skills"], "availability": "official-dynamic", "matchType": "exact", "confidence": "medium" },
+    { "id": "education", "label": "Education", "inputKeys": ["education"], "availability": "official-dynamic", "matchType": "exact", "confidence": "medium" },
+    { "id": "interest", "label": "Professional interests", "inputKeys": ["interests"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "medium" },
+    { "id": "matchedAudience", "label": "Matched audiences", "inputKeys": ["customerLists", "accountLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences", "suppressionLists"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" }
+  ],
+  "knownLimitations": [
+    "Exact title and skill availability can be locale-specific and dynamic.",
+    "Some combinations may reduce reach below platform minimums."
+  ]
+}

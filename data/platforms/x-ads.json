@@ -1,0 +1,27 @@
+{
+  "id": "x-ads",
+  "name": "X Ads",
+  "channelType": "paid-social",
+  "supportedLocales": ["US", "CA", "GB", "EU", "AU", "IN", "GLOBAL"],
+  "refreshCadence": "monthly",
+  "sourceUrl": "https://docs.x.com/x-ads-api/llms.txt",
+  "sourceCheckedAt": "2026-06-13",
+  "liveCheck": {
+    "mode": "official-api-preferred",
+    "authRequired": true,
+    "envVars": ["X_ADS_ACCESS_TOKEN", "X_AD_ACCOUNT_ID"],
+    "notes": "Use current X Ads API docs and targeting criteria endpoints for live availability."
+  },
+  "targetingDimensions": [
+    { "id": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "availability": "official-dynamic", "matchType": "exact", "confidence": "medium" },
+    { "id": "keyword", "label": "Keyword targeting", "inputKeys": ["keywords"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "medium" },
+    { "id": "interest", "label": "Interest targeting", "inputKeys": ["interests", "industries", "topics"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "followerLookalike", "label": "Follower lookalikes", "inputKeys": ["companyNames", "communities"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "tailoredAudience", "label": "Tailored audiences", "inputKeys": ["customerLists", "accountLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences", "suppressionLists"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "device", "label": "Device targeting", "inputKeys": ["devices"], "availability": "official-dynamic", "matchType": "exact", "confidence": "medium" }
+  ],
+  "knownLimitations": [
+    "Not a primary B2B title or firmographic targeting platform.",
+    "Use for keyword, conversation, and audience-extension hypotheses when brand fit exists."
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "id": "tiktok-ads",
+  "name": "TikTok Ads",
+  "channelType": "paid-social-video",
+  "supportedLocales": ["US", "CA", "GB", "EU", "AU", "IN", "GLOBAL"],
+  "refreshCadence": "monthly",
+  "sourceUrl": "https://business-api.tiktok.com/portal/docs",
+  "sourceCheckedAt": "2026-06-13",
+  "liveCheck": {
+    "mode": "official-api-preferred",
+    "authRequired": true,
+    "envVars": ["TIKTOK_ACCESS_TOKEN", "TIKTOK_ADVERTISER_ID"],
+    "notes": "Use TikTok Business API for targeting metadata where available; B2B targeting should be treated as creative/context-led unless verified."
+  },
+  "targetingDimensions": [
+    { "id": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "availability": "official-dynamic", "matchType": "exact", "confidence": "medium" },
+    { "id": "interest", "label": "Interest targeting", "inputKeys": ["interests", "industries", "topics"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "behavior", "label": "Behavior targeting", "inputKeys": ["interests", "lifeEvents"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "hashtag", "label": "Hashtag or content signals", "inputKeys": ["keywords", "communities"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "demographics", "label": "Demographics", "inputKeys": ["demographics"], "availability": "official-dynamic", "matchType": "substitute", "confidence": "low" },
+    { "id": "device", "label": "Device targeting", "inputKeys": ["devices"], "availability": "official-dynamic", "matchType": "exact", "confidence": "medium" },
+    { "id": "customAudience", "label": "Custom audiences", "inputKeys": ["customerLists", "accountLists", "contactLists", "websiteVisitors", "retargetingAudiences", "engagementAudiences", "suppressionLists"], "availability": "official-auth", "matchType": "exact", "confidence": "medium" },
+    { "id": "lookalike", "label": "Lookalike audiences", "inputKeys": ["lookalikeSeeds"], "availability": "official-auth", "matchType": "substitute", "confidence": "medium" }
+  ],
+  "knownLimitations": [
+    "Weak fit for precise enterprise B2B persona targeting.",
+    "May be useful for hiring, employer brand, SMB, creator, or broad awareness contexts."
+  ]
+}

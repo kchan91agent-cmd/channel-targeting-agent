@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/channel-targeting-agent/match-output.schema.json",
+  "title": "MatchOutput",
+  "type": "object",
+  "required": ["inputSummary", "platformMatches", "channelGroups", "rawInputs", "unavailableStrategyDimensions"],
+  "properties": {
+    "inputSummary": { "type": "object" },
+    "platformMatches": { "type": "array" },
+    "channelGroups": { "type": "array" },
+    "rawInputs": { "type": "object" },
+    "unavailableStrategyDimensions": { "type": "array" },
+    "generatedAt": { "type": "string" }
+  }
+}

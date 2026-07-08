@@ -1,0 +1,10 @@
+Decision memo
+
+We are taking B2B workflow automation platform into mid-market SaaS operations teams. The product is B2B workflow automation platform. The market is Mid-market SaaS operations teams.
+
+The locale is GB; geographies include United Kingdom and Ireland. Industries include Software and Professional services. Company size is 1000+.
+Titles include Marketing Operations Director and Revenue Operations Manager. Functions include Sales, Marketing, and Operations. Seniorities are VP and Director.
+
+Keywords include revenue operations and workflow automation. Pains include slow lead follow-up and manual handoffs. Triggers include pipeline conversion pressure and CRM migration.
+
+Campaign goal is Trial demand. Preferred channels include microsoft-ads, google-ads-youtube, and linkedin-ads.

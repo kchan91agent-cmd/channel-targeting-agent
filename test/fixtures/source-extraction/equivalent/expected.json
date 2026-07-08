@@ -1,0 +1,16 @@
+{
+  "product": "B2B workflow automation platform",
+  "market": "Mid-market SaaS operations teams",
+  "locale": "GB",
+  "geographies": ["Ireland", "United Kingdom"],
+  "industries": ["Professional services", "Software"],
+  "companySizes": ["1000+"],
+  "jobTitles": ["Marketing Operations Director", "Revenue Operations Manager"],
+  "jobFunctions": ["Marketing", "Operations", "Sales"],
+  "seniorities": ["Director", "VP"],
+  "keywords": ["revenue operations", "workflow automation"],
+  "pains": ["manual handoffs", "slow lead follow-up"],
+  "triggers": ["CRM migration", "pipeline conversion pressure"],
+  "campaignGoal": "Trial demand",
+  "preferredChannels": ["google-ads-youtube", "linkedin-ads", "microsoft-ads"]
+}

@@ -1,0 +1,44 @@
+{
+  "name": "channel-targeting-agent",
+  "version": "0.1.0",
+  "description": "Map PMM ICP and persona strategy into platform-available B2B targeting options.",
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "preflight": "node scripts/preflight.mjs",
+    "start": "node src/index.js examples/b2b-saas-generic.json",
+    "match": "node src/index.js",
+    "report": "node src/report.js",
+    "check-fields": "node src/connectors/check-fields.js",
+    "refresh": "node src/connectors/refresh-registry.js",
+    "freshness": "node scripts/freshness-status.mjs",
+    "test": "node --test",
+    "test:output-standard": "node --test test/output-standardization.test.js",
+    "test:source-extraction": "node --test test/source-extraction-e2e.test.js",
+    "test:provider-adapters": "node --test test/provider-adapters.test.js",
+    "extract": "node src/extract/extract-source.js",
+    "extract:provider": "node src/extract/extract-with-provider.js",
+    "analyze-source": "node src/analyze-source.js",
+    "provider-preflight": "node scripts/provider-preflight.mjs",
+    "test:provider:live": "node --test test/live-provider-acceptance.test.js",
+    "check:portability": "node scripts/check-portability.mjs",
+    "diagnose-source": "node src/extract/run-harness.js"
+  },
+  "dependencies": {
+    "fast-xml-parser": "5.7.0",
+    "jszip": "3.10.1",
+    "linkedom": "0.18.12",
+    "mammoth": "1.11.0",
+    "pdfjs-dist": "5.4.54"
+  },
+  "keywords": [
+    "pmm",
+    "abm",
+    "targeting",
+    "advertising",
+    "gtm"
+  ],
+  "license": "MIT"
+}

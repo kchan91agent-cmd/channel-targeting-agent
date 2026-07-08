@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/channel-targeting-agent/extraction-response.schema.json",
+  "title": "UniversalSourceExtractionResponse",
+  "description": "Portable response shape for documentation and adapter authors. Runtime validation in src/extract/provider-adapters.js is authoritative and additionally rejects unknown strategy fields.",
+  "oneOf": [
+    {
+      "$ref": "strategy-input.schema.json"
+    },
+    {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "reason"],
+      "properties": {
+        "status": { "const": "source_unreadable" },
+        "reason": { "type": "string", "minLength": 1 }
+      }
+    }
+  ]
+}
