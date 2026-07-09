@@ -1,20 +1,131 @@
 {
   "platformId": "microsoft-ads",
   "platformName": "Microsoft Advertising",
-  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "generatedAt": "2026-07-09T16:50:50.487Z",
   "source": {
-    "mode": "registry-template",
-    "checkedAt": "2026-07-09T00:00:00.000Z",
-    "scope": "Publishable field-value template only; no authenticated account objects included.",
+    "mode": "official-doc-curated",
+    "checkedAt": "2026-07-09",
+    "scope": "Curated official documentation categories only; no credentials, account objects, or raw API responses included.",
     "caveats": [
-      "Platform-visible value; availability may vary by account, locale, campaign type, and policy."
+      "Official Microsoft Advertising documentation confirms profile criteria families, but profile identifiers require API lookup."
     ]
   },
   "fields": [
-    { "fieldId": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "companyName", "label": "LinkedIn company", "inputKeys": ["companyNames"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "industry", "label": "LinkedIn industry", "inputKeys": ["industries"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "jobFunction", "label": "LinkedIn job function", "inputKeys": ["jobFunctions"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "keyword", "label": "Keywords", "inputKeys": ["keywords", "intentSignals"], "status": "ready-for-values", "values": [] }
+    {
+      "fieldId": "companyName",
+      "label": "LinkedIn company",
+      "inputKeys": [
+        "companyNames"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Company profile criterion",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://learn.microsoft.com/en-us/advertising/campaign-management-service/profilecriterion?view=bingads-13",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Microsoft Advertising ProfileCriterion",
+          "confidence": "medium",
+          "caveats": [
+            "Official Microsoft Advertising documentation confirms profile criteria families, but profile identifiers require API lookup."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "industry",
+      "label": "LinkedIn industry",
+      "inputKeys": [
+        "industries"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Industry profile criterion",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://learn.microsoft.com/en-us/advertising/campaign-management-service/profilecriterion?view=bingads-13",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Microsoft Advertising ProfileCriterion",
+          "confidence": "medium",
+          "caveats": [
+            "Official Microsoft Advertising documentation confirms profile criteria families, but profile identifiers require API lookup."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "jobFunction",
+      "label": "LinkedIn job function",
+      "inputKeys": [
+        "jobFunctions"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Job function profile criterion",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://learn.microsoft.com/en-us/advertising/campaign-management-service/profilecriterion?view=bingads-13",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Microsoft Advertising ProfileCriterion",
+          "confidence": "medium",
+          "caveats": [
+            "Official Microsoft Advertising documentation confirms profile criteria families, but profile identifiers require API lookup."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "geography",
+      "label": "Location",
+      "inputKeys": [
+        "locale",
+        "geographies"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Campaign location criterion",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://learn.microsoft.com/en-us/advertising/campaign-management-service/profilecriterion?view=bingads-13",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Microsoft Advertising ProfileCriterion",
+          "confidence": "medium",
+          "caveats": [
+            "Official Microsoft Advertising documentation confirms profile criteria families, but profile identifiers require API lookup."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "keyword",
+      "label": "Keywords",
+      "inputKeys": [
+        "keywords"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Keyword criterion",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://learn.microsoft.com/en-us/advertising/campaign-management-service/profilecriterion?view=bingads-13",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Microsoft Advertising ProfileCriterion",
+          "confidence": "medium",
+          "caveats": [
+            "Official Microsoft Advertising documentation confirms profile criteria families, but profile identifiers require API lookup."
+          ]
+        }
+      ]
+    }
   ]
 }

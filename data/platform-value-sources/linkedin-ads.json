@@ -1,0 +1,146 @@
+{
+  "platformId": "linkedin-ads",
+  "platformName": "LinkedIn Ads",
+  "sourceLabel": "LinkedIn Ads targeting options",
+  "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+  "sourceCheckedAt": "2026-07-09",
+  "confidence": "high",
+  "caveats": [
+    "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+  ],
+  "fields": [
+    {
+      "fieldId": "geography",
+      "label": "Location",
+      "inputKeys": ["locale", "geographies"],
+      "confidence": "high",
+      "values": [
+        { "label": "Permanent location" },
+        { "label": "Recent location" },
+        { "label": "Recent or permanent location" },
+        { "label": "Continent" },
+        { "label": "Country cluster" },
+        { "label": "Country" },
+        { "label": "State" },
+        { "label": "Region or market area" },
+        { "label": "County" },
+        { "label": "City" },
+        { "label": "Profile language" }
+      ]
+    },
+    {
+      "fieldId": "companyName",
+      "label": "Company names",
+      "inputKeys": ["companyNames"],
+      "confidence": "high",
+      "values": [
+        { "label": "Company category" },
+        { "label": "Company funding stage" },
+        { "label": "Company business type" },
+        { "label": "Company regions served" },
+        { "label": "Company connections" },
+        { "label": "Company followers" },
+        { "label": "Company growth rate" },
+        { "label": "Company name" },
+        { "label": "Company revenue" }
+      ]
+    },
+    {
+      "fieldId": "industry",
+      "label": "Company industry",
+      "inputKeys": ["industries"],
+      "confidence": "high",
+      "values": [
+        { "label": "Company industry" }
+      ]
+    },
+    {
+      "fieldId": "companySize",
+      "label": "Company size",
+      "inputKeys": ["companySizes"],
+      "confidence": "high",
+      "values": [
+        { "label": "Company size" }
+      ]
+    },
+    {
+      "fieldId": "demographics",
+      "label": "Demographics",
+      "inputKeys": ["demographics"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Member age" },
+        { "label": "Member gender" }
+      ]
+    },
+    {
+      "fieldId": "device",
+      "label": "Devices",
+      "inputKeys": ["devices"],
+      "confidence": "high",
+      "values": [
+        { "label": "Device operating system" },
+        { "label": "Device type" }
+      ]
+    },
+    {
+      "fieldId": "education",
+      "label": "Education",
+      "inputKeys": ["education"],
+      "confidence": "high",
+      "values": [
+        { "label": "Degrees" },
+        { "label": "Fields of study" },
+        { "label": "Member schools" }
+      ]
+    },
+    {
+      "fieldId": "jobTitle",
+      "label": "Job title",
+      "inputKeys": ["jobTitles"],
+      "confidence": "high",
+      "values": [
+        { "label": "Job title" },
+        { "label": "Years of experience" }
+      ]
+    },
+    {
+      "fieldId": "jobFunction",
+      "label": "Job function",
+      "inputKeys": ["jobFunctions"],
+      "confidence": "high",
+      "values": [
+        { "label": "Job function" }
+      ]
+    },
+    {
+      "fieldId": "seniority",
+      "label": "Seniority",
+      "inputKeys": ["seniorities"],
+      "confidence": "high",
+      "values": [
+        { "label": "Job seniority" }
+      ]
+    },
+    {
+      "fieldId": "skill",
+      "label": "Member skills",
+      "inputKeys": ["skills"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Member skills" }
+      ]
+    },
+    {
+      "fieldId": "interest",
+      "label": "Professional interests",
+      "inputKeys": ["interests"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Member groups" },
+        { "label": "Member interests" },
+        { "label": "Member traits" }
+      ]
+    }
+  ]
+}

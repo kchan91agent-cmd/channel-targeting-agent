@@ -1,0 +1,60 @@
+{
+  "platformId": "meta-ads",
+  "platformName": "Meta Ads: Facebook / Instagram",
+  "sourceLabel": "Meta Marketing API Targeting Search",
+  "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+  "sourceCheckedAt": "2026-07-09",
+  "confidence": "medium",
+  "caveats": [
+    "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+  ],
+  "fields": [
+    {
+      "fieldId": "geography",
+      "label": "Location",
+      "inputKeys": ["locale", "geographies"],
+      "confidence": "high",
+      "values": [
+        { "label": "Country" },
+        { "label": "Region" },
+        { "label": "City" },
+        { "label": "Zip code" },
+        { "label": "Geo market" },
+        { "label": "Electoral district" }
+      ]
+    },
+    {
+      "fieldId": "interest",
+      "label": "Interests",
+      "inputKeys": ["interests", "industries", "topics"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Interest" },
+        { "label": "Interest suggestion" },
+        { "label": "Interest validation" }
+      ]
+    },
+    {
+      "fieldId": "behavior",
+      "label": "Behaviors",
+      "inputKeys": ["lifeEvents"],
+      "confidence": "low",
+      "values": [
+        { "label": "Behavior" }
+      ]
+    },
+    {
+      "fieldId": "demographics",
+      "label": "Demographics",
+      "inputKeys": ["demographics", "education"],
+      "confidence": "low",
+      "values": [
+        { "label": "Education school" },
+        { "label": "Education major" },
+        { "label": "Education status" },
+        { "label": "Work employer" },
+        { "label": "Work position" }
+      ]
+    }
+  ]
+}

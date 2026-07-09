@@ -1,0 +1,60 @@
+{
+  "platformId": "reddit-ads",
+  "platformName": "Reddit Ads",
+  "sourceLabel": "Reddit Ads API docs",
+  "sourceUrl": "https://ads-api.reddit.com/docs/v3/",
+  "sourceCheckedAt": "2026-07-09",
+  "confidence": "medium",
+  "caveats": [
+    "Official Reddit Ads API documentation confirms targeting option families, but exact selectable values are dynamic and may vary by account and locale."
+  ],
+  "fields": [
+    {
+      "fieldId": "geography",
+      "label": "Location",
+      "inputKeys": ["locale", "geographies"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Country" },
+        { "label": "Region" },
+        { "label": "Metro" }
+      ]
+    },
+    {
+      "fieldId": "community",
+      "label": "Community targeting",
+      "inputKeys": ["communities", "industries", "interests", "topics"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Community" }
+      ]
+    },
+    {
+      "fieldId": "interest",
+      "label": "Interest targeting",
+      "inputKeys": ["interests", "industries"],
+      "confidence": "low",
+      "values": [
+        { "label": "Interest" }
+      ]
+    },
+    {
+      "fieldId": "keyword",
+      "label": "Keyword targeting",
+      "inputKeys": ["keywords"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Keyword" }
+      ]
+    },
+    {
+      "fieldId": "device",
+      "label": "Device targeting",
+      "inputKeys": ["devices"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Device" }
+      ]
+    }
+  ]
+}

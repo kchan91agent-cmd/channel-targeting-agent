@@ -1,3 +1,5 @@
+import { closestCatalogValues } from "../platform-values.js";
+
 const EXACT_ACTIONABILITY_WEIGHTS = {
   companyNames: 3,
   jobTitles: 3,
@@ -263,6 +265,10 @@ function fieldCheckSummary(fieldCheck) {
 
 export function matchStrategyToPlatforms(strategy, platforms, options = {}) {
   const fieldChecks = options.fieldChecks ?? new Map();
+  const docsBackedValueMatches = closestCatalogValues(
+    (options.platformValueCatalogs ?? []).filter((catalog) => catalog.source?.mode === "official-doc-curated"),
+    strategy
+  );
   const platformMatches = platforms.map((platform) => {
     const liveFieldCheck = fieldChecks instanceof Map ? fieldChecks.get(platform.id) : fieldChecks[platform.id];
     const preferred = platformPreferred(strategy, platform.id);
@@ -423,6 +429,7 @@ export function matchStrategyToPlatforms(strategy, platforms, options = {}) {
       if (preferredDelta !== 0) return preferredDelta;
       return CONFIDENCE_RANK[b.confidence] - CONFIDENCE_RANK[a.confidence];
     }),
-    unavailableStrategyDimensions
+    unavailableStrategyDimensions,
+    docsBackedValueMatches
   };
 }

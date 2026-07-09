@@ -1,7 +1,7 @@
 # Channel Targeting Agent Pilot Welcome Kit
 
 Status: shareable pilot handoff
-Last reviewed: 2026-06-26
+Last reviewed: 2026-07-09
 
 ## Welcome
 
@@ -15,6 +15,8 @@ It helps you separate:
 - Missing inputs that would materially improve the plan.
 
 This is a read-only planning tool. It does not create campaigns, upload audiences, change ad accounts, or spend budget.
+
+The current pilot is most useful as a pre-launch feasibility check. It can help a PMM, demand generation lead, or paid-media specialist decide whether a strategy is targetable enough to explore, which channels deserve closer review, and what inputs are missing before launch planning. It is not a final media plan, launch approval, or budget recommendation.
 
 ## Open The Project
 
@@ -64,6 +66,15 @@ Your report has two layers. The most useful parts are:
 
 Treat the report as a planning starting point. A paid-media specialist must still validate account-specific audience availability, campaign-type rules, policy restrictions, reach, and cost before launch.
 
+The strongest current use cases are:
+
+- Checking whether a broad ICP, persona, or ABM idea maps to real platform targeting fields.
+- Separating direct targeting from proxy tests and message-only inputs.
+- Finding missing account, audience, suppression, budget, and measurement inputs before media planning.
+- Creating a shared starting point for PMM, demand generation, and paid-media review.
+
+The current report does not yet provide live account-specific picklists, audience sizes, cost forecasts, or a final go / no-go launch decision.
+
 ## Privacy And Safe Use
 
 - Your source is processed temporarily for this run and is not saved into the project by default.
@@ -79,6 +90,8 @@ After reading the report, ask yourself:
 2. Does it clearly distinguish direct targeting from a proxy or a message-only input?
 3. Did it identify the missing information that would change your plan?
 4. Would a demand-generation or paid-media specialist know what to verify next?
+5. Does the report make the campaign feel ready for media planning, or does it expose missing inputs first?
+6. Would a sharper go / no-go call, launch-readiness score, budget-aware channel sequence, or risk register make the output easier to use?
 
 Do not treat a platform recommendation as an instruction to launch. It is a hypothesis grounded in the current registry and your source.
 
@@ -98,6 +111,9 @@ What was wrong, unclear, or too generic:
 Any targeting claim a paid-media specialist would change:
 -
 
+What would make this more useful for executive launch planning:
+-
+
 Would you use this as a planning starting point? yes | no | with changes
 ```
 
@@ -109,4 +125,4 @@ Stay in the conversation. Tell the agent what happened in plain language and let
 
 ## Pilot Scope
 
-This pilot is currently validated for Codex. Platform recommendations are registry-backed unless a later, explicitly authorized read-only account check confirms a specific field.
+This pilot is currently validated for Codex. Platform recommendations are registry-backed and docs-backed where official source catalogs are available, unless a later, explicitly authorized read-only account check confirms a specific field. Treat the report as a feasibility preflight, not final launch approval.

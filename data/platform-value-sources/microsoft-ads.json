@@ -1,0 +1,58 @@
+{
+  "platformId": "microsoft-ads",
+  "platformName": "Microsoft Advertising",
+  "sourceLabel": "Microsoft Advertising ProfileCriterion",
+  "sourceUrl": "https://learn.microsoft.com/en-us/advertising/campaign-management-service/profilecriterion?view=bingads-13",
+  "sourceCheckedAt": "2026-07-09",
+  "confidence": "medium",
+  "caveats": [
+    "Official Microsoft Advertising documentation confirms profile criteria families, but profile identifiers require API lookup."
+  ],
+  "fields": [
+    {
+      "fieldId": "companyName",
+      "label": "LinkedIn company",
+      "inputKeys": ["companyNames"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Company profile criterion" }
+      ]
+    },
+    {
+      "fieldId": "industry",
+      "label": "LinkedIn industry",
+      "inputKeys": ["industries"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Industry profile criterion" }
+      ]
+    },
+    {
+      "fieldId": "jobFunction",
+      "label": "LinkedIn job function",
+      "inputKeys": ["jobFunctions"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Job function profile criterion" }
+      ]
+    },
+    {
+      "fieldId": "geography",
+      "label": "Location",
+      "inputKeys": ["locale", "geographies"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Campaign location criterion" }
+      ]
+    },
+    {
+      "fieldId": "keyword",
+      "label": "Keywords",
+      "inputKeys": ["keywords"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Keyword criterion" }
+      ]
+    }
+  ]
+}

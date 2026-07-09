@@ -1,0 +1,81 @@
+{
+  "platformId": "google-ads-youtube",
+  "platformName": "Google Ads / YouTube",
+  "sourceLabel": "Google Ads API targeting overview",
+  "sourceUrl": "https://developers.google.com/google-ads/api/docs/targeting/overview",
+  "sourceCheckedAt": "2026-07-09",
+  "confidence": "medium",
+  "caveats": [
+    "Official Google Ads API documentation confirms these targeting families, but exact selectable values may require API metadata queries."
+  ],
+  "fields": [
+    {
+      "fieldId": "geography",
+      "label": "Location",
+      "inputKeys": ["locale", "geographies"],
+      "confidence": "high",
+      "values": [
+        { "label": "Geo target constant" },
+        { "label": "Campaign location criterion" }
+      ]
+    },
+    {
+      "fieldId": "keyword",
+      "label": "Keywords",
+      "inputKeys": ["keywords", "industries"],
+      "confidence": "high",
+      "values": [
+        { "label": "Keyword criterion" },
+        { "label": "Keyword planning idea" }
+      ]
+    },
+    {
+      "fieldId": "customSegment",
+      "label": "Custom segments",
+      "inputKeys": ["keywords", "interests", "industries", "placements", "topics"],
+      "confidence": "medium",
+      "values": [
+        { "label": "Custom segment" },
+        { "label": "Placement signal" },
+        { "label": "Topic signal" }
+      ]
+    },
+    {
+      "fieldId": "inMarket",
+      "label": "In-market audiences",
+      "inputKeys": ["industries", "interests"],
+      "confidence": "medium",
+      "values": [
+        { "label": "In-market audience" }
+      ]
+    },
+    {
+      "fieldId": "affinity",
+      "label": "Affinity audiences",
+      "inputKeys": ["interests"],
+      "confidence": "low",
+      "values": [
+        { "label": "Affinity audience" }
+      ]
+    },
+    {
+      "fieldId": "detailedDemographics",
+      "label": "Detailed demographics / life events",
+      "inputKeys": ["demographics", "education", "lifeEvents"],
+      "confidence": "low",
+      "values": [
+        { "label": "Detailed demographic" },
+        { "label": "Life event" }
+      ]
+    },
+    {
+      "fieldId": "device",
+      "label": "Device targeting",
+      "inputKeys": ["devices"],
+      "confidence": "high",
+      "values": [
+        { "label": "Device criterion" }
+      ]
+    }
+  ]
+}

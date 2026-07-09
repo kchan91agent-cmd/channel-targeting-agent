@@ -6,6 +6,8 @@ import { checkPlatformFields } from "../src/connectors/field-check.js";
 import { loadPlatforms } from "../src/platforms.js";
 import { matchStrategyToPlatforms } from "../src/matcher/match.js";
 import { renderMarkdownReport } from "../src/report/render-markdown.js";
+import { validateStandardOutput } from "../src/report/validate-standard-output.js";
+import { loadPlatformValueCatalogs } from "../src/platform-values.js";
 
 test("parses Markdown campaign briefs into strategy input", async () => {
   const markdown = await readFile(new URL("../examples/b2b-saas-generic.md", import.meta.url), "utf8");
@@ -24,8 +26,9 @@ test("parses expanded audience inputs from Markdown briefs", () => {
 
 test("renders the required executive brief, appendix, and all-platform field inventory", async () => {
   const platforms = await loadPlatforms();
+  const platformValueCatalogs = await loadPlatformValueCatalogs();
   const markdown = await readFile(new URL("../examples/b2b-saas-generic.md", import.meta.url), "utf8");
-  const report = renderMarkdownReport(matchStrategyToPlatforms(parseMarkdownBrief(markdown), platforms));
+  const report = renderMarkdownReport(matchStrategyToPlatforms(parseMarkdownBrief(markdown), platforms, { platformValueCatalogs }));
 
   for (const heading of [
     "## Executive Brief",
@@ -38,6 +41,7 @@ test("renders the required executive brief, appendix, and all-platform field inv
     "### Source Inputs",
     "### Keyword Cluster Guidance",
     "### Concrete Keyword and Audience Map",
+    "### Docs-Backed Value Evidence",
     "### Platform Field Inventory",
     "### Platform Detail",
     "### Cross-Platform Gaps",
@@ -45,6 +49,11 @@ test("renders the required executive brief, appendix, and all-platform field inv
   ]) assert.ok(report.includes(heading));
 
   assert.ok(report.includes("| LinkedIn Ads | Geography |"));
+  assert.ok(report.includes("| LinkedIn Ads | Revenue Operations Manager, Marketing Operations Director | Job title |"));
+  assert.equal(report.includes("| LinkedIn Ads | None |"), false);
+  assert.equal(report.includes("| Google Ads / YouTube | None |"), false);
+  assert.ok(report.includes("LinkedIn Ads targeting options"));
+  assert.deepEqual(validateStandardOutput(report, platforms), { valid: true, errors: [] });
   assert.ok(report.includes("| LinkedIn Ads | Lookalike / similar-audience seeds |"));
   assert.ok(report.includes("| LinkedIn Ads | Job title | Direct targeting field |"));
   assert.ok(report.includes("| Google Ads / YouTube | Job title | Not targetable |"));
@@ -56,8 +65,9 @@ test("renders the required executive brief, appendix, and all-platform field inv
 
 test("keeps pains, gains, objections, and triggers out of targeting keywords", async () => {
   const platforms = await loadPlatforms();
+  const platformValueCatalogs = await loadPlatformValueCatalogs();
   const strategy = parseMarkdownBrief("Product: Creator commerce analytics\nMarket: TikTok commerce teams\nKeywords: TikTok Shop analytics\nPains: unclear creator ROI\nGains: faster creative iteration\nTriggers: seasonal product drop");
-  const report = renderMarkdownReport(matchStrategyToPlatforms(strategy, platforms));
+  const report = renderMarkdownReport(matchStrategyToPlatforms(strategy, platforms, { platformValueCatalogs }));
   const targetingMap = report.slice(report.indexOf("### Concrete Keyword and Audience Map"), report.indexOf("### Platform Field Inventory"));
 
   assert.ok(report.includes("| Pains, gains, objections, and triggers |"));

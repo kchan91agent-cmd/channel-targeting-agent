@@ -5,6 +5,7 @@ import { matchStrategyToPlatforms } from "./matcher/match.js";
 import { renderMarkdownReport } from "./report/render-markdown.js";
 import { checkPlatformFields } from "./connectors/field-check.js";
 import { loadLocalEnv } from "./env.js";
+import { loadPlatformValueCatalogs } from "./platform-values.js";
 
 function parseArgs(argv) {
   const args = { inputPath: null, outPath: null, withFieldChecks: false };
@@ -33,10 +34,11 @@ async function main() {
 
   const strategy = await loadBrief(inputPath);
   const platforms = await loadPlatforms();
+  const platformValueCatalogs = await loadPlatformValueCatalogs();
   const fieldChecks = withFieldChecks
     ? new Map((await Promise.all(platforms.map(async (platform) => [platform.id, await checkPlatformFields(platform)]))))
     : new Map();
-  const output = matchStrategyToPlatforms(strategy, platforms, { fieldChecks });
+  const output = matchStrategyToPlatforms(strategy, platforms, { fieldChecks, platformValueCatalogs });
   const report = renderMarkdownReport(output);
 
   if (outPath) {

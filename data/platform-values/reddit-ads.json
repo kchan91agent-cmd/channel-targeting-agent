@@ -1,20 +1,161 @@
 {
   "platformId": "reddit-ads",
   "platformName": "Reddit Ads",
-  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "generatedAt": "2026-07-09T16:50:50.487Z",
   "source": {
-    "mode": "registry-template",
-    "checkedAt": "2026-07-09T00:00:00.000Z",
-    "scope": "Publishable field-value template only; no authenticated account objects included.",
+    "mode": "official-doc-curated",
+    "checkedAt": "2026-07-09",
+    "scope": "Curated official documentation categories only; no credentials, account objects, or raw API responses included.",
     "caveats": [
-      "Platform-visible value; availability may vary by account, locale, campaign type, and policy."
+      "Official Reddit Ads API documentation confirms targeting option families, but exact selectable values are dynamic and may vary by account and locale."
     ]
   },
   "fields": [
-    { "fieldId": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "community", "label": "Community targeting", "inputKeys": ["communities", "topics"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "interest", "label": "Interest targeting", "inputKeys": ["interests", "industries", "topics"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "keyword", "label": "Keyword targeting", "inputKeys": ["keywords", "intentSignals"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "device", "label": "Device targeting", "inputKeys": ["devices"], "status": "ready-for-values", "values": [] }
+    {
+      "fieldId": "geography",
+      "label": "Location",
+      "inputKeys": [
+        "locale",
+        "geographies"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Country",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://ads-api.reddit.com/docs/v3/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Reddit Ads API docs",
+          "confidence": "medium",
+          "caveats": [
+            "Official Reddit Ads API documentation confirms targeting option families, but exact selectable values are dynamic and may vary by account and locale."
+          ]
+        },
+        {
+          "label": "Region",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://ads-api.reddit.com/docs/v3/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Reddit Ads API docs",
+          "confidence": "medium",
+          "caveats": [
+            "Official Reddit Ads API documentation confirms targeting option families, but exact selectable values are dynamic and may vary by account and locale."
+          ]
+        },
+        {
+          "label": "Metro",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://ads-api.reddit.com/docs/v3/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Reddit Ads API docs",
+          "confidence": "medium",
+          "caveats": [
+            "Official Reddit Ads API documentation confirms targeting option families, but exact selectable values are dynamic and may vary by account and locale."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "community",
+      "label": "Community targeting",
+      "inputKeys": [
+        "communities",
+        "industries",
+        "interests",
+        "topics"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Community",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://ads-api.reddit.com/docs/v3/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Reddit Ads API docs",
+          "confidence": "medium",
+          "caveats": [
+            "Official Reddit Ads API documentation confirms targeting option families, but exact selectable values are dynamic and may vary by account and locale."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "interest",
+      "label": "Interest targeting",
+      "inputKeys": [
+        "interests",
+        "industries"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Interest",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://ads-api.reddit.com/docs/v3/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Reddit Ads API docs",
+          "confidence": "low",
+          "caveats": [
+            "Official Reddit Ads API documentation confirms targeting option families, but exact selectable values are dynamic and may vary by account and locale."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "keyword",
+      "label": "Keyword targeting",
+      "inputKeys": [
+        "keywords"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Keyword",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://ads-api.reddit.com/docs/v3/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Reddit Ads API docs",
+          "confidence": "medium",
+          "caveats": [
+            "Official Reddit Ads API documentation confirms targeting option families, but exact selectable values are dynamic and may vary by account and locale."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "device",
+      "label": "Device targeting",
+      "inputKeys": [
+        "devices"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Device",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://ads-api.reddit.com/docs/v3/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Reddit Ads API docs",
+          "confidence": "medium",
+          "caveats": [
+            "Official Reddit Ads API documentation confirms targeting option families, but exact selectable values are dynamic and may vary by account and locale."
+          ]
+        }
+      ]
+    }
   ]
 }

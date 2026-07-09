@@ -1,19 +1,254 @@
 {
   "platformId": "meta-ads",
   "platformName": "Meta Ads: Facebook / Instagram",
-  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "generatedAt": "2026-07-09T16:50:50.487Z",
   "source": {
-    "mode": "registry-template",
-    "checkedAt": "2026-07-09T00:00:00.000Z",
-    "scope": "Publishable field-value template only; no authenticated account objects included.",
+    "mode": "official-doc-curated",
+    "checkedAt": "2026-07-09",
+    "scope": "Curated official documentation categories only; no credentials, account objects, or raw API responses included.",
     "caveats": [
-      "Platform-visible value; availability may vary by account, locale, campaign type, and policy."
+      "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
     ]
   },
   "fields": [
-    { "fieldId": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "interest", "label": "Interests", "inputKeys": ["interests", "industries", "topics"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "behavior", "label": "Behaviors", "inputKeys": ["interests", "intentSignals"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "demographics", "label": "Demographics", "inputKeys": ["demographics", "education", "lifeEvents"], "status": "ready-for-values", "values": [] }
+    {
+      "fieldId": "geography",
+      "label": "Location",
+      "inputKeys": [
+        "locale",
+        "geographies"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Country",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "high",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Region",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "high",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "City",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "high",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Zip code",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "high",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Geo market",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "high",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Electoral district",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "high",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "interest",
+      "label": "Interests",
+      "inputKeys": [
+        "interests",
+        "industries",
+        "topics"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Interest",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "medium",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Interest suggestion",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "medium",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Interest validation",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "medium",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "behavior",
+      "label": "Behaviors",
+      "inputKeys": [
+        "lifeEvents"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Behavior",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "low",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "demographics",
+      "label": "Demographics",
+      "inputKeys": [
+        "demographics",
+        "education"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Education school",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "low",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Education major",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "low",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Education status",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "low",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Work employer",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "low",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        },
+        {
+          "label": "Work position",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "Meta Marketing API Targeting Search",
+          "confidence": "low",
+          "caveats": [
+            "Official Meta developer documentation confirms targeting-search categories, but exact selectable values are dynamic and policy-sensitive."
+          ]
+        }
+      ]
+    }
   ]
 }

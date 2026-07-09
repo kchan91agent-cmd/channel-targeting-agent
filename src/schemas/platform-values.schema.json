@@ -14,7 +14,7 @@
       "required": ["mode", "checkedAt", "scope", "caveats"],
       "additionalProperties": false,
       "properties": {
-        "mode": { "enum": ["registry-template", "authenticated-sanitized", "manual-reviewed"] },
+        "mode": { "enum": ["registry-template", "official-doc-curated", "authenticated-sanitized", "manual-reviewed"] },
         "checkedAt": { "type": "string" },
         "scope": { "type": "string" },
         "caveats": { "type": "array", "items": { "type": "string" } }
@@ -44,7 +44,11 @@
                 "locale": { "type": "string" },
                 "status": { "enum": ["api-confirmed", "manual-reviewed"] },
                 "checkedAt": { "type": "string" },
-                "source": { "enum": ["authenticated-read-only-query", "manual-review"] },
+                "source": { "enum": ["official-doc", "authenticated-read-only-query", "manual-review"] },
+                "sourceUrl": { "type": "string" },
+                "sourceCheckedAt": { "type": "string" },
+                "sourceLabel": { "type": "string" },
+                "confidence": { "enum": ["low", "medium", "high"] },
                 "caveats": { "type": "array", "items": { "type": "string" } }
               }
             }

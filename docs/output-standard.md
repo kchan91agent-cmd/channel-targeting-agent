@@ -82,6 +82,15 @@ Then include these subsections:
 
 Never present pains, gains, objections, or triggers as targeting keywords unless an explicitly verified platform field supports them.
 
+### Docs-Backed Value Evidence
+
+When docs-backed platform-value catalogs are loaded, provide a table that ties source input terms to official-doc-backed fields and values/categories:
+
+| Platform | Source input terms | Docs-backed field | Official values/categories | Official source | Verification needed |
+| --- | --- | --- | --- | --- | --- |
+
+Treat this section as evidence only. It supports the inferred ties between source terms and official platform categories, but it does not prove account-specific availability, full dynamic picklists, or campaign eligibility.
+
 ### Platform Field Inventory
 
 For every relevant platform, provide a complete table:

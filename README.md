@@ -181,7 +181,14 @@ npm run refresh-values
 npm run refresh-values -- --write-templates
 ```
 
-See `docs/platform-value-catalog.md` for credential setup and the publish-safety boundary.
+Preview or write official-doc-backed catalogs without credentials:
+
+```bash
+npm run refresh-values -- --source official-docs
+npm run refresh-values -- --source official-docs --write
+```
+
+See `docs/platform-value-catalog.md` for official source citations, credential setup, and the publish-safety boundary.
 
 ## Third-Party Pilot
 

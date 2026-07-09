@@ -1,25 +1,617 @@
 {
   "platformId": "linkedin-ads",
   "platformName": "LinkedIn Ads",
-  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "generatedAt": "2026-07-09T16:50:50.482Z",
   "source": {
-    "mode": "registry-template",
-    "checkedAt": "2026-07-09T00:00:00.000Z",
-    "scope": "Publishable field-value template only; no authenticated account objects included.",
+    "mode": "official-doc-curated",
+    "checkedAt": "2026-07-09",
+    "scope": "Curated official documentation categories only; no credentials, account objects, or raw API responses included.",
     "caveats": [
-      "Platform-visible value; availability may vary by account, locale, campaign type, and policy."
+      "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
     ]
   },
   "fields": [
-    { "fieldId": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "companyName", "label": "Company names", "inputKeys": ["companyNames"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "industry", "label": "Company industry", "inputKeys": ["industries"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "companySize", "label": "Company size", "inputKeys": ["companySizes"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "jobTitle", "label": "Job title", "inputKeys": ["jobTitles"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "jobFunction", "label": "Job function", "inputKeys": ["jobFunctions"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "seniority", "label": "Seniority", "inputKeys": ["seniorities"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "skill", "label": "Member skills", "inputKeys": ["skills"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "education", "label": "Education", "inputKeys": ["education"], "status": "ready-for-values", "values": [] },
-    { "fieldId": "interest", "label": "Professional interests", "inputKeys": ["interests"], "status": "ready-for-values", "values": [] }
+    {
+      "fieldId": "geography",
+      "label": "Location",
+      "inputKeys": [
+        "locale",
+        "geographies"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Permanent location",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Recent location",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Recent or permanent location",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Continent",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Country cluster",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Country",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "State",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Region or market area",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "County",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "City",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Profile language",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "companyName",
+      "label": "Company names",
+      "inputKeys": [
+        "companyNames"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Company category",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Company funding stage",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Company business type",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Company regions served",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Company connections",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Company followers",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Company growth rate",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Company name",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Company revenue",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "industry",
+      "label": "Company industry",
+      "inputKeys": [
+        "industries"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Company industry",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "companySize",
+      "label": "Company size",
+      "inputKeys": [
+        "companySizes"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Company size",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "demographics",
+      "label": "Demographics",
+      "inputKeys": [
+        "demographics"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Member age",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "medium",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Member gender",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "medium",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "device",
+      "label": "Devices",
+      "inputKeys": [
+        "devices"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Device operating system",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Device type",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "education",
+      "label": "Education",
+      "inputKeys": [
+        "education"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Degrees",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Fields of study",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Member schools",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "jobTitle",
+      "label": "Job title",
+      "inputKeys": [
+        "jobTitles"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Job title",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Years of experience",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "jobFunction",
+      "label": "Job function",
+      "inputKeys": [
+        "jobFunctions"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Job function",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "seniority",
+      "label": "Seniority",
+      "inputKeys": [
+        "seniorities"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Job seniority",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "high",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "skill",
+      "label": "Member skills",
+      "inputKeys": [
+        "skills"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Member skills",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "medium",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    },
+    {
+      "fieldId": "interest",
+      "label": "Professional interests",
+      "inputKeys": [
+        "interests"
+      ],
+      "status": "manual-reviewed",
+      "values": [
+        {
+          "label": "Member groups",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "medium",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Member interests",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "medium",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        },
+        {
+          "label": "Member traits",
+          "status": "manual-reviewed",
+          "checkedAt": "2026-07-09",
+          "source": "official-doc",
+          "sourceUrl": "https://www.linkedin.com/help/lms/answer/a424655",
+          "sourceCheckedAt": "2026-07-09",
+          "sourceLabel": "LinkedIn Ads targeting options",
+          "confidence": "medium",
+          "caveats": [
+            "Official LinkedIn Help confirms these targeting categories, but exact selectable values may vary by account, locale, campaign type, and policy."
+          ]
+        }
+      ]
+    }
   ]
 }

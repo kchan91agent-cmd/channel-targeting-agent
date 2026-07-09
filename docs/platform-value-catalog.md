@@ -35,7 +35,23 @@ data/platform-values/
   reddit-ads.json
 ```
 
-Each file starts as a safe template with empty `values` arrays. After local credentialed checks exist, the template can be populated with sanitized, reviewed values.
+Each file can be generated either as an empty safe template or as a docs-backed catalog populated with sanitized, official-source category values. Local credentialed checks can later add sanitized, reviewed live values without changing the publish-safety boundary.
+
+## Docs-Backed Importer
+
+The docs-backed importer creates source-defensible catalogs from curated official documentation manifests in `data/platform-value-sources/`. It does not use credentials and does not scrape pages at runtime. This makes the committed catalogs more transparent than the static registry because every generated value carries an official source URL, source label, checked date, confidence, and caveats.
+
+Docs-backed catalogs are not account-specific and are not full dynamic picklists. They confirm field families and stable category-level values from official documentation. API credentials remain optional for a later live verification layer when exact account availability, typeahead values, locale differences, or policy gating matter.
+
+Official sources used by the importer:
+
+| Platform | Official source | Source type | Checked date | Confirms | Still requires API/account verification |
+| --- | --- | --- | --- | --- | --- |
+| LinkedIn Ads | [LinkedIn Ads targeting options](https://www.linkedin.com/help/lms/answer/a424655) | Official help documentation | 2026-07-09 | Location, company attributes, demographics, devices, education, job experience, interests, and traits categories | Exact typeahead values, account eligibility, locale restrictions, and campaign-type availability |
+| Meta Ads | [Meta Marketing API Targeting Search](https://developers.facebook.com/docs/marketing-api/audiences/reference/targeting-search/) | Official API documentation | 2026-07-09 | Location, interest, behavior, and demographic search families | Exact dynamic values, policy-sensitive availability, and ad-account eligibility |
+| Google Ads / YouTube | [Google Ads API targeting overview](https://developers.google.com/google-ads/api/docs/targeting/overview) | Official API documentation | 2026-07-09 | Location, keyword, custom segment, audience-family, demographic, life-event, and device targeting families | API metadata values, account eligibility, campaign subtype support, and policy restrictions |
+| Microsoft Advertising | [Microsoft Advertising ProfileCriterion](https://learn.microsoft.com/en-us/advertising/campaign-management-service/profilecriterion?view=bingads-13) | Official API documentation | 2026-07-09 | LinkedIn company, industry, and job-function profile criteria | Profile identifiers, account eligibility, campaign-type support, and current selectable values |
+| Reddit Ads | [Reddit Ads API docs](https://ads-api.reddit.com/docs/v3/) | Official API documentation | 2026-07-09 | Location, community, interest, keyword, and device targeting families | Exact dynamic values, account eligibility, locale availability, and policy gating |
 
 ## Local Credential Setup
 
@@ -123,16 +139,29 @@ Preview safe catalog templates:
 npm run refresh-values
 ```
 
+Preview docs-backed official-source catalogs:
+
+```bash
+npm run refresh-values -- --source official-docs
+```
+
 Preview a single platform:
 
 ```bash
 npm run refresh-values -- --platform linkedin-ads
+npm run refresh-values -- --source official-docs --platform linkedin-ads
 ```
 
 Write or refresh empty publishable templates:
 
 ```bash
 npm run refresh-values -- --write-templates
+```
+
+Write docs-backed publishable catalogs:
+
+```bash
+npm run refresh-values -- --source official-docs --write
 ```
 
 Run existing read-only field-family checks:
@@ -153,4 +182,4 @@ npm test
 
 ## Current Limitation
 
-`refresh-values` creates and validates publishable catalog templates. It does not yet pull live value lists from platform APIs. Add one value adapter at a time, starting with LinkedIn, and keep each adapter read-only, sanitized, and test-covered before committing generated values.
+`refresh-values` creates and validates publishable catalog templates or curated official-doc catalogs. It does not yet pull live value lists from platform APIs. Add one value adapter at a time, starting with LinkedIn, and keep each adapter read-only, sanitized, and test-covered before committing generated values.

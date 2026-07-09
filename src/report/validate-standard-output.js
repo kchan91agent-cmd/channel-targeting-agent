@@ -27,7 +27,12 @@ function orderedHeadings(report, headings) {
 }
 
 function platformRows(report, platformName) {
-  return report
+  const inventoryStart = report.indexOf("### Platform Field Inventory");
+  const detailStart = report.indexOf("### Platform Detail");
+  const inventory = inventoryStart >= 0 && detailStart > inventoryStart
+    ? report.slice(inventoryStart, detailStart)
+    : report;
+  return inventory
     .split("\n")
     .filter((line) => line.startsWith(`| ${platformName} |`));
 }

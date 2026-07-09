@@ -8,6 +8,7 @@ import { loadPlatforms } from "./platforms.js";
 import { matchStrategyToPlatforms } from "./matcher/match.js";
 import { renderMarkdownReport } from "./report/render-markdown.js";
 import { validateStandardOutput } from "./report/validate-standard-output.js";
+import { loadPlatformValueCatalogs } from "./platform-values.js";
 
 function argument(argv, name) {
   const index = argv.indexOf(name);
@@ -57,6 +58,7 @@ export async function analyzeSource({ provider, filePath, url, caseId = "source-
   const ingest = dependencies.ingestSource ?? ingestSource;
   const extract = dependencies.extractWithProvider ?? extractWithProvider;
   const platformsLoader = dependencies.loadPlatforms ?? loadPlatforms;
+  const platformValueCatalogsLoader = dependencies.loadPlatformValueCatalogs ?? loadPlatformValueCatalogs;
   const match = dependencies.matchStrategyToPlatforms ?? matchStrategyToPlatforms;
   const render = dependencies.renderMarkdownReport ?? renderMarkdownReport;
   const validate = dependencies.validateStandardOutput ?? validateStandardOutput;
@@ -74,7 +76,8 @@ export async function analyzeSource({ provider, filePath, url, caseId = "source-
     const { strategy } = await extract({ provider, sourcePath: readableSourcePath, outPath: briefPath });
     await chmod(briefPath, 0o600);
     const platforms = await platformsLoader();
-    const report = render(match(strategy, platforms));
+    const platformValueCatalogs = await platformValueCatalogsLoader();
+    const report = render(match(strategy, platforms, { platformValueCatalogs }));
     const contractErrors = validate(report, platforms).errors;
     return { report, diagnosis: diagnosis({ caseId, provider, sourceType, contractErrors }) };
   } catch (error) {
