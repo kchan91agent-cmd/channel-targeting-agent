@@ -1,0 +1,22 @@
+{
+  "platformId": "google-ads-youtube",
+  "platformName": "Google Ads / YouTube",
+  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "source": {
+    "mode": "registry-template",
+    "checkedAt": "2026-07-09T00:00:00.000Z",
+    "scope": "Publishable field-value template only; no authenticated account objects included.",
+    "caveats": [
+      "Platform-visible value; availability may vary by account, locale, campaign type, and policy."
+    ]
+  },
+  "fields": [
+    { "fieldId": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "keyword", "label": "Keywords", "inputKeys": ["keywords", "intentSignals"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "customSegment", "label": "Custom segments", "inputKeys": ["keywords", "intentSignals", "technographics", "interests"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "inMarket", "label": "In-market audiences", "inputKeys": ["industries", "intentSignals", "interests"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "affinity", "label": "Affinity audiences", "inputKeys": ["industries", "interests"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "detailedDemographics", "label": "Detailed demographics / life events", "inputKeys": ["demographics", "education", "lifeEvents"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "device", "label": "Device targeting", "inputKeys": ["devices"], "status": "ready-for-values", "values": [] }
+  ]
+}

@@ -12,6 +12,7 @@
     "match": "node src/index.js",
     "report": "node src/report.js",
     "check-fields": "node src/connectors/check-fields.js",
+    "refresh-values": "node src/connectors/refresh-values.js",
     "refresh": "node src/connectors/refresh-registry.js",
     "freshness": "node scripts/freshness-status.mjs",
     "test": "node --test",

@@ -2,8 +2,10 @@ import { writeFile } from "node:fs/promises";
 import path from "node:path";
 import { getProjectRoot, loadPlatforms } from "../platforms.js";
 import { checkSourceUrl, missingAuth } from "./source-check.js";
+import { loadLocalEnv } from "../env.js";
 
 async function main() {
+  await loadLocalEnv();
   const dryRun = process.argv.includes("--dry-run");
   const platforms = await loadPlatforms();
   const checks = [];

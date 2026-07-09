@@ -1,0 +1,25 @@
+{
+  "platformId": "linkedin-ads",
+  "platformName": "LinkedIn Ads",
+  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "source": {
+    "mode": "registry-template",
+    "checkedAt": "2026-07-09T00:00:00.000Z",
+    "scope": "Publishable field-value template only; no authenticated account objects included.",
+    "caveats": [
+      "Platform-visible value; availability may vary by account, locale, campaign type, and policy."
+    ]
+  },
+  "fields": [
+    { "fieldId": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "companyName", "label": "Company names", "inputKeys": ["companyNames"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "industry", "label": "Company industry", "inputKeys": ["industries"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "companySize", "label": "Company size", "inputKeys": ["companySizes"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "jobTitle", "label": "Job title", "inputKeys": ["jobTitles"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "jobFunction", "label": "Job function", "inputKeys": ["jobFunctions"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "seniority", "label": "Seniority", "inputKeys": ["seniorities"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "skill", "label": "Member skills", "inputKeys": ["skills"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "education", "label": "Education", "inputKeys": ["education"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "interest", "label": "Professional interests", "inputKeys": ["interests"], "status": "ready-for-values", "values": [] }
+  ]
+}

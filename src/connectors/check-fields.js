@@ -1,5 +1,6 @@
 import { loadPlatforms } from "../platforms.js";
 import { checkPlatformFields } from "./field-check.js";
+import { loadLocalEnv } from "../env.js";
 
 function parsePlatform(argv) {
   const index = argv.indexOf("--platform");
@@ -8,6 +9,7 @@ function parsePlatform(argv) {
 }
 
 async function main() {
+  await loadLocalEnv();
   const platformId = parsePlatform(process.argv.slice(2));
   if (!platformId) {
     console.error("Usage: npm run check-fields -- --platform <platform-id>");

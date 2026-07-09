@@ -1,0 +1,20 @@
+{
+  "platformId": "reddit-ads",
+  "platformName": "Reddit Ads",
+  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "source": {
+    "mode": "registry-template",
+    "checkedAt": "2026-07-09T00:00:00.000Z",
+    "scope": "Publishable field-value template only; no authenticated account objects included.",
+    "caveats": [
+      "Platform-visible value; availability may vary by account, locale, campaign type, and policy."
+    ]
+  },
+  "fields": [
+    { "fieldId": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "community", "label": "Community targeting", "inputKeys": ["communities", "topics"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "interest", "label": "Interest targeting", "inputKeys": ["interests", "industries", "topics"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "keyword", "label": "Keyword targeting", "inputKeys": ["keywords", "intentSignals"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "device", "label": "Device targeting", "inputKeys": ["devices"], "status": "ready-for-values", "values": [] }
+  ]
+}

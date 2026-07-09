@@ -24,6 +24,8 @@ This project now focuses only on public social and paid ad platforms. It exclude
 
 If a user does not configure live credentials, the connector layer must use the committed platform registry as the last-known attribute set. This is the normal default path for public pilots and should still return every known field for the platform with the `Registry-backed only — not account-confirmed.` caveat.
 
+For publishable field-value snapshots, use `docs/platform-value-catalog.md`. Field-value snapshots must be sanitized before commit and must exclude account-owned audiences, reach, audience size, account IDs, and raw API responses.
+
 ## Implemented Connector Status
 
 | Platform | Status | What it confirms | What it does not do |
@@ -32,6 +34,16 @@ If a user does not configure live credentials, the connector layer must use the 
 | LinkedIn Ads | Implemented read-only facet probe | Uses `adTargetingFacets` to confirm mapped targeting facets available to the token/app context. | Does not fetch every entity value or prove audience size. |
 | Microsoft Advertising | Implemented authenticated account probe | Uses OAuth + GetUser to confirm the provided Microsoft Advertising access context. | Field-level LinkedIn profile criteria remain registry-backed until a profile-data read is added. |
 | Meta, DV360, Reddit, X, TikTok | Registry fallback | Returns structured fallback fields and recoverable missing-auth / not-implemented errors. | Does not perform live account checks yet. |
+
+## Platform Value Catalog Status
+
+| Platform | Status | Commit-safe value families | Never publish |
+|---|---|---|---|
+| LinkedIn Ads | Template ready | job title, job function, seniority, skill, industry, company size, professional interest, geography | matched audiences, account IDs, reach, raw API responses |
+| Meta Ads | Template ready | interests, behaviors, demographics, geography | custom audiences, lookalikes, account IDs, reach, raw API responses |
+| Google Ads / YouTube | Template ready | geography, keywords, custom segment inputs, in-market, affinity, detailed demographics, device | Customer Match, remarketing lists, account IDs, reach, raw API responses |
+| Microsoft Advertising | Template ready | geography, LinkedIn company/industry/job-function values, keywords | customer match, remarketing lists, account IDs, reach, raw API responses |
+| Reddit Ads | Template ready | communities, interests, keywords, geography, device | custom audiences, account IDs, reach, raw API responses |
 
 ## Recommended Build Order
 

@@ -4,6 +4,7 @@ import { loadPlatforms } from "./platforms.js";
 import { matchStrategyToPlatforms } from "./matcher/match.js";
 import { renderMarkdownReport } from "./report/render-markdown.js";
 import { checkPlatformFields } from "./connectors/field-check.js";
+import { loadLocalEnv } from "./env.js";
 
 function parseArgs(argv) {
   const args = { inputPath: null, outPath: null, withFieldChecks: false };
@@ -22,6 +23,7 @@ function parseArgs(argv) {
 }
 
 async function main() {
+  await loadLocalEnv();
   const { inputPath, outPath, withFieldChecks } = parseArgs(process.argv.slice(2));
   if (!inputPath) {
     console.error("Usage: npm run report -- <strategy-input.json|brief.md> [--with-field-checks] [--out report.md]");

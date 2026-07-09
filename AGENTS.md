@@ -79,6 +79,8 @@ Use `.env.example` as a reference. Never commit real tokens. If credentials are 
 
 For a new agent host or pilot batch, run `npm run freshness` and then `npm run refresh -- --dry-run` before the first conversation when network access is available. These checks are advisory and read-only: do not delay a user report solely because an official documentation URL is unavailable. Follow `docs/platform-freshness-policy.md`; account-specific checks require explicit authorized credentials and remain read-only.
 
+For publishable platform values, follow `docs/platform-value-catalog.md`. Commit only sanitized field-value catalogs under `data/platform-values/`. Never commit credentials, account IDs, custom/matched/tailored audiences, remarketing lists, audience sizes, reach estimates, raw API responses, or account-owned list names. `npm run refresh-values` is template-only until a platform-specific value adapter is implemented and tested.
+
 ## Output Standard
 
 `docs/output-standard.md` is the required response contract. It supersedes the older action-led report layout below whenever they conflict. Use the two-layer structure in that file, in that order: a concise `Executive Brief` followed by `Appendix: Targeting Evidence and Platform Detail`. Return the complete report directly in the chat response. Do not write a report file unless the user explicitly asks for a saved artifact.

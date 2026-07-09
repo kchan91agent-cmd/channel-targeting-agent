@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.com/channel-targeting-agent/platform-values.schema.json",
+  "title": "Publishable platform value catalog",
+  "type": "object",
+  "required": ["platformId", "platformName", "generatedAt", "source", "fields"],
+  "additionalProperties": false,
+  "properties": {
+    "platformId": { "type": "string" },
+    "platformName": { "type": "string" },
+    "generatedAt": { "type": "string" },
+    "source": {
+      "type": "object",
+      "required": ["mode", "checkedAt", "scope", "caveats"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "enum": ["registry-template", "authenticated-sanitized", "manual-reviewed"] },
+        "checkedAt": { "type": "string" },
+        "scope": { "type": "string" },
+        "caveats": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "fields": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["fieldId", "label", "inputKeys", "status", "values"],
+        "additionalProperties": false,
+        "properties": {
+          "fieldId": { "type": "string" },
+          "label": { "type": "string" },
+          "inputKeys": { "type": "array", "items": { "type": "string" } },
+          "status": { "enum": ["ready-for-values", "api-confirmed", "manual-reviewed"] },
+          "values": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["label", "status", "checkedAt", "source"],
+              "additionalProperties": false,
+              "properties": {
+                "label": { "type": "string" },
+                "platformValueId": { "type": "string" },
+                "aliases": { "type": "array", "items": { "type": "string" } },
+                "locale": { "type": "string" },
+                "status": { "enum": ["api-confirmed", "manual-reviewed"] },
+                "checkedAt": { "type": "string" },
+                "source": { "enum": ["authenticated-read-only-query", "manual-review"] },
+                "caveats": { "type": "array", "items": { "type": "string" } }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

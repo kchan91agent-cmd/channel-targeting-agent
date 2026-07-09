@@ -1,0 +1,20 @@
+{
+  "platformId": "microsoft-ads",
+  "platformName": "Microsoft Advertising",
+  "generatedAt": "2026-07-09T00:00:00.000Z",
+  "source": {
+    "mode": "registry-template",
+    "checkedAt": "2026-07-09T00:00:00.000Z",
+    "scope": "Publishable field-value template only; no authenticated account objects included.",
+    "caveats": [
+      "Platform-visible value; availability may vary by account, locale, campaign type, and policy."
+    ]
+  },
+  "fields": [
+    { "fieldId": "geography", "label": "Location", "inputKeys": ["locale", "geographies"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "companyName", "label": "LinkedIn company", "inputKeys": ["companyNames"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "industry", "label": "LinkedIn industry", "inputKeys": ["industries"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "jobFunction", "label": "LinkedIn job function", "inputKeys": ["jobFunctions"], "status": "ready-for-values", "values": [] },
+    { "fieldId": "keyword", "label": "Keywords", "inputKeys": ["keywords", "intentSignals"], "status": "ready-for-values", "values": [] }
+  ]
+}

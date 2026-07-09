@@ -168,6 +168,21 @@ npm run refresh -- --dry-run
 
 The included GitHub Actions workflow runs tests and a source check on the first day of every month, then uploads the generated snapshot as a workflow artifact.
 
+## Platform Value Catalogs
+
+The project includes publishable platform-value templates in `data/platform-values/`. These are for safe field values such as job titles, industries, interests, communities, keywords, and geographies that can help the agent recommend the closest selectable platform values.
+
+Do not publish account-owned values such as custom audiences, matched audiences, remarketing lists, customer lists, audience sizes, reach estimates, account IDs, or raw API responses.
+
+Preview or refresh the safe templates:
+
+```bash
+npm run refresh-values
+npm run refresh-values -- --write-templates
+```
+
+See `docs/platform-value-catalog.md` for credential setup and the publish-safety boundary.
+
 ## Third-Party Pilot
 
 For an external PMM, demand generation, or growth team testing this in their own Codex or Claude Code environment, use `docs/third-party-pilot.md`.

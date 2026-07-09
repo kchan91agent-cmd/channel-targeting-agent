@@ -48,6 +48,7 @@ Current implementation:
 - `npm run check-fields -- --platform linkedin-ads` runs a read-only LinkedIn `adTargetingFacets` probe when credentials exist.
 - `npm run check-fields -- --platform microsoft-ads` runs a Microsoft Advertising authenticated account probe; field-level profile criteria are still registry-backed.
 - `npm run report -- <brief.md> --with-field-checks` includes connector evidence in the report where checks were explicitly run.
+- `npm run refresh-values` previews publishable platform-value catalog templates. It does not pull live values until a platform-specific value adapter is implemented and tested.
 
 ## What Is Not Automated
 
