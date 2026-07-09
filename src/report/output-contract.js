@@ -15,11 +15,9 @@ export const REQUIRED_APPENDIX_HEADINGS = [
   "### Source Inputs",
   "### Keyword Cluster Guidance",
   "### Concrete Keyword and Audience Map",
-  "### Docs-Backed Value Evidence",
   "### Platform Field Inventory",
   "### Platform Detail",
-  "### Cross-Platform Gaps",
-  "### Manual Verification Required"
+  "### Cross-Platform Gaps"
 ];
 
 export const REQUIRED_TARGETING_MAP_HEADINGS = [

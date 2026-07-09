@@ -41,18 +41,14 @@ test("renders the required executive brief, appendix, and all-platform field inv
     "### Source Inputs",
     "### Keyword Cluster Guidance",
     "### Concrete Keyword and Audience Map",
-    "### Docs-Backed Value Evidence",
     "### Platform Field Inventory",
     "### Platform Detail",
-    "### Cross-Platform Gaps",
-    "### Manual Verification Required"
+    "### Cross-Platform Gaps"
   ]) assert.ok(report.includes(heading));
 
   assert.ok(report.includes("| LinkedIn Ads | Geography |"));
-  assert.ok(report.includes("| LinkedIn Ads | Revenue Operations Manager, Marketing Operations Director | Job title |"));
-  assert.equal(report.includes("| LinkedIn Ads | None |"), false);
-  assert.equal(report.includes("| Google Ads / YouTube | None |"), false);
-  assert.ok(report.includes("LinkedIn Ads targeting options"));
+  assert.equal(report.includes("### Docs-Backed Value Evidence"), false);
+  assert.equal(report.includes("### Manual Verification Required"), false);
   assert.deepEqual(validateStandardOutput(report, platforms), { valid: true, errors: [] });
   assert.ok(report.includes("| LinkedIn Ads | Lookalike / similar-audience seeds |"));
   assert.ok(report.includes("| LinkedIn Ads | Job title | Direct targeting field |"));

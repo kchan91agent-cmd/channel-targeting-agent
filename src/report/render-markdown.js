@@ -27,18 +27,6 @@ const FIRST_PARTY_KEYS = new Set([
   "suppressionLists"
 ]);
 
-const SENSITIVE_DOC_EVIDENCE_KEYS = new Set([
-  "companyNames",
-  "accountLists",
-  "customerLists",
-  "contactLists",
-  "websiteVisitors",
-  "retargetingAudiences",
-  "engagementAudiences",
-  "lookalikeSeeds",
-  "suppressionLists"
-]);
-
 const SOURCE_INPUTS = [
   ["Geographies", "geographies"],
   ["Industries", "industries"],
@@ -434,36 +422,6 @@ function renderKeywordAudienceMap(output) {
   return lines.join("\n");
 }
 
-function renderDocsBackedValueEvidence(output) {
-  const lines = ["### Docs-Backed Value Evidence", ""];
-  const matches = output.docsBackedValueMatches ?? [];
-  if (matches.length === 0) {
-    lines.push("No docs-backed platform-value catalogs were loaded, or no source inputs mapped to a docs-backed value category.");
-    lines.push("");
-    return lines.join("\n");
-  }
-
-  lines.push("| Platform | Source input terms | Docs-backed field | Official values/categories | Official source | Verification needed |");
-  lines.push("| --- | --- | --- | --- | --- | --- |");
-  let rowCount = 0;
-  for (const catalog of matches) {
-    for (const field of catalog.fields) {
-      if ((field.inputKeys ?? []).some((key) => SENSITIVE_DOC_EVIDENCE_KEYS.has(key))) continue;
-      if ((field.requestedValues ?? []).length === 0) continue;
-      const values = field.values ?? [];
-      const first = values[0] ?? {};
-      const officialValues = values.map((value) => value.label).join(", ");
-      const source = first.sourceUrl ? `[${escapeTable(first.sourceLabel ?? "official source")}](${first.sourceUrl})` : "Official source metadata unavailable";
-      const caveat = first.caveats?.[0] ?? "Verify exact account availability, locale, policy, and current picklists before campaign build.";
-      lines.push(`| ${escapeTable(catalog.platformName)} | ${escapeTable(shortList(field.requestedValues, 8))} | ${escapeTable(field.label)} | ${escapeTable(officialValues)} | ${source} | ${escapeTable(caveat)} |`);
-      rowCount += 1;
-    }
-  }
-  if (rowCount === 0) lines.push("| None | No non-private source input terms mapped to docs-backed categories | None | None | None | Account/list-style inputs are intentionally omitted from this evidence table. |");
-  lines.push("");
-  return lines.join("\n");
-}
-
 function renderPlatformFieldInventory(output) {
   const lines = ["### Platform Field Inventory", ""];
   for (const platform of output.platformMatches) {
@@ -517,20 +475,6 @@ function renderCrossPlatformGaps(output) {
   return lines.join("\n");
 }
 
-function renderManualVerification(output) {
-  const lines = ["### Manual Verification Required", ""];
-  lines.push("- Verify exact picklists and authenticated/API field availability in each ad account before campaign build.");
-  lines.push("- Verify campaign-type and locale constraints, policy constraints, audience-size/minimum-reach thresholds, and first-party audience eligibility.");
-  lines.push("- Verify suppression logic, exclusions, and negative-keyword treatment before activation.");
-  lines.push("- Do not upload customer, contact, or account lists from this tool.");
-  lines.push("- Treat pains, gains, objections, and triggers as message strategy unless a platform exposes a confirmed targeting field.");
-  for (const platform of output.platformMatches) {
-    lines.push(`- **${platform.platformName}:** ${authenticationStatus(platform)} ${platform.caveats.join(" ")}`);
-  }
-  lines.push("");
-  return lines.join("\n");
-}
-
 export function renderAppendix(output) {
   return [
     "## Appendix: Targeting Evidence and Platform Detail",
@@ -538,11 +482,9 @@ export function renderAppendix(output) {
     renderSourceInputs(output),
     renderKeywordClusterGuidance(output),
     renderKeywordAudienceMap(output),
-    renderDocsBackedValueEvidence(output),
     renderPlatformFieldInventory(output),
     renderPlatformDetail(output),
-    renderCrossPlatformGaps(output),
-    renderManualVerification(output)
+    renderCrossPlatformGaps(output)
   ].join("\n");
 }
 

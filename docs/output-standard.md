@@ -7,7 +7,7 @@ Use this standard for every non-technical feasibility readout. Deliver the compl
 
 Never create campaigns, upload audiences, mutate ad accounts, spend budget, or invent targeting fields.
 
-Use exactly this two-layer structure. Do not compress, omit, merge, or replace it with a generic summary. The executive brief should stay decision-first; the appendix should carry the complete evidence, keyword clusters, raw inputs, platform inventory, and verification detail.
+Use exactly this two-layer structure. Do not compress, omit, merge, or replace it with a generic summary. The executive brief should stay decision-first; the appendix should carry the complete evidence, keyword clusters, raw inputs, platform inventory, and platform detail.
 
 ## Executive Brief
 
@@ -82,15 +82,6 @@ Then include these subsections:
 
 Never present pains, gains, objections, or triggers as targeting keywords unless an explicitly verified platform field supports them.
 
-### Docs-Backed Value Evidence
-
-When docs-backed platform-value catalogs are loaded, provide a table that ties source input terms to official-doc-backed fields and values/categories:
-
-| Platform | Source input terms | Docs-backed field | Official values/categories | Official source | Verification needed |
-| --- | --- | --- | --- | --- | --- |
-
-Treat this section as evidence only. It supports the inferred ties between source terms and official platform categories, but it does not prove account-specific availability, full dynamic picklists, or campaign eligibility.
-
 ### Platform Field Inventory
 
 For every relevant platform, provide a complete table:
@@ -111,9 +102,5 @@ For every evaluated platform, include channel group, confidence, channel type, e
 ### Cross-Platform Gaps
 
 List source dimensions that remain unavailable or weak across platforms and any missing activation inputs that materially change planning.
-
-### Manual Verification Required
-
-List every required platform-side check. Include dynamic picklists; authenticated/API field availability; campaign-type and locale constraints; audience-size/minimum-reach checks; policy constraints; first-party eligibility; suppression logic; and negative-keyword treatment.
 
 Keep the result in plain language suitable for a non-technical PMM gut check. Keep temporary inputs outside the standalone repository and do not save private source material unless explicitly asked.
