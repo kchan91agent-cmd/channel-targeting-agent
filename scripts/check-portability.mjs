@@ -7,6 +7,12 @@ const SCANNED_EXTENSIONS = new Set([".js", ".json", ".md", ".mjs", ".ps1", ".sh"
 const IGNORED_DIRECTORIES = new Set([".git", "node_modules", "coverage"]);
 const REQUIRED_IGNORE_LINES = [".env", ".env.*", "!.env.example", "*.private.md", "*.private.json", "pilot-brief.md", "pilot-report.md"];
 const FORBIDDEN_PERSONAL_REFERENCES = ["/" + "Users/", "Kevin" + "OS"];
+const REQUIRED_SETUP_HANDOFF_TEXT = {
+  "AGENTS.md": ["## Setup Completion Handoff", "docs/workflow.md"],
+  "docs/workflow.md": ["## Setup Completion Response", "Run the example", "Analyze your own material"],
+  "docs/pilot-welcome-kit.md": ["## After Setup: Quick Start", "Run the example", "Analyze your own material"],
+  "docs/third-party-pilot.md": ["## Required Setup Completion Handoff", "Setup Completion Response"]
+};
 
 async function filesUnder(directory) {
   const entries = await readdir(directory, { withFileTypes: true });
@@ -35,6 +41,13 @@ export async function portabilityViolations(projectRoot = PROJECT_ROOT) {
     await stat(join(projectRoot, "package-lock.json"));
   } catch {
     violations.push("package-lock.json is required for reproducible installs");
+  }
+
+  for (const [file, requiredValues] of Object.entries(REQUIRED_SETUP_HANDOFF_TEXT)) {
+    const content = await readFile(join(projectRoot, file), "utf8");
+    for (const requiredValue of requiredValues) {
+      if (!content.includes(requiredValue)) violations.push(`${file} is missing setup-handoff text: ${requiredValue}`);
+    }
   }
 
   for (const file of await filesUnder(projectRoot)) {

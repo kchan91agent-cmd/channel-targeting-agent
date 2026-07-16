@@ -1,7 +1,7 @@
 # Portability And Isolation Contract
 
 Status: source-of-truth
-Last reviewed: 2026-06-22
+Last reviewed: 2026-07-15
 
 ## What Must Stay True
 
@@ -13,6 +13,7 @@ This repository is shareable by itself. It must not depend on a parent workspace
 - Credentials are environment variables or local ignored files. They are never committed.
 - Codex extraction ignores personal user configuration and runs beside its temporary source, not inside a personal workspace.
 - The fixed report contract, extraction contract, matcher, and platform registry remain project-owned and provider-neutral.
+- A successful setup-only pilot request ends with the canonical quick-start handoff in `docs/workflow.md`, offering the bundled example or the tester's own source. The welcome kit, third-party guide, and agent instructions must preserve that same next-step contract across Codex and Claude Code.
 
 ## Maintainer Release Check
 

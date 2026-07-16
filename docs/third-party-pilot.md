@@ -1,7 +1,7 @@
 # Third-Party Pilot Guide
 
 Status: working
-Last reviewed: 2026-06-26
+Last reviewed: 2026-07-15
 
 This guide is for an external PMM, demand generation, or growth team testing Channel Targeting Agent in Codex or Claude Code.
 
@@ -29,7 +29,7 @@ Do not use the pilot to launch campaigns, upload audiences, mutate ad accounts, 
 
 ## Share With A Tester
 
-Send the tester [Pilot Welcome Kit](pilot-welcome-kit.md). It contains the only instructions they need: attach a source, send one conversation request, review the report, and return redacted feedback.
+Send the tester [Pilot Welcome Kit](pilot-welcome-kit.md). It contains the only instructions they need: complete the conversation-only quick start, optionally run the example, attach a source, review the report, and return redacted feedback.
 
 ## Share The Project
 
@@ -45,11 +45,22 @@ Share only the `channel-targeting-agent` folder. Do not include parent workspace
 
 The GitHub repository is the source of truth. Before each new pilot, test run, or project-based rerun, the agent host must sync or pull the latest `main` branch from GitHub and use that version for the run.
 
-Do not assume a Codex/App Studio project created from the GitHub link automatically receives future repository updates. If the environment cannot sync from GitHub, create a fresh project from the repo link before running the test.
+Do not assume a Codex project or Claude Code workspace created from the GitHub repository automatically receives future updates. If the environment cannot sync from GitHub, create or prepare a fresh project from the repository before running the test.
+
+## Required Setup Completion Handoff
+
+When the agent host completes setup and the tester has not supplied a source, it must return the canonical `Setup Completion Response` in `docs/workflow.md`. Successful setup must not end with only a technical completion summary or a generic question.
+
+The handoff offers two paths:
+
+1. `Run the example` to see the included sample report.
+2. `Analyze your own material` by attaching an unformatted source.
+
+If the tester already supplied a readable source, the agent host should skip the choice and continue directly into analysis. If setup fails, it should report the plain-language host problem instead of showing the success handoff.
 
 ## For A Non-Technical Pilot User
 
-The pilot user supplies only a readable source: a launch deck, messaging document, campaign brief, product page, link, attachment, PDF, or pasted notes. They do not need to create a campaign brief, understand platform fields, or run commands.
+The pilot user can begin by running the included example or by supplying a readable source: a launch deck, messaging document, campaign brief, product page, link, attachment, PDF, or pasted notes. They do not need to create a campaign brief, understand platform fields, choose a provider, or run commands.
 
 Give the agent this request in the conversation window:
 
@@ -99,7 +110,7 @@ npm test
 npm run analyze-source -- --provider codex --file examples/b2b-saas-generic.md
 ```
 
-The first run should pass the test suite and print the complete report. An agent returns that report directly in its response window. Source ingestion and provider extraction cannot run in a fresh environment without npm-installed dependencies.
+The host preparation run should pass the test suite and print the complete example report. If the tester has not supplied a source, the agent then returns the required setup-completion handoff rather than dumping host output into the conversation. Source ingestion and provider extraction cannot run in a fresh environment without npm-installed dependencies.
 
 ## Agent Host Troubleshooting
 
@@ -192,6 +203,7 @@ Rules:
 - Do not upload audiences, create campaigns, mutate ad accounts, or spend budget.
 - Keep confidential pilot briefs and reports local unless the user explicitly asks to share or commit them.
 - Never ask the pilot user to run a command, use Terminal, install Node, or choose a provider. Resolve setup yourself or explain in plain language that the agent environment needs repair.
+- After successful setup without a supplied source, return the canonical quick start in `docs/workflow.md`; do not stop at a setup summary.
 ```
 
 ## Suggested Pilot Scorecard

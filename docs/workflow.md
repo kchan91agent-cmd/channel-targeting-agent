@@ -1,7 +1,7 @@
 # Agent Workflow
 
 Status: working
-Last reviewed: 2026-06-21
+Last reviewed: 2026-07-15
 
 This MVP is meant to run inside an agent workflow, not as a web app.
 
@@ -22,6 +22,38 @@ The agent must:
 The standard command owns ingestion and provider extraction. It requires an explicit provider, writes temporary material outside the repository, and validates the fixed report contract. The lower-level extraction commands remain available for regression tests and advanced debugging only.
 
 If the source cannot be read, request accessible text or a downloadable file. Do not proceed from partial access or invent missing details. Keep the temporary brief and report outside the repository unless the user explicitly authorizes saving a shareable version.
+
+## Setup Completion Response
+
+When setup succeeds but the user has not yet supplied a source, do not stop at `setup complete`. Return this quick-start handoff directly in the conversation:
+
+```text
+Channel Targeting Agent is ready.
+
+Choose one way to begin:
+
+1. Run the example — I’ll analyze the included sample so you can see the expected report.
+2. Analyze your own material — attach a campaign brief, messaging document, deck, PDF, public product page, or paste rough notes.
+
+You do not need to format the source or use Terminal. Do not attach customer lists, account lists, credentials, or other secrets.
+
+When you provide a source, I will:
+- extract only facts the source supports
+- separate direct targeting, proxy tests, and message-only inputs
+- identify channels worth investigating
+- flag missing inputs and manual verification needs
+- return the complete report in this conversation
+
+Reply with "run the example" or attach your source.
+```
+
+If the user chooses the example, run the bundled example and return its report. End that response with:
+
+```text
+That is the expected report structure. To analyze your own material, attach your source and say: "Analyze this with the Channel Targeting Agent."
+```
+
+If the user supplied a readable source as part of the setup request, skip the choice and continue directly into analysis. If setup fails, report the host problem in plain language and do not show the success handoff.
 
 ## Runtime Preflight
 

@@ -69,6 +69,22 @@ Never write a user-supplied source, temporary brief, or generated report into th
 
 For third-party pilots, follow `docs/third-party-pilot.md`. Keep pilot briefs and reports local unless the user explicitly asks to commit or share them.
 
+## Setup Completion Handoff
+
+When a user asks the agent to read the welcome kit, create or prepare the project, or complete first-time setup without supplying a campaign source, setup completion is not the end of the interaction.
+
+After setup and required host checks succeed, return the exact quick-start guidance in `docs/workflow.md` under `Setup Completion Response`. The response must:
+
+- say that Channel Targeting Agent is ready
+- offer `Run the example` and `Analyze your own material` as the two next paths
+- explain that the user can attach an unformatted source and does not need Terminal
+- include the privacy warning against customer lists, credentials, and other secrets
+- tell the user exactly how to continue in the same conversation
+
+Do not end a successful setup-only request with only a completion summary, terminal output, or a generic question such as `What would you like to do next?`
+
+If the user already supplied a readable source, do not pause for the quick-start choice. Confirm readiness briefly and continue directly into the source-analysis workflow. If setup fails, report the plain-language host problem instead of showing the success handoff.
+
 ## Durable Isolation And Portability
 
 Treat `docs/portability-and-isolation.md` as the release contract. Before sharing the project, run `npm ci`, `npm test`, and `npm run check:portability`. Keep all dependencies project-declared and locked; do not add parent-workspace paths, private artifacts, personal configuration, or undocumented runtime assumptions. When changing source retention, dependencies, provider behavior, credentials, or the pilot flow, update that contract and add a deterministic guard where possible.

@@ -1,7 +1,7 @@
 # Channel Targeting Agent Pilot Welcome Kit
 
 Status: shareable pilot handoff
-Last reviewed: 2026-07-09
+Last reviewed: 2026-07-15
 
 ## Welcome
 
@@ -22,24 +22,39 @@ The current pilot is most useful as a pre-launch feasibility check. It can help 
 
 Start here: [Channel Targeting Agent on GitHub](https://github.com/kchan91agent-cmd/channel-targeting-agent)
 
-If the repository is private, accept the GitHub invitation from the pilot host first. Open the project in Codex, then attach your source and follow the first-run request below. You do not need to download files manually or use Terminal.
+If the repository is private, accept the GitHub invitation from the pilot host first. Open the project in a supported agent workspace: Codex or Claude Code. The agent host handles repository and runtime preparation; the pilot tester should not be asked to use Terminal.
 
 ## Staying Current
 
 The GitHub repository is the source of truth for this project. Before starting a new pilot or rerun, the agent host should sync the project with the latest `main` branch from GitHub.
 
-Do not assume a Codex/App Studio project created from the GitHub link automatically receives future updates. If the project cannot sync from GitHub, create a fresh project from the repo link before running the test.
+Do not assume a Codex project or Claude Code workspace created from the GitHub repository automatically receives future updates. If the agent host cannot sync from GitHub, it should create or prepare a fresh project from the repository before the test.
 
 ## What You Need
 
 You need only two things:
 
-1. Access to the Channel Targeting Agent project in a Codex workspace.
+1. Access to the Channel Targeting Agent project in a Codex or Claude Code workspace.
 2. One readable source: a document, slide deck, PDF, product page, public link, or pasted notes.
 
 You do **not** need to use Terminal, install software, create a structured brief, know platform-field names, or share ad-account credentials.
 
-## Start Your First Run
+## After Setup: Quick Start
+
+When the project is ready and you have not supplied a source yet, the agent should not stop after saying setup is complete. It should offer two next steps in the same conversation:
+
+1. **Run the example:** see the expected report using the included sample.
+2. **Analyze your own material:** attach a campaign brief, messaging document, deck, PDF, public product page, or paste rough notes.
+
+You can reply with `run the example` or attach your source. You do not need to format the source or use Terminal. Do not attach customer lists, account lists, credentials, or other secrets.
+
+If the project says setup is complete without showing these choices, send:
+
+```text
+Show me the Channel Targeting Agent quick start.
+```
+
+## Analyze Your Own Material
 
 Attach your source or paste a public link, then send this message in the same conversation:
 
@@ -51,7 +66,7 @@ Do all required setup and analysis work yourself. Do not ask me to use Terminal 
 Use the exact two-layer report structure in docs/output-standard.md: concise Executive Brief first, then Appendix: Targeting Evidence and Platform Detail. Do not create campaigns, upload audiences, mutate ad accounts, spend budget, invent targeting fields, or save my source or report into the repository.
 ```
 
-The agent performs its setup and analysis in the background, then returns the report here.
+The agent performs any remaining host setup and analysis in the background, then returns the report here. Codex and Claude Code use the same report contract and tester experience; the hosting environment chooses its own supported provider adapter behind the scenes.
 
 ## What You Will Receive
 
@@ -125,4 +140,4 @@ Stay in the conversation. Tell the agent what happened in plain language and let
 
 ## Pilot Scope
 
-This pilot is currently validated for Codex. Platform recommendations are registry-backed and docs-backed where official source catalogs are available, unless a later, explicitly authorized read-only account check confirms a specific field. Treat the report as a feasibility preflight, not final launch approval.
+The conversation-only pilot flow supports Codex and Claude Code. Codex has completed the current live acceptance corpus; Claude Code remains a supported pilot path whose cross-provider acceptance is still being expanded. Platform recommendations are registry-backed and docs-backed where official source catalogs are available, unless a later, explicitly authorized read-only account check confirms a specific field. Treat the report as a feasibility preflight, not final launch approval.
