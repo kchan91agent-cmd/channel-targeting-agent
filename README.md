@@ -1,7 +1,7 @@
 # Channel Targeting Agent
 
 Status: working
-Last reviewed: 2026-07-04
+Last reviewed: 2026-07-18
 
 Channel Targeting Agent helps PMMs translate broad ICP, persona, and campaign strategy into targeting options that actually exist inside advertising platforms.
 
@@ -13,9 +13,9 @@ This repository is standalone. It does not require parent workspace context, pri
 
 ## Staying Current
 
-The GitHub repository is the source of truth for this project. Before each new pilot, test run, or Codex/App Studio project run, the agent host should sync or pull the latest `main` branch from GitHub.
+The GitHub repository is the source of truth for this project. Before each new pilot, test run, or Codex/App Studio project run, the agent host should run `npm run sync-check`. The user-facing `analyze-source`, `report`, `match`, `start`, and npm-based `preflight` commands run this check automatically.
 
-Do not assume a project created from the GitHub link automatically receives future repository updates. If the environment cannot sync from GitHub, create a fresh project from the repo link before running the test.
+The check fetches `origin/main` and fast-forwards only when the checkout is clean and the update can be applied safely. If GitHub cannot be reached or the checkout cannot be updated safely, it reports the cached commit and continues with that version. It never overwrites local changes. Do not assume a project created from the GitHub link automatically receives future repository updates.
 
 ## Why This Exists
 

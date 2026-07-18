@@ -1,7 +1,7 @@
 # Channel Targeting Agent Pilot Welcome Kit
 
 Status: shareable pilot handoff
-Last reviewed: 2026-07-15
+Last reviewed: 2026-07-18
 
 ## Welcome
 
@@ -26,9 +26,9 @@ If the repository is private, accept the GitHub invitation from the pilot host f
 
 ## Staying Current
 
-The GitHub repository is the source of truth for this project. Before starting a new pilot or rerun, the agent host should sync the project with the latest `main` branch from GitHub.
+The GitHub repository is the source of truth for this project. Before starting a new pilot or rerun, the agent host should run `npm run sync-check`; the main user-facing analysis and report commands also run it automatically.
 
-Do not assume a Codex project or Claude Code workspace created from the GitHub repository automatically receives future updates. If the agent host cannot sync from GitHub, it should create or prepare a fresh project from the repository before the test.
+The check safely fast-forwards a clean checkout. If GitHub is unavailable or the update cannot be applied without risking local work, the agent continues with the cached commit it reports. Do not assume a Codex project or Claude Code workspace created from the GitHub repository automatically receives future updates.
 
 ## What You Need
 

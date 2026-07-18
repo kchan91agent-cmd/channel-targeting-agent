@@ -27,6 +27,8 @@ The tool should not:
 
 ## Common Commands
 
+Before every user-requested analysis or report, run `npm run sync-check`. The check fetches GitHub `main` and fast-forwards only a clean checkout. If GitHub, Git, authentication, or a safe fast-forward is unavailable, continue with the cached version reported by the check; never overwrite local changes or block a report solely because synchronization failed. The `analyze-source`, `report`, `match`, `start`, and npm-based `preflight` commands run this check automatically.
+
 Run the applicable preflight check before a third-party pilot. A working Node.js 20+ runtime is a hard prerequisite for every test and report command.
 
 ```bash
@@ -38,6 +40,7 @@ powershell -NoProfile -ExecutionPolicy Bypass -File .\scripts\preflight.ps1
 ```
 
 ```bash
+npm run sync-check
 npm test
 npm run test:output-standard
 npm run match -- examples/b2b-saas-generic.json

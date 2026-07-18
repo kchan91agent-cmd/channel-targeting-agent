@@ -1,7 +1,7 @@
 # Agent Workflow
 
 Status: working
-Last reviewed: 2026-07-15
+Last reviewed: 2026-07-18
 
 This MVP is meant to run inside an agent workflow, not as a web app.
 
@@ -13,11 +13,12 @@ The person requesting analysis should only need to provide a readable source: a 
 
 The agent must:
 
-1. Read the supplied source.
-2. Create a temporary supported brief from facts in that source only.
-3. Leave absent fields empty so missing-input checks remain useful.
-4. Run preflight and `npm run analyze-source -- --provider codex|claude --file <path>|--url <public-https-url>`.
-5. Return the complete two-layer report defined in `docs/output-standard.md` directly in the response window: concise Executive Brief first, then Appendix: Targeting Evidence and Platform Detail. Do not save, attach, or link a report file unless explicitly asked.
+1. Run `npm run sync-check`. Use the latest GitHub `main` when it can be applied safely; otherwise continue with the cached version reported by the check.
+2. Read the supplied source.
+3. Create a temporary supported brief from facts in that source only.
+4. Leave absent fields empty so missing-input checks remain useful.
+5. Run preflight and `npm run analyze-source -- --provider codex|claude --file <path>|--url <public-https-url>`.
+6. Return the complete two-layer report defined in `docs/output-standard.md` directly in the response window: concise Executive Brief first, then Appendix: Targeting Evidence and Platform Detail. Do not save, attach, or link a report file unless explicitly asked.
 
 The standard command owns ingestion and provider extraction. It requires an explicit provider, writes temporary material outside the repository, and validates the fixed report contract. The lower-level extraction commands remain available for regression tests and advanced debugging only.
 

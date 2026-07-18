@@ -1,7 +1,7 @@
 # Third-Party Pilot Guide
 
 Status: working
-Last reviewed: 2026-07-15
+Last reviewed: 2026-07-18
 
 This guide is for an external PMM, demand generation, or growth team testing Channel Targeting Agent in Codex or Claude Code.
 
@@ -43,9 +43,9 @@ Share only the `channel-targeting-agent` folder. Do not include parent workspace
 
 ## Keep The Project Current
 
-The GitHub repository is the source of truth. Before each new pilot, test run, or project-based rerun, the agent host must sync or pull the latest `main` branch from GitHub and use that version for the run.
+The GitHub repository is the source of truth. Before each new pilot, test run, or project-based rerun, the agent host must run `npm run sync-check`. The user-facing analysis and report commands also run this check automatically.
 
-Do not assume a Codex project or Claude Code workspace created from the GitHub repository automatically receives future updates. If the environment cannot sync from GitHub, create or prepare a fresh project from the repository before running the test.
+The check fast-forwards a clean checkout when a newer `main` is available. If GitHub cannot be reached or the update cannot be applied safely, continue with the cached commit reported by the check. Never overwrite local changes. Do not assume a Codex project or Claude Code workspace created from the GitHub repository automatically receives future updates.
 
 ## Required Setup Completion Handoff
 
