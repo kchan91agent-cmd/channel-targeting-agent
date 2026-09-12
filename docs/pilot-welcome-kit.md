@@ -1,6 +1,7 @@
 # Channel Targeting Agent Pilot Welcome Kit
 
-Status: shareable pilot handoff
+Status: source-of-truth
+Distribution state: shareable pilot handoff
 Last reviewed: 2026-07-18
 
 ## Welcome
@@ -132,7 +133,7 @@ What would make this more useful for executive launch planning:
 Would you use this as a planning starting point? yes | no | with changes
 ```
 
-For a formal feedback packet, use `docs/pilot-feedback-template.md`.
+For a formal feedback packet, use [pilot-feedback-template.md](pilot-feedback-template.md).
 
 ## If Something Does Not Work
 
